@@ -15,17 +15,23 @@
 
   <insert id="AUTH.INSERT.TB_VU.001">
   	/* 사용자, 유저 정보 삽입 */
-    INSERT INTO VOTEON.USERS
+    INSERT INTO user_T
     (
-        vu_nick_name  
-        ,vu_id 
-        ,vu_password 
+        user_id,
+        user_pw,
+        user_name,
+        user_nickName,
+        user_email,
+        user_code
     )
     VALUES
     (
         #{id}, 
-        #{nick_name}, 
-        #{password}
+        #{pw}, 
+        #{name},
+        #{nickname},
+        #{email}
+        #{code}
     );
 
   </insert>

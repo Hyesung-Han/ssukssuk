@@ -8,7 +8,7 @@ app.get("/users/:id", async (req, res) => {
   }
 
   var selectParams = {
-    id: req.params.id
+    id: req.params.id,
   };
 
   var selectQuery = req.mybatisMapper.getStatement(
@@ -21,7 +21,7 @@ app.get("/users/:id", async (req, res) => {
   let data = [];
   try {
     data = await req.sequelize.query(selectQuery, {
-      type: req.sequelize.QueryTypes.SELECT
+      type: req.sequelize.QueryTypes.SELECT,
     });
     console.log("TCL: data", data);
   } catch (error) {
@@ -36,14 +36,45 @@ app.get("/users/:id", async (req, res) => {
 
   res.json({
     msg: "RDB에서 정보 꺼내오기",
-    user: data.map(x => {
+    user: data.map((x) => {
       x.vu_password = "";
       return x;
-    })[0]
+    })[0],
   });
 });
 
-app.post("/", function(req, res) {
+app.post("/", function (req, res) {
+  var insertParams = {
+    id: req.params.id,
+    pw: req.params.pw,
+    name: req.params.name,
+    nickname: req.params.nickname,
+    email: req.params.email,
+    code: req.params.code,
+  };
+
+  var selectQuery = req.mybatisMapper.getStatement(
+    "BASE",
+    "AUTH.SELECT.TB_VU.001",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "rdb select에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "정보가 없습니다." });
+    return;
+  }
   res.json({ success: "post call succeed!", url: req.url, body: req.body });
 });
 
