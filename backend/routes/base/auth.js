@@ -87,15 +87,14 @@ app.post("/regi", async (req, res) => {
 });
 
 // 회원 정보 수정(add 01.19 CSW)
-app.patch("/:id", async (req, res) => {
-  if (!req.params || !req.params.id) {
+app.patch("/updateinfo", async (req, res) => {
+  if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
 
   var updateParams = {
-    id: req.params.id,
-    pw: req.body.user_pw,
+    id: req.body.user_id,
     nickName: req.body.user_nickName
   };
 
@@ -113,7 +112,7 @@ app.patch("/:id", async (req, res) => {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "update에 실패하였습니다.", error: error });
+    res.status(403).send({ msg: "nick name update에 실패하였습니다.", error: error });
     return;
   }
 
@@ -121,10 +120,48 @@ app.patch("/:id", async (req, res) => {
     res.status(403).send({ msg: "정보가 없습니다." });
     return;
   }
-  res.json({ success: "update success"});
+  res.json({ success: "nickname update success"});
 
 });
 // 회원 정보 수정 end
 
+// 비밀번호 수정(add 01.19 CSW)
+app.patch("/updatepw", async (req, res) => {
+  if (!req.body || !req.body.user_id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+
+  var updateParams = {
+    id: req.body.user_id,
+    pw: req.body.user_pw,
+  };
+
+  var updateQuery = req.mybatisMapper.getStatement(
+    "USER",
+    "AUTH.UPDATE.USERPWUPDATE",
+    updateParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "pw update에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "정보가 없습니다." });
+    return;
+  }
+  res.json({ success: "pw update success"});
+
+});
+// 비밀번호 수정 end
 
 module.exports = app;
