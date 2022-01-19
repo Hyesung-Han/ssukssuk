@@ -4,6 +4,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="USER">  
 
+
+  <update id = "AUTH.UPDATE.USERUPDATE">
+      update user_t set
+      user_pw: #{pw}
+      user_nickName:#{nickName}
+      where user_id = #{id}
+  </update>
+
+
   <select id="AUTH.SELECT.TB_VU.001">
   	/* 사용자, 유저 정보 조회 */
     SELECT  
@@ -34,5 +43,6 @@
         #{code}
     )
   </insert>
+
 
 </mapper>
