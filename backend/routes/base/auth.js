@@ -2,7 +2,7 @@ var express = require("express");
 var app = express.Router();
 
 // 회원정보 조회
-app.get("/users/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
   if (!req.params || !req.params.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
@@ -47,12 +47,12 @@ app.get("/users/:id", async (req, res) => {
 // 회원가입 
 app.post("/register", async (req, res) => {
   var insertParams = {
-    user_id: req.body.user_id,
-    user_pw: req.body.user_pw,
-    user_name: req.body.user_name,
-    user_nickName: req.body.user_nickName,
-    user_email: req.body.user_email,
-    user_code: req.body.user_code,
+    id: req.body.user_id,
+    pw: req.body.user_pw,
+    name: req.body.user_name,
+    nickName: req.body.user_nickName,
+    email: req.body.user_email,
+    code: req.body.user_code,
   };
 
   let insertQuery = req.mybatisMapper.getStatement(

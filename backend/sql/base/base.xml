@@ -26,12 +26,12 @@
     )
     VALUES
     (
-        #{user_id}, 
-        #{user_pw}, 
-        #{user_name},
-        #{user_nickName},
-        #{user_email}
-        #{user_code}
+        #{id}, 
+        #{pw}, 
+        #{name},
+        #{nickName},
+        #{email},
+        #{code}
     )
   </insert>
 
