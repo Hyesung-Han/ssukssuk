@@ -1,5 +1,7 @@
 var express = require("express");
 var {hashPassword,comparePassword} = require("../../utils/bcrypt");
+const jwt = require('jsonwebtoken');
+const {verifyToken} = require('../../utils/jwt');
 var app = express.Router();
 
 // // 회원정보 조회
@@ -161,27 +163,64 @@ res.json({
 });
 }); // 닉네임 중복검사 end
 
-// 회원탈퇴 add (01.19 csw)
-app.delete("/:id", async(req, res)=>{
-  if (!req.params || !req.params.id) {
+// 회원 정보 수정(add 01.19 CSW)
+app.patch("/updateinfo", async (req, res) => {
+  if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
-
-  var selectParams = {
-    id: req.params.id
+  var updateParams = {
+    id: req.body.user_id,
+    nickName: req.body.user_nickName
   };
 
-  var selectQuery = req.mybatisMapper.getStatement(
-    "BASE",
-    "AUTH.DELETE.USERDELETE",
-     selectParams,
-    { language: "sql", indent: "  " }
+  var updateQuery = req.mybatisMapper.getStatement(
+    "USER",
+    "AUTH.UPDATE.USERUPDATE",
+    updateParams,
+        { language: "sql", indent: "  " }
   );
 
   let data = [];
   try {
-    data = await req.sequelize.query(selectQuery, {
+data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "nick name update에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "정보가 없습니다." });
+    return;
+  }
+  res.json({ success: "nickname update success"});
+
+});
+// 회원 정보 수정 end
+
+// 회원탈퇴 add (01.19 csw)
+app.delete("/delete", async(req, res)=>{
+  if (!req.body || !req.body.user_id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+  var deleteParams = {
+    id: req.body.user_id
+  };
+
+  var deleteQuery = req.mybatisMapper.getStatement(
+    "BASE",
+    "AUTH.DELETE.USERDELETE",
+     deleteParams,
+     { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(deleteQuery, {
       type: req.sequelize.QueryTypes.DELETE
     });
     console.log("user-delete success");
@@ -190,4 +229,46 @@ app.delete("/:id", async(req, res)=>{
     return;
   }
 }); // 회원탈퇴 end
+    
+
+// 비밀번호 수정(add 01.19 CSW)
+app.patch("/updatepw", async (req, res) => {
+  if (!req.body || !req.body.user_id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+
+  var updateParams = {
+    id: req.body.user_id,
+    pw: req.body.user_pw,
+  };
+
+  var updateQuery = req.mybatisMapper.getStatement(
+    "USER",
+    "AUTH.UPDATE.USERPWUPDATE",
+    updateParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "pw update에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "정보가 없습니다." });
+    return;
+  }
+  res.json({ success: "pw update success"});
+
+});
+// 비밀번호 수정 end
+
+
 module.exports = app;
