@@ -7,8 +7,13 @@
 
   <update id = "AUTH.UPDATE.USERUPDATE">
       update user_t set
-      user_pw: #{pw}
-      user_nickName:#{nickName}
+      user_nickName = #{nickName}
+      where user_id = #{id}
+  </update>
+
+  <update id = "AUTH.UPDATE.USERPWUPDATE">
+      update user_t set
+      user_pw = #{pw}
       where user_id = #{id}
   </update>
 
