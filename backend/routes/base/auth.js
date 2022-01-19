@@ -87,7 +87,7 @@ app.post("/regi", async (req, res) => {
 });
 
 // 회원 정보 수정(add 01.19 CSW)
-app.patch("/:id", verifyToken, async (req, res) => {
+app.patch("/:id", async (req, res) => {
   if (!req.params || !req.params.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
@@ -95,6 +95,8 @@ app.patch("/:id", verifyToken, async (req, res) => {
 
   var updateParams = {
     id: req.params.id,
+    pw: req.body.user_pw,
+    nickName: req.body.user_nickName
   };
 
   var updateQuery = req.mybatisMapper.getStatement(
@@ -119,13 +121,7 @@ app.patch("/:id", verifyToken, async (req, res) => {
     res.status(403).send({ msg: "정보가 없습니다." });
     return;
   }
-  res.json({
-    msg: "RDB에서 정보 꺼내오기",
-    user: data.map((x) => {
-      x.vu_password = "";
-      return x;
-    })[0],
-  });
+  res.json({ success: "update success"});
 
 });
 // 회원 정보 수정 end
