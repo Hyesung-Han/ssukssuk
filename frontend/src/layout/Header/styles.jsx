@@ -12,6 +12,10 @@ const Wrapper = styled.div`
   & .logo {
     cursor: pointer;
     padding-left: 16px;
+    padding-top: 5px;
+  }
+  & .logo_img{
+    height: 50px;
   }
   & .menu-button {
     position: fixed;
@@ -19,13 +23,13 @@ const Wrapper = styled.div`
     top: 14px;
     z-index: 1300;
     margin-left: 0;
-    width: 23px;
-    height: 20px;
+    width: 40px;
+    height: 30px;
     cursor: pointer;
     & div {
       width: 100%;
       height: 3px;
-      background: #fff;
+      background: #000;
       border-radius: 30px;
       /* transition: all 0.4s ease; */
       &:nth-child(1) {
@@ -58,8 +62,16 @@ const Wrapper = styled.div`
 
   & .appbar {
     width: 100%;
+    height: 100px;
+    
     transition: all 0.3s ease;
     box-sizing: border-box;
+
+    background-color: #ffffff;
+    box-shadow: none;
+
+    border-bottom: 1px solid grey;
+
     &.appbar-shift {
       width: 100%;
     }
@@ -75,6 +87,12 @@ const Wrapper = styled.div`
     text-transform: none;
     opacity: 0.7;
     transition: all 0.2s;
+
+    // transform: translateY( -50% );
+
+    color:#000000;
+    background-color: #ffffff;
+
     &:hover {
       opacity: 1;
       background: none;

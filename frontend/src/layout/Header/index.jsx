@@ -31,6 +31,7 @@ const Header = props => {
     setInfoDetailDialogOpen,
   } = useContext(CommonContext);
 
+
   const handleSignInDialogOpen = () => {
     history.push('/Auth');
   };
@@ -84,9 +85,9 @@ const Header = props => {
               <Typography
                 variant="h6"
                 className="logo"
-                onClick={onClickRedirectPathHandler('/MainVote')}
+                onClick={onClickRedirectPathHandler('/')}
               >
-                Logo
+                <img className='logo_img' src="images/ssug_orange.png" alt="logo"/>
               </Typography>
             </Grid>
 
@@ -96,51 +97,60 @@ const Header = props => {
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={onClickRedirectPathHandler('/MainVote')}
+                    onClick={onClickRedirectPathHandler('/Community')}
                     className="display-none header-button"
                   >
-                    Vote
+                    게시판
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={onClickRedirectPathHandler('/MyVote')}
+                    onClick={onClickRedirectPathHandler('/Ask')}
                     className="display-none header-button"
                   >
-                    My Vote
+                    문의사항
                   </Button>
                 </Grid>
-                <Grid item onClick={onClickRedirectPathHandler('/CreateVote')}>
+
+                {/* 로그인 해야지만 내 농장 페이지 보임 ==================== */}
+                { user.status === "login"?
+                <Grid item onClick={onClickRedirectPathHandler('/MyFarm')}>
                   <Button
                     color="primary"
                     variant="contained"
                     onClick={window.scrollTo(0, 0)}
                     className="header-button"
                   >
-                    Create a Vote
+                    내 농장
                   </Button>
                 </Grid>
+                : null}
+                {/* ======================================================= */}
+
+                {/* 관리자 페이지 ==================== */}
+                {/* 임시로 유저 타입이 A인 사람이 관리자로 설정 */}
+                { user.user_type === "A"?
+                <Grid item onClick={onClickRedirectPathHandler('/Admin')}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={window.scrollTo(0, 0)}
+                    className="header-button"
+                  >
+                    관리자 페이지
+                  </Button>
+                </Grid>
+                : null}
+                {/* ======================================================= */}
               </Grid>
             </Grid>
 
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  <IconButton
-                    aria-label="delete"
-                    onClick={onClickRedirectPathHandler('/SearchVote')}
-                  >
-                    <SearchIcon
-                      fontSize="default"
-                      color="inherit"
-                      htmlColor="#eeeeee"
-                    />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <Button
+                <Button
                     color="primary"
                     variant="contained"
                     onClick={handleSignInDialogOpen}

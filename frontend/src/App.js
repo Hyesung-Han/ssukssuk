@@ -20,6 +20,10 @@ import MainVote from './pages/MainVote/';
 import ContactUs from './pages/ContactUs/';
 import CreateVote from './pages/CreateVote/';
 import SearchVote from './pages/SearchVote/';
+import Ask from './pages/Ask/';
+import Community from './pages/Community/';
+import Admin from './pages/Admin/';
+import MyFarm from './pages/MyFarm/';
 
 // css
 // import './index.css';
@@ -114,6 +118,10 @@ const App = () => {
             <Route exact path="/SearchVote" component={SearchVote} />
             <Route exact path="/not-found" component={NotFound} />
             <Route exact path="/CreateVote" component={CreateVote} />
+            <Route exact path="/Ask" component={Ask} />
+            <Route exact path="/Community" component={Community} />
+            <Route exact path="/MyFarm" component={MyFarm} />
+            <Route exact path="/Admin" component={Admin} />
             <Redirect to="/not-found" />
           </Switch>
         </BrowserRouter>
