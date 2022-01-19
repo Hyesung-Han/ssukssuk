@@ -84,4 +84,32 @@ app.post("/regi", async (req, res) => {
   res.json({ success: "회원가입 성공!", url: req.url, body: req.body });
 });
 
+app.delete("/:id", async(req, res)=>{
+  if (!req.params || !req.params.id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+
+  var selectParams = {
+    id: req.params.id
+  };
+
+  var selectQuery = req.mybatisMapper.getStatement(
+    "BASE",
+    "AUTH.DELETE.USERDELETE",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.DELETE
+    });
+    console.log("user-delete success");
+  } catch (error) {
+    res.status(403).send({ msg: "delete에 실패하였습니다.", error: error });
+    return;
+  }
+});
 module.exports = app;
