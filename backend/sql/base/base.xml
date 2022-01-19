@@ -22,6 +22,15 @@
     LIMIT 1
   </select>
 
+
+  <delete id="AUTH.DELETE.USERDELETE">
+    /* 사용자, 유저 정보 삭제 */
+    Delete
+    From user_T
+    Where user_id = #{id}
+      
+  </delete>
+
   <insert id="AUTH.INSERT.userRegi">
   	/* 사용자, 유저 정보 삽입 */
     INSERT INTO user_T
@@ -59,5 +68,6 @@
     FROM user_T
     WHERE user_nickName = #{user_nickName}
   </select>
+
 
 </mapper>

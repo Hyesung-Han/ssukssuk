@@ -81,8 +81,7 @@ app.post("/regi", async (req, res) => {
     return;
   }
   res.json({ success: "회원가입 성공!", url: req.url, body: req.body });
-});
-
+}); // 회원가입 end
 
 // ID 중복검사 (add 01.19 OYT)
 app.get('/checkid', async (req, res) => {
@@ -121,7 +120,7 @@ app.get('/checkid', async (req, res) => {
     msg: "id 중복검사",
     idchk: checkid.tf
   });
-});
+}); // ID 중복검사 end
 
 // nickname 중복검사 (add 01.19 OYT)
 app.get('/checknick', async (req, res) => {
@@ -146,7 +145,7 @@ try {
   console.log("TCL: data", data);
 
 } catch (error) {
-  res.status(403).send({ msg: "아이디 중복검사에 실패하였습니다.", error: error });
+  res.status(403).send({ msg: "닉네임 중복검사에 실패하였습니다.", error: error });
   return;
 }
 let checkNick = new Object();
@@ -160,6 +159,35 @@ res.json({
   msg: "닉네임 중복검사",
   nickchk: checkNick.tf
 });
-});
+}); // 닉네임 중복검사 end
 
+// 회원탈퇴 add (01.19 csw)
+app.delete("/:id", async(req, res)=>{
+  if (!req.params || !req.params.id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+
+  var selectParams = {
+    id: req.params.id
+  };
+
+  var selectQuery = req.mybatisMapper.getStatement(
+    "BASE",
+    "AUTH.DELETE.USERDELETE",
+     selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.DELETE
+    });
+    console.log("user-delete success");
+  } catch (error) {
+    res.status(403).send({ msg: "delete에 실패하였습니다.", error: error });
+    return;
+  }
+}); // 회원탈퇴 end
 module.exports = app;
