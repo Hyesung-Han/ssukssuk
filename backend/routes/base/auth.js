@@ -1,5 +1,7 @@
 var express = require("express");
 var {hashPassword,comparePassword} = require("../../utils/bcrypt");
+const jwt = require('jsonwebtoken');
+const {verifyToken} = require('../../utils/jwt');
 var app = express.Router();
 
 // 회원정보 조회
@@ -83,5 +85,50 @@ app.post("/regi", async (req, res) => {
   }
   res.json({ success: "회원가입 성공!", url: req.url, body: req.body });
 });
+
+// 회원 정보 수정(add 01.19 CSW)
+app.patch("/:id", verifyToken, async (req, res) => {
+  if (!req.params || !req.params.id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+
+  var updateParams = {
+    id: req.params.id,
+  };
+
+  var updateQuery = req.mybatisMapper.getStatement(
+    "USER",
+    "AUTH.UPDATE.USERUPDATE",
+    updateParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "update에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "정보가 없습니다." });
+    return;
+  }
+  res.json({
+    msg: "RDB에서 정보 꺼내오기",
+    user: data.map((x) => {
+      x.vu_password = "";
+      return x;
+    })[0],
+  });
+
+});
+// 회원 정보 수정 end
+
 
 module.exports = app;
