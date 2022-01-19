@@ -6,7 +6,7 @@ app.get("/", async function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  res.json({ success: "회원가입!", url: req.url, body: req.body });
+  res.json({ success: "post call succeed!", url: req.url, body: req.body });
 });
 
 app.put("/", function (req, res) {

@@ -4,7 +4,7 @@ const mybatisMapper = require("mybatis-mapper");
 const envType = process.env.ENV ? process.env.ENV : "dev";
 const version = process.env.VERSION ? process.env.VERSION : "base";
 // DB connection 정보
-const sequelize = new Sequelize("jeans", "sowon", "sowonwow1@", {
+const sequelize = new Sequelize("jeans", "ssafy", "admin", {
   host: "127.0.0.1",
   dialect: "mysql",
 });

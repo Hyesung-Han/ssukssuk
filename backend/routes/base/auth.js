@@ -1,4 +1,5 @@
 var express = require("express");
+var {hashPassword,comparePassword} = require("../../utils/bcrypt");
 var app = express.Router();
 
 // 회원정보 조회
@@ -44,17 +45,20 @@ app.get("/:id", async (req, res) => {
   });
 }); // 회원 정보 조회 end
 
-// 회원가입 
-app.post("/register", async (req, res) => {
+// 회원가입 (add 01.19 OYT )
+app.post("/regi", async (req, res) => {
+
+  const hashedPassword = await hashPassword(req.body.user_pw);
+
   var insertParams = {
     id: req.body.user_id,
-    pw: req.body.user_pw,
+    pw: hashedPassword,
     name: req.body.user_name,
     nickName: req.body.user_nickName,
     email: req.body.user_email,
     code: req.body.user_code,
   };
-
+  
   let insertQuery = req.mybatisMapper.getStatement(
     "BASE",
     "AUTH.INSERT.TB_VU.001",
@@ -77,7 +81,7 @@ app.post("/register", async (req, res) => {
     res.status(403).send({ msg: "입력된 정보가 없습니다." });
     return;
   }
-  res.json({ success: "post call succeed!", url: req.url, body: req.body });
+  res.json({ success: "회원가입 성공!", url: req.url, body: req.body });
 });
 
 module.exports = app;
