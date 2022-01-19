@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express.Router();
 
+// 회원정보 조회
 app.get("/users/:id", async (req, res) => {
   if (!req.params || !req.params.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
@@ -41,38 +42,39 @@ app.get("/users/:id", async (req, res) => {
       return x;
     })[0],
   });
-});
+}); // 회원 정보 조회 end
 
-app.post("/", function (req, res) {
+// 회원가입 
+app.post("/register", async (req, res) => {
   var insertParams = {
-    id: req.params.id,
-    pw: req.params.pw,
-    name: req.params.name,
-    nickname: req.params.nickname,
-    email: req.params.email,
-    code: req.params.code,
+    user_id: req.body.user_id,
+    user_pw: req.body.user_pw,
+    user_name: req.body.user_name,
+    user_nickName: req.body.user_nickName,
+    user_email: req.body.user_email,
+    user_code: req.body.user_code,
   };
 
-  var selectQuery = req.mybatisMapper.getStatement(
+  let insertQuery = req.mybatisMapper.getStatement(
     "BASE",
-    "AUTH.SELECT.TB_VU.001",
-    selectParams,
+    "AUTH.INSERT.TB_VU.001",
+    insertParams,
     { language: "sql", indent: "  " }
   );
-
+  console.log(insertQuery);
   let data = [];
   try {
-    data = await req.sequelize.query(selectQuery, {
-      type: req.sequelize.QueryTypes.SELECT,
+    data = await req.sequelize.query(insertQuery, {
+      type: req.sequelize.QueryTypes.INSERT,
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "rdb select에 실패하였습니다.", error: error });
+    res.status(403).send({ msg: "user insert에 실패하였습니다.", error: error });
     return;
   }
 
   if (data.length == 0) {
-    res.status(403).send({ msg: "정보가 없습니다." });
+    res.status(403).send({ msg: "입력된 정보가 없습니다." });
     return;
   }
   res.json({ success: "post call succeed!", url: req.url, body: req.body });

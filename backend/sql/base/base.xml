@@ -26,14 +26,13 @@
     )
     VALUES
     (
-        #{id}, 
-        #{pw}, 
-        #{name},
-        #{nickname},
-        #{email}
-        #{code}
-    );
-
+        #{user_id}, 
+        #{user_pw}, 
+        #{user_name},
+        #{user_nickName},
+        #{user_email}
+        #{user_code}
+    )
   </insert>
 
 </mapper>
