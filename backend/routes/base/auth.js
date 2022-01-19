@@ -14,7 +14,7 @@ app.get("/:id", async (req, res) => {
   };
 
   var selectQuery = req.mybatisMapper.getStatement(
-    "BASE",
+    "USER",
     "AUTH.SELECT.TB_VU.001",
     selectParams,
     { language: "sql", indent: "  " }
@@ -60,8 +60,8 @@ app.post("/regi", async (req, res) => {
   };
   
   let insertQuery = req.mybatisMapper.getStatement(
-    "BASE",
-    "AUTH.INSERT.TB_VU.001",
+    "USER",
+    "AUTH.INSERT.userRegi",
     insertParams,
     { language: "sql", indent: "  " }
   );
