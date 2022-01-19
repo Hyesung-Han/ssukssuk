@@ -27,10 +27,6 @@ app.use(
 );
 // bodyParser
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
 app.use(bodyParser.json()); // req.body 내용 파싱
 app.use(bodyParser.urlencoded({ extended: true })); // req.body 내용 파싱
 app.use(form_data.array()); // form-data 파싱을 위한..
