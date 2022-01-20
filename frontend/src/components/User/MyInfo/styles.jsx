@@ -36,7 +36,7 @@ const Wrapper = styled.div`
     box-shadow: none;
   }
   .my-info-upload-image-component-button {
-    color: #4248b5;
+    color: #9aba11;
     font-size: 14px;
     font-weight: 700;
     font-family: 'Noto Sans KR', sans-serif;

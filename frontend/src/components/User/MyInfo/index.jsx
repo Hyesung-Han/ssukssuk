@@ -22,23 +22,13 @@ import {
 import Wrapper from './styles';
 
 const MyInfoUploadImageComponent = () => {
-  const { user, serverImgUrl } = useContext(CommonContext);
-  const { thumbnailImageData, setThumbnailImageData } = useContext(ViewContext);
+  const { user } = useContext(CommonContext);
 
   const onDrop = useCallback(acceptedFiles => {
     console.log('Basic -> acceptedFiles', acceptedFiles);
   }, []);
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone(onDrop);
-
-  useEffect(() => {
-    for (const file of acceptedFiles) {
-      setThumbnailImageData({
-        img: URL.createObjectURL(file),
-        file: file,
-      });
-    }
-  }, [acceptedFiles]);
+  const { getRootProps, getInputProps } = useDropzone(onDrop);
 
   return (
     <Grid
@@ -49,32 +39,10 @@ const MyInfoUploadImageComponent = () => {
       spacing={2}
     >
       <Grid item xs={12}>
-        <section className="container">
-          <div {...getRootProps({ className: 'dropzone' })}>
-            <Avatar
-              variant="circle"
-              src={
-                thumbnailImageData.img
-                  ? thumbnailImageData.img
-                  : `${serverImgUrl}${user.user_img_url}`
-              }
-              className="cover-avatar"
-            />
-            <input {...getInputProps()} />
-          </div>
-        </section>
-      </Grid>
-      <Grid item xs={12}>
         <Fragment>
           <Typography> {user.nick_name} </Typography>
           <section className="container">
             <div {...getRootProps({ className: 'dropzone' })}>
-              <Button
-                size={'small'}
-                className="my-info-upload-image-component-button"
-              >
-                EDIT PROFILE
-              </Button>
               <input {...getInputProps()} />
             </div>
           </section>
@@ -103,7 +71,7 @@ const MyInfoInputComponent = props => {
       }
       RightComponet={
         <TextField
-          disabled={keyValue === 'user_id' ? true : false}
+          disabled={keyValue === 'nick_name' ? false : true}
           id={`outlined-basic-${keyValue}`}
           defaultValue={inputValue[keyValue]}
           variant="outlined"
@@ -123,7 +91,7 @@ const MyInfoButtonGroupComponent = props => {
   const { setUserDetailDialogOpen, user, serverUrl, setUser } = useContext(
     CommonContext,
   );
-  const { inputValue, thumbnailImageData } = useContext(ViewContext);
+  const { inputValue } = useContext(ViewContext);
 
   const [isReadyToUpload, setIsReadyToUpload] = useState(false);
 
@@ -136,11 +104,9 @@ const MyInfoButtonGroupComponent = props => {
     let respone = [];
     let data = {};
     const formData = new FormData();
-    formData.append('files', thumbnailImageData.file);
 
     let body = {
       ...inputValue,
-      ...thumbnailImageData,
     };
 
     formData.append('optionData', JSON.stringify(body));
@@ -165,25 +131,7 @@ const MyInfoButtonGroupComponent = props => {
       setIsReadyToUpload(true);
       return;
     }
-
-    if (thumbnailImageData.img !== user.user_img_url) {
-      setIsReadyToUpload(true);
-      return;
-    }
-
-    if (thumbnailImageData.file !== '') {
-      setIsReadyToUpload(true);
-      return;
-    }
-
-    setIsReadyToUpload(false);
-  }, [
-    inputValue.user_id,
-    inputValue.user_nm,
-    inputValue.user_data,
-    thumbnailImageData.img,
-    thumbnailImageData.file,
-  ]);
+  }, [inputValue.user_id, inputValue.user_nm, inputValue.user_data]);
 
   return (
     <Grid
@@ -213,7 +161,7 @@ const MyInfoButtonGroupComponent = props => {
         }}
         className="upload-fab"
         style={{
-          backgroundColor: isReadyToUpload ? '#4248b5' : '#E0E0E0',
+          backgroundColor: isReadyToUpload ? '#9aba11' : '#E0E0E0',
         }}
       >
         UPLOAD
@@ -253,24 +201,28 @@ const MyInfoContentComponent = () => {
         alignItems="center"
         spacing={2}
       >
+        <h2 className="section-title">회원정보</h2>
+
         <Grid item xs={12}>
-          <MyInfoUploadImageComponent />
+          <MyInfoInputComponent title="아이디" keyValue="user_id" />
+        </Grid>
+        <Grid item xs={12}>
+          <MyInfoInputComponent title="이름" keyValue="user_nm" />
         </Grid>
 
         <Grid item xs={12}>
-          <MyInfoInputComponent title="ID" keyValue="user_id" />
-        </Grid>
-        <Grid item xs={12}>
-          <MyInfoInputComponent title="Name" keyValue="user_nm" />
+          <MyInfoInputComponent title="별명" keyValue="nick_name" />
         </Grid>
 
         <Grid item xs={12}>
-          <MyInfoInputComponent title="Web Site" keyValue="web_site" />
+          <MyInfoInputComponent title="이메일" keyValue="user_email" />
+        </Grid>
+        <Grid item xs={12}>
+          <MyInfoInputComponent title="등급" keyValue="user_email" />
         </Grid>
 
-        <Grid item xs={12}>
-          <MyInfoButtonGroupComponent />
-        </Grid>
+        <Grid item xs={12}></Grid>
+        <MyInfoButtonGroupComponent />
       </Grid>
     </form>
   );
@@ -278,11 +230,6 @@ const MyInfoContentComponent = () => {
 
 const MyInfo = () => {
   const { user } = useContext(CommonContext);
-
-  const [thumbnailImageData, setThumbnailImageData] = useState({
-    img: '',
-    file: '',
-  });
 
   const [inputValue, setInputValue] = useState({
     user_nm: user.user_nm,
@@ -294,8 +241,6 @@ const MyInfo = () => {
       value={{
         inputValue,
         setInputValue,
-        thumbnailImageData,
-        setThumbnailImageData,
       }}
     >
       <Wrapper>

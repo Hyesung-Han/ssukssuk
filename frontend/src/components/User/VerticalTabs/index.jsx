@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import MyInfo from './../MyInfo/';
 import ChangePassword from './../ChangePassword/';
+import DeleteAccount from './../DeleteAccount/';
 import { CommonContext } from '../../../context/CommonContext';
 
 import {
@@ -54,7 +55,7 @@ export default function VerticalTabs() {
     setDrawerOpen,
     setUser,
   } = useContext(CommonContext);
-  const labels = ['Edit Profile', 'Change Password', 'Sign Out'];
+  const labels = ['회원정보 수정', '비밀번호 변경', '로그아웃', '회원탈퇴'];
   const handleChange = (event, newValue) => {
     setUserDialogIndex(newValue);
   };
@@ -90,7 +91,7 @@ export default function VerticalTabs() {
         {labels.map((x, index) => {
           return (
             !fullScreen &&
-            (x === 'Sign Out' ? (
+            (x === '로그아웃' ? (
               <Tab
                 key={index}
                 label={x}
@@ -115,7 +116,7 @@ export default function VerticalTabs() {
                   fontWeight: 'bold',
                   fontFamily: 'Noto Sans KR',
                   lineHeight: '22px',
-                  color: index === userDialogIndex ? '#4248b5' : '#3c3c3c',
+                  color: index === userDialogIndex ? '#9aba11' : '#3c3c3c',
                 }}
                 {...a11yProps(index)}
               />
@@ -131,6 +132,9 @@ export default function VerticalTabs() {
         <ChangePassword />
       </TabPanel>
       <TabPanel value={userDialogIndex} index={2} className="test"></TabPanel>
+      <TabPanel value={userDialogIndex} index={3} className="password info">
+        <DeleteAccount />
+      </TabPanel>
     </Wrapper>
   );
 }
