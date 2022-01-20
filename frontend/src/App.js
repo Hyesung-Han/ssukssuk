@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 // ui
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 // hook
 import { CommonContext } from './context/CommonContext';
@@ -36,7 +36,7 @@ const serverUrlBase = `http://${HOST}`;
 const serverImgUrl = `https://ssafy-viba-s3.s3.ap-northeast-2.amazonaws.com/public/`;
 
 /// theme
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontFamily: ['Noto Sans KR'].join(','),
     button: {
