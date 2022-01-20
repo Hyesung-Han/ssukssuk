@@ -164,7 +164,7 @@ res.json({
 }); // 닉네임 중복검사 end
 
 // 회원 정보 수정(add 01.19 CSW)
-app.patch("/updateinfo", async (req, res) => {
+app.patch("/updateinfo",verifyToken, async (req, res) => {
   if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
@@ -183,7 +183,7 @@ app.patch("/updateinfo", async (req, res) => {
 
   let data = [];
   try {
-data = await req.sequelize.query(updateQuery, {
+      data = await req.sequelize.query(updateQuery, {
       type: req.sequelize.QueryTypes.UPDATE,
     });
     console.log("TCL: data", data);
