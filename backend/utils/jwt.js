@@ -1,6 +1,6 @@
 // jwt
 const jwt = require('jsonwebtoken');
-const envJson = require(`${__dirname}/env/env.json`);
+const envJson = require(`${__dirname}/../env/env.json`);
 
 const verifyToken = (req, res, next) => {
     try {

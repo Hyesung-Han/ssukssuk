@@ -13,7 +13,7 @@
 
   <update id = "AUTH.UPDATE.USERPWUPDATE">
       update user_t set
-      user_pw = #{pw}
+      user_pw = #{new_pw}
       where user_id = #{id}
   </update>
 
