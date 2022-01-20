@@ -270,5 +270,63 @@ app.patch("/updatepw", async (req, res) => {
 });
 // 비밀번호 수정 end
 
+// 회원 로그인 (add 01.20 CSW)
+app.post("/login", async (req, res) => {
+  //존재하는 회원인지 확인
+  const hashedPassword = await hashPassword(req.body.user_pw);
+  if (!req.body || !req.body.user_id) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+
+  var selectParams = {
+    id: req.body.user_id,
+    pw: hashedPassword,
+    comparepw:req.params.user_pw
+  };
+  
+  let selectQuery = req.mybatisMapper.getStatement(
+    "USER",
+    "AUTH.SELECT.userexist",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+  console.log(selectQuery);
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+
+  } catch (error) {
+    res.status(403).send({ msg: "존재하지 않는 유저입니다.", error: error });
+    return;
+  }
+  //존재하는 유저인지 확인 end
+
+  //비밀번호 비교
+  const result = comparePassword(
+    pw,
+    comparepw
+  );
+
+  if (result) {
+    return res.json({ status: "OK" });
+  } else {
+    return res.json({ status: "ERROR" });
+  }
+  
+  //비밀번호 비교 end
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "입력된 정보가 없습니다." });
+    return;
+  }
+  res.json({ success: "로그인 성공!", url: req.url, body: req.body });
+});
+
+// 회원 로그인 end
+
 
 module.exports = app;
