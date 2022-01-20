@@ -77,7 +77,12 @@
   <select id="AUTH.SELECT.userexist">
     /*로그인: 존재하는 회원인지 검사*/
     SELECT  
-        *
+        user_id,
+        user_pw,
+        user_name,
+        user_nickName,
+        user_email,
+        user_code
     FROM user_T
     WHERE user_id = #{id}
     LIMIT 1
