@@ -76,6 +76,7 @@ const App = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [userDialogIndex, setUserDialogIndex] = useState(0);
   const [isShowKeyborad, setIsShowKeyborad] = useState(false);
+  const [isSignUp, setIsSignUp] = useState('SignIn');
   const [signDialogOpen, setSignDialogOpen] = useState(false);
   const [infoDialogOpen, setInfoDetailDialogOpen] = useState(false);
   const [userDialogOpen, setUserDetailDialogOpen] = useState(false);
@@ -103,6 +104,8 @@ const App = () => {
         isShowKeyborad,
         setIsShowKeyborad,
         defaultThumbnailImage,
+        isSignUp,
+        setIsSignUp,
       }}
     >
       <MuiThemeProvider theme={theme}>

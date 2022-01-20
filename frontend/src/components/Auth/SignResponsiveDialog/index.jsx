@@ -688,7 +688,7 @@ const ResponsiveDialogSign = () => {
   const fullScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
   let history = useHistory();
 
-  const { signDialogOpen, setSignDialogOpen, serverImgUrl } = useContext(
+  const { signDialogOpen, setSignDialogOpen, serverImgUrl, isSignUp, setIsSignUp } = useContext(
     CommonContext,
   );
 
@@ -698,7 +698,7 @@ const ResponsiveDialogSign = () => {
     history.goBack();
   };
 
-  const [isSignUp, setIsSignUp] = useState('SignIn');
+  // const [isSignUp, setIsSignUp] = useState('SignIn');
   const [signInUserData, setSignInUserData] = useState({
     id: '',
     password: '',

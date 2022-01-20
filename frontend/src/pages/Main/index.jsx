@@ -87,7 +87,7 @@ const Main = () => {
                     <Typography variant="h5">
                       IoT를 이용한 농장 관리
                       <br />
-                      농장이 멀리있어도 안심되요
+                      농장이 멀리있어도 안심돼요
                     </Typography>
                   </Box>
                 </Box>
