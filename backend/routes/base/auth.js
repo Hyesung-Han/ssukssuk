@@ -1,6 +1,7 @@
 var express = require("express");
 var {hashPassword,comparePassword} = require("../../utils/bcrypt");
 const jwt = require('jsonwebtoken');
+const envJson = require(`${__dirname}/../../env/env.json`);
 const {verifyToken} = require('../../utils/jwt');
 var app = express.Router();
 
@@ -270,19 +271,16 @@ app.patch("/updatepw", async (req, res) => {
 });
 // 비밀번호 수정 end
 
-// 회원 로그인 (add 01.20 CSW)
+// 회원 로그인 (fix 01.20 OYT)
 app.post("/login", async (req, res) => {
   //존재하는 회원인지 확인
-  const hashedPassword = await hashPassword(req.body.user_pw);
   if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
 
   var selectParams = {
-    id: req.body.user_id,
-    pw: hashedPassword,
-    comparepw:req.params.user_pw
+    id: req.body.user_id
   };
   
   let selectQuery = req.mybatisMapper.getStatement(
@@ -300,32 +298,35 @@ app.post("/login", async (req, res) => {
     console.log("TCL: data", data);
 
   } catch (error) {
-    res.status(403).send({ msg: "존재하지 않는 유저입니다.", error: error });
+    res.status(403).send({ msg: "로그인 중 문제가 발생했습니다.", error: error });
     return;
   }
   //존재하는 유저인지 확인 end
+  if (data.length == 0) {
+    return res.status(200).json({ code:200, msg: "로그인 정보를 확인하세요" });
+  }else{
+    //비밀번호 비교
+    const result = await comparePassword(req.body.user_pw, data[0].user_pw);
 
-  //비밀번호 비교
-  const result = comparePassword(
-    pw,
-    comparepw
-  );
-
-  if (result) {
-    return res.json({ status: "OK" });
-  } else {
-    return res.json({ status: "ERROR" });
+    if (result) {
+      const token = jwt.sign({
+        id:data[0].user_id
+      },envJson.JWT_SECRET,{expiresIn: "24h"});
+      console.log(token);
+      return res.status(200).json(
+        { code: 200,
+          msg: "로그인 성공",
+          token:token,
+          id: data[0].user_id,
+          name: data[0].user_nickName});
+    } else {
+      return res.status(200).json({ code:200, msg: "로그인 정보를 확인하세요" });
+    }
   }
+
+});
   
   //비밀번호 비교 end
-
-  if (data.length == 0) {
-    res.status(403).send({ msg: "입력된 정보가 없습니다." });
-    return;
-  }
-  res.json({ success: "로그인 성공!", url: req.url, body: req.body });
-});
-
 // 회원 로그인 end
 
 
