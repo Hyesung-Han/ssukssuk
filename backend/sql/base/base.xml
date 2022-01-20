@@ -74,5 +74,13 @@
     WHERE user_nickName = #{user_nickName}
   </select>
 
+  <select id="AUTH.SELECT.userexist">
+    /*로그인: 존재하는 회원인지 검사*/
+    SELECT  
+        *
+    FROM user_T
+    WHERE user_id = #{id}
+    LIMIT 1
+  </select>
 
 </mapper>
