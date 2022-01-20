@@ -272,7 +272,7 @@ app.patch("/updatepw", async (req, res) => {
 // 비밀번호 수정 end
 
 // 회원 로그인 (fix 01.20 OYT)
-app.get("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   //존재하는 회원인지 확인
   if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
