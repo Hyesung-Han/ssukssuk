@@ -7,7 +7,7 @@ const path = require("path");
 const cors = require("cors");
 const multer = require('multer'); // form-data 파싱을 위한..
 const form_data = multer(); // form-data 파싱을 위한..
-
+const { swaggerUi, specs } = require('./swagger');
 
 // --------------------------------------------
 // env
@@ -17,6 +17,7 @@ const port = envJson.port ? envJson.port : 3001;
 
 //----------------------------------
 // middleware
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // cors
 app.use(

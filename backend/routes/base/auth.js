@@ -3,9 +3,19 @@ var {hashPassword,comparePassword} = require("../../utils/bcrypt");
 const jwt = require('jsonwebtoken');
 const envJson = require(`${__dirname}/../../env/env.json`);
 const {verifyToken} = require('../../utils/jwt');
+
+// DB 연동
+const path = require("path");
+const mybatisMapper = require("mybatis-mapper");
+const version = process.env.VERSION ? process.env.VERSION : "base";
+const sqlPath = path.join(__dirname, "..", ".", `../sql/${version}/`);
+
+// mapper 설정
+mybatisMapper.createMapper([`${sqlPath}/base.xml`]);
+
 var app = express.Router();
 
-// // 회원정보 조회
+// 회원정보 조회
 app.get("/myInfo", async (req, res) => {
   if (!req.body || !req.body.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
@@ -16,7 +26,7 @@ app.get("/myInfo", async (req, res) => {
     id: req.body.id,
   };
 
-  var selectQuery = req.mybatisMapper.getStatement(
+  var selectQuery = mybatisMapper.getStatement(
     "USER",
     "AUTH.SELECT.userInfo",
     selectParams,
@@ -61,7 +71,7 @@ app.post("/regi", async (req, res) => {
     code: req.body.user_code,
   };
   
-  let insertQuery = req.mybatisMapper.getStatement(
+  let insertQuery = mybatisMapper.getStatement(
     "USER",
     "AUTH.INSERT.userRegi",
     insertParams,
@@ -94,7 +104,7 @@ app.get('/checkid', async (req, res) => {
 
   console.log(req.body.id);
 
-  let idChkQuery = req.mybatisMapper.getStatement(
+  let idChkQuery = mybatisMapper.getStatement(
     "USER",
     "AUTH.SELECT.userIdChk",
     selectParams,
@@ -133,7 +143,7 @@ app.get('/checknick', async (req, res) => {
 
 console.log(req.body.user_nickName);
 
-let nickChkQuery = req.mybatisMapper.getStatement(
+let nickChkQuery = mybatisMapper.getStatement(
   "USER",
   "AUTH.SELECT.userNickChk",
   selectParams,
@@ -175,7 +185,7 @@ app.patch("/updateinfo",verifyToken, async (req, res) => {
     nickName: req.body.user_nickName
   };
 
-  var updateQuery = req.mybatisMapper.getStatement(
+  var updateQuery = mybatisMapper.getStatement(
     "USER",
     "AUTH.UPDATE.USERUPDATE",
     updateParams,
@@ -212,8 +222,8 @@ app.delete("/delete", async(req, res)=>{
     id: req.body.user_id
   };
 
-  var deleteQuery = req.mybatisMapper.getStatement(
-    "BASE",
+  var deleteQuery = mybatisMapper.getStatement(
+    "USER",
     "AUTH.DELETE.USERDELETE",
      deleteParams,
      { language: "sql", indent: "  " }
@@ -248,7 +258,7 @@ app.patch("/updatepw", verifyToken, async (req, res) => {
     id: req.body.user_id,
   };
   
-  let selectQuery = req.mybatisMapper.getStatement(
+  let selectQuery = mybatisMapper.getStatement(
     "USER",
     "AUTH.SELECT.userexist",
     selectParams,
@@ -281,7 +291,7 @@ app.patch("/updatepw", verifyToken, async (req, res) => {
 
 
   if(result){
-    var updateQuery = req.mybatisMapper.getStatement(
+    var updateQuery = mybatisMapper.getStatement(
       "USER",
       "AUTH.UPDATE.USERPWUPDATE",
       updateParams,
@@ -325,7 +335,7 @@ app.post("/login", async (req, res) => {
     id: req.body.user_id,
   };
   
-  let selectQuery = req.mybatisMapper.getStatement(
+  let selectQuery = mybatisMapper.getStatement(
     "USER",
     "AUTH.SELECT.userexist",
     selectParams,
