@@ -98,12 +98,12 @@ app.post("/regi", async (req, res) => {
 }); // 회원가입 end
 
 // ID 중복검사 (add 01.19 OYT)
-app.get("/checkid", async (req, res) => {
+app.get("/checkid/:id", async (req, res) => {
   var selectParams = {
-    user_id: req.body.id,
+    user_id: req.params.id,
   };
 
-  console.log(req.body.id);
+  console.log(req.params.id);
 
   let idChkQuery = mybatisMapper.getStatement(
     "USER",
@@ -131,19 +131,20 @@ app.get("/checkid", async (req, res) => {
   } else {
     checkid.tf = false;
   }
-  res.json({
+  return res.json({
     msg: "id 중복검사",
+    code: 200,
     idchk: checkid.tf,
   });
 }); // ID 중복검사 end
 
 // nickname 중복검사 (add 01.19 OYT)
-app.get("/checknick", async (req, res) => {
+app.get("/checknick/:nickName", async (req, res) => {
   var selectParams = {
-    user_nickName: req.body.user_nickName,
+    user_nickName: req.params.nickName,
   };
 
-  console.log(req.body.user_nickName);
+  console.log(req.params.nickName);
 
   let nickChkQuery = mybatisMapper.getStatement(
     "USER",
@@ -171,8 +172,9 @@ app.get("/checknick", async (req, res) => {
   } else {
     checkNick.tf = false;
   }
-  res.json({
+  return res.json({
     msg: "닉네임 중복검사",
+    code: 200,
     nickchk: checkNick.tf,
   });
 }); // 닉네임 중복검사 end
@@ -224,7 +226,7 @@ app.delete("/delete/:id", async (req, res) => {
   }
   var deleteParams = {
     id: req.params.id,
-  };
+  };2
 
   var deleteQuery = mybatisMapper.getStatement(
     "USER",
@@ -243,6 +245,7 @@ app.delete("/delete/:id", async (req, res) => {
     res.status(403).send({ msg: "delete에 실패하였습니다.", error: error });
     return;
   }
+  return res.json({ success: "nickname update success" });
 }); // 회원탈퇴 end
 
 // 비밀번호 수정(add 01.19 CSW)
