@@ -20,18 +20,28 @@ import Wrapper from './styles';
 
 const Header = props => {
   let history = useHistory();
-  const isTablet = useMediaQuery('(max-width:960px)');
+  const isTablet = useMediaQuery('(max-width:1100px)');
 
   const {
     user,
+    setUser,
     drawerOpen,
     setDrawerOpen,
     setSignDialogOpen,
+    setIsSignUp,
     setUserDetailDialogOpen,
     setInfoDetailDialogOpen,
   } = useContext(CommonContext);
 
-  const handleSignInDialogOpen = () => {
+  const handleSignInDialogOpen = name => e => {
+    if(name==='me')
+    {
+      setIsSignUp('SignIn')
+    }
+    else if(name==="SignUp")
+    {
+      setIsSignUp('SignUp');
+    }
     history.push('/Auth');
   };
 
@@ -47,6 +57,24 @@ const Header = props => {
     } else {
       history.push(name);
     }
+  };
+
+  const onClickSignOutOpenHandler = () => {
+    setDrawerOpen(false);
+    setUser({
+      user_no: 0,
+      user_id: '',
+      user_nm: '',
+      user_pwd: '',
+      user_img_url: '',
+      status: '',
+      web_site: '',
+      token: '',
+    });
+
+    alert('You are logged out.');
+
+    history.push('/');
   };
 
   useEffect(() => {
@@ -77,78 +105,110 @@ const Header = props => {
         )}
         <AppBar
           position="fixed"
+          align-content="center"
+          align-items="center"
           className={drawerOpen ? 'appbar appbar-shift' : 'appbar'}
         >
-          <Grid container justify="space-between" alignItems="center">
+          <Grid className='appbar-wrap' container justify="space-between" alignItems="center">
             <Grid item>
               <Typography
                 variant="h6"
                 className="logo"
-                onClick={onClickRedirectPathHandler('/MainVote')}
+                onClick={onClickRedirectPathHandler('/')}
               >
-                Logo
+                <img
+                  className="logo_img"
+                  src="images/ssug_green.png"
+                  alt="logo"
+                />
               </Typography>
             </Grid>
 
             <Grid item className="title display-none">
-              <Grid container justify="center" spacing={2}>
+              <Grid container spacing={2}>
                 <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={onClickRedirectPathHandler('/MainVote')}
+                    onClick={onClickRedirectPathHandler('/Community')}
                     className="display-none header-button"
                   >
-                    Vote
+                    게시판
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={onClickRedirectPathHandler('/MyVote')}
+                    onClick={onClickRedirectPathHandler('/Ask')}
                     className="display-none header-button"
                   >
-                    My Vote
+                    문의사항
                   </Button>
                 </Grid>
-                <Grid item onClick={onClickRedirectPathHandler('/CreateVote')}>
+                {user.status &&
+                <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={window.scrollTo(0, 0)}
-                    className="header-button"
+                    onClick={onClickRedirectPathHandler('/Ask')}
+                    className="display-none header-button"
                   >
-                    Create a Vote
+                    내 농장
                   </Button>
                 </Grid>
+                }
               </Grid>
             </Grid>
 
             <Grid item>
               <Grid container alignItems="center">
-                <Grid item>
-                  <IconButton
-                    aria-label="delete"
-                    onClick={onClickRedirectPathHandler('/SearchVote')}
-                  >
-                    <SearchIcon
-                      fontSize="default"
-                      color="inherit"
-                      htmlColor="#eeeeee"
-                    />
-                  </IconButton>
-                </Grid>
+                {user.user_type === 'A' && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={onClickRedirectPathHandler('/Admin')}
+                      className="display-none header-button"
+                    >
+                      관리자 페이지
+                    </Button>
+                  </Grid>
+                )}
+                {!user.status&&
                 <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={handleSignInDialogOpen}
+                    onClick={handleSignInDialogOpen('SignUp')}
                     className="display-none header-button"
                   >
-                    {user.status === 'login' ? 'My' : 'Sign In'}
+                    회원가입
                   </Button>
                 </Grid>
+                }
+                <Grid item>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleSignInDialogOpen('me')}
+                    className="display-none header-button"
+                  >
+                    {user.status === 'login' ? '내 정보' : '로그인'}
+                  </Button>
+                </Grid>
+                {user.status&&
+                <Grid item>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={onClickSignOutOpenHandler}
+                    className="display-none header-button"
+                  >
+                    로그아웃
+                  </Button>
+                </Grid>
+                }
               </Grid>
             </Grid>
           </Grid>

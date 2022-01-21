@@ -13,12 +13,9 @@ import {
   ListItem,
   ListItemText,
   IconButton,
-} from '@material-ui/core';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@material-ui/core';
+} from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Wrapper from './styles';
 
@@ -50,17 +47,34 @@ const DrawerHeaderGroup = () => {
     history.push('/Auth');
   };
 
+  const onClickSignOutOpenHandler = () => {
+    setDrawerOpen(false);
+    setUser({
+      user_no: 0,
+      user_id: '',
+      user_nm: '',
+      user_pwd: '',
+      user_img_url: '',
+      status: '',
+      web_site: '',
+      token: '',
+    });
+
+    alert('You are logged out.');
+
+    history.push('/');
+  };
+
   return (
     <Grid container direction="row" justify="space-between" alignItems="center">
       <Grid item>
         {user.status ? (
           <Button
-            variant="contained"
-            color="primary"
+            variant="outlined"
             className="up-cancel-fab"
-            onClick={onClickRedirectPathHandler('/CreateVote')}
+            onClick={onClickSignOutOpenHandler}
           >
-            Create a Vote
+            로그아웃
           </Button>
         ) : (
           <Fragment>
@@ -69,7 +83,7 @@ const DrawerHeaderGroup = () => {
               className="up-cancel-fab"
               onClick={handleSignInDialogOpen}
             >
-              Sign In
+              로그인
             </Button>
           </Fragment>
         )}
@@ -100,24 +114,6 @@ const DrawerListGroup = () => {
     setUserDetailDialogOpen(true);
   };
 
-  const onClickSignOutOpenHandler = () => {
-    setDrawerOpen(false);
-    setUser({
-      user_no: 0,
-      user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
-      token: '',
-    });
-
-    alert('You are logged out.');
-
-    history.push('/');
-  };
-
   const onClickRedirectPathHandler = name => () => {
     setDrawerOpen(false);
     window.scrollTo(0, 0);
@@ -129,96 +125,52 @@ const DrawerListGroup = () => {
       <List className="drawer-list-group-list">
         <ListItem
           button
-          key={'Vote'}
-          onClick={onClickRedirectPathHandler('/MainVote')}
+          key={'Community'}
+          onClick={onClickRedirectPathHandler('/Community')}
         >
-          <ListItemText primary={'Vote'} disableTypography />
+          <ListItemText primary={'게시판'} disableTypography />
+        </ListItem>
+        <ListItem
+          button
+          key={'Ask'}
+          onClick={onClickRedirectPathHandler('/Ask')}
+        >
+          <ListItemText primary={'문의 사항'} disableTypography />
         </ListItem>
         {user.status && (
-          <Fragment>
-            <ListItem
-              button
-              key={'My Vote'}
-              onClick={onClickRedirectPathHandler('/MyVote')}
-            >
-              <ListItemText primary={'My Vote'} disableTypography />
-            </ListItem>
-            <ListItem button key={'Me'} className="bg-unset">
-              <Accordion className="panel">
-                <AccordionSummary
-                  className="panel-summary"
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Avatar
-                    alt="profile picture"
-                    src={`https://picsum.photos/id/82/200/300.webp`}
-                    className="avatar"
-                  />
-                  <ListItemText
-                    primary={'Me'}
-                    disableTypography
-                    className="list-item"
-                  />
-                </AccordionSummary>
-                <AccordionDetails>
-                  <List className="expansion-panel">
-                    <ListItem
-                      button
-                      key={'Edit Profile '}
-                      onClick={onClickEditProfileOpenHandler}
-                    >
-                      <ListItemText
-                        primary={'Edit Profile'}
-                        disableTypography
-                      />
-                    </ListItem>
-                    <ListItem
-                      button
-                      key={'Change Password'}
-                      onClick={onClickChangePasswordOpenHandler}
-                    >
-                      <ListItemText
-                        primary={'Change Password'}
-                        disableTypography
-                      />
-                    </ListItem>
-                    <ListItem button key={'Sign Out'}>
-                      <ListItemText
-                        primary={'Sign Out'}
-                        disableTypography
-                        className="list-item"
-                        onClick={onClickSignOutOpenHandler}
-                      />
-                    </ListItem>
-                  </List>
-                </AccordionDetails>
-              </Accordion>
-            </ListItem>
-          </Fragment>
+          <ListItem
+            button
+            key={'MyFarm'}
+            onClick={onClickRedirectPathHandler('/MyFarm')}
+          >
+            <ListItemText primary={'내 농장'} disableTypography />
+          </ListItem>
         )}
         <ListItem
           button
-          key={'AboutMe'}
-          onClick={onClickRedirectPathHandler('/AboutMe')}
+          key={'AboutTeam'}
+          onClick={onClickRedirectPathHandler('/AboutTeam')}
         >
-          <ListItemText primary={'About Me'} disableTypography />
+          <ListItemText primary={'우리 팀 소개'} disableTypography />
         </ListItem>
-        <ListItem
-          button
-          key={'ContactUs'}
-          onClick={onClickRedirectPathHandler('/ContactUs')}
-        >
-          <ListItemText primary={'Contact Us'} disableTypography />
-        </ListItem>
-        <ListItem
-          button
-          key={'Terms'}
-          onClick={onClickRedirectPathHandler('/Terms')}
-        >
-          <ListItemText primary={'Terms'} disableTypography />
-        </ListItem>
+        {user.user_type === 'A' && (
+          <ListItem
+            button
+            key={'Admin'}
+            onClick={onClickRedirectPathHandler('/Admin')}
+          >
+            <ListItemText primary={'관리자 페이지'} disableTypography />
+          </ListItem>
+        )}
+        {user.status && (
+          <ListItem
+            button
+            key={'Auth'}
+            onClick={onClickRedirectPathHandler('/Auth')}
+          >
+            <ListItemText primary={'내 정보 수정'} disableTypography />
+          </ListItem>
+        )}
       </List>
     </>
   );
