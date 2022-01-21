@@ -217,13 +217,13 @@ app.patch("/updateinfo", verifyToken, async (req, res) => {
 // 회원 정보 수정 end
 
 // 회원탈퇴 add (01.19 csw)
-app.delete("/delete/:user_id", async (req, res) => {
-  if (!req.params || !req.params.user_id) {
+app.delete("/delete/:id", async (req, res) => {
+  if (!req.params || !req.params.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
   var deleteParams = {
-    id: req.body.user_id,
+    id: req.params.id,
   };
 
   var deleteQuery = mybatisMapper.getStatement(
