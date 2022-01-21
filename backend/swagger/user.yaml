@@ -118,6 +118,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+
   /user/updateinfo:
     patch:
       tags:
@@ -135,6 +136,36 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/Update_userinfo"
+      responses:
+        default:
+          description: "successful operation"
+
+  /user/updatepw:
+    patch:
+      tags:
+        - "user"
+      summary: "get userinfo"
+      description: "This can only be done by the logged in user."
+      operationId: "updatePw"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_id"
+          in: "formData"
+          description: "ID of pet to update"
+          required: true
+          type: "string"
+        - name: "user_pw"
+          in: "formData"
+          description: "Additional data to pass to server"
+          required: false
+          type: "string"
+        - name: "user_new_pw"
+          in: "formData"
+          description: "Additional data to pass to server"
+          required: false
+          type: "string"
       responses:
         default:
           description: "successful operation"
