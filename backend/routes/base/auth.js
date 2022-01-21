@@ -248,7 +248,7 @@ app.delete("/delete/:id", async (req, res) => {
   return res.json({ success: "nickname update success" });
 }); // 회원탈퇴 end
 
-// 비밀번호 수정(add 01.19 CSW)
+// 비밀번호 수정(fix 01.21 OYT)
 app.patch("/updatepw", verifyToken, async (req, res) => {
   if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
@@ -282,11 +282,11 @@ app.patch("/updatepw", verifyToken, async (req, res) => {
     return;
   }
   //존재하는 유저인지 확인 end
-
+  const hashedPassword = await hashPassword(req.body.user_new_pw);
   var updateParams = {
     id: req.body.user_id,
     pw: req.body.user_pw,
-    new_pw: req.body.user_new_pw,
+    new_pw: hashedPassword,
   };
 
   const result = await comparePassword(updateParams.pw, data[0].user_pw);

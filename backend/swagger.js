@@ -8,6 +8,16 @@ const options = {
             version: '1.0.0',
             description: 'SSSS API with express',
         },
+        securityDefinitions: {
+            jwt: {
+              type: 'apiKey',
+              name: 'Authorization',
+              in: 'header'
+            }
+        },
+        security: [
+            { jwt: [] }
+        ],
         host: 'localhost:3001',
         basePath: '/'
     },
