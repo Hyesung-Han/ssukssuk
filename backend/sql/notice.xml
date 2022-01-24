@@ -87,4 +87,40 @@
     order by notice_no desc;
   </select>
 
+<insert id="NOTICE.INSERT.commentwrite">
+  	/* 공지사항 댓글쓰기 */
+    INSERT INTO n_comment_T
+    (
+        comment_no,
+        comment_user_nickName,
+        notice_no,
+        comment_text,
+        comment_date
+    )
+    VALUES
+    (
+        #{comment_no}, 
+        #{user_nickName},
+        #{notice_no},
+        #{text},
+        now()
+    )
+  </insert>
+
+  <update id = "NOTICE.UPDATE.COMMENTUPDATE">
+  /* 공지사항 댓글 수정 */
+      update n_comment_t set
+      comment_text = #{text}
+      where comment_no = #{no}
+  </update>
+
+
+  <delete id="NOTICE.DELETE.COMMENTDELETE">
+    /* 공지사항 댓글 삭제 */
+    Delete
+    From n_comment_t
+    Where comment_no = #{no}
+  </delete>
+
+
 </mapper>

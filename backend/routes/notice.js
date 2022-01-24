@@ -101,7 +101,6 @@ app.post("/write", async (req, res) => {
   var insertParams = {
     title: req.body.notice_title,
     author: req.body.notice_author,
-    date: req.body.notice_date,
     content: req.body.notice_content,
     code: req.body.notice_code,
     user_id: req.body.notice_user_id,
@@ -242,5 +241,114 @@ app.get("/search", async function (req, res) {
     }),
   });
 }); // 공지사항 글 전체 목록 end
+
+// 공지사항 댓글 작성 add (01.25 hhs)
+app.post("/comment/write", async (req, res) => {
+  var insertParams = {
+    comment_no: req.body.comment_no,
+    user_nickName: req.body.comment_user_nickName,
+    notice_no: req.body.notice_no,
+    text: req.body.comment_text,
+  };
+
+  let insertQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.INSERT.commentwrite",
+    insertParams,
+    { language: "sql", indent: "  " }
+  );
+  console.log(insertQuery);
+  let data = [];
+  try {
+    data = await req.sequelize.query(insertQuery, {
+      type: req.sequelize.QueryTypes.INSERT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res
+      .status(403)
+      .send({ msg: "notice comment insert에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "입력된 정보가 없습니다." });
+    return;
+  }
+  res.json({
+    success: "공지사항 댓글작성 성공!",
+    url: req.url,
+    body: req.body,
+  });
+}); // 공지사항 댓글 작성 end
+
+// 공지사항 댓글 수정 add (01.25 hhs)
+app.patch("/comment/update", async (req, res) => {
+  if (!req.body) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+  var updateParams = {
+    no: req.body.comment_no,
+    text: req.body.comment_text,
+  };
+
+  var updateQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.UPDATE.COMMENTUPDATE",
+    updateParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res
+      .status(403)
+      .send({ msg: "comment update에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "정보가 없습니다." });
+    return;
+  }
+  res.json({ success: "notice comment update success" });
+});
+// 공지사항 댓글 수정 end
+
+// 공지사항 댓글삭제 add (01.25 hhs)
+app.delete("/comment/delete/:no", async (req, res) => {
+  if (!req.params || !req.params.no) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+  var deleteParams = {
+    no: req.params.no,
+  };
+
+  var deleteQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.DELETE.COMMENTDELETE",
+    deleteParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(deleteQuery, {
+      type: req.sequelize.QueryTypes.DELETE,
+    });
+    console.log("comment delete success");
+  } catch (error) {
+    res.status(403).send({ msg: "delete에 실패하였습니다.", error: error });
+    return;
+  }
+  return res.json({ success: "notice comment delete success" });
+}); // 공지사항 댓글 삭제 end
 
 module.exports = app;
