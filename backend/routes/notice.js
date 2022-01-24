@@ -92,13 +92,12 @@ app.get("/list", async (req, res) => {
 // 공지사항 글 작성 add (01.24 hhs)
 app.post("/write", async (req, res) => {
   var insertParams = {
-    no: req.body.notice_no,
     title: req.body.notice_title,
     author: req.body.notice_author,
     date: req.body.notice_date,
     content: req.body.notice_content,
-    hit: req.body.notice_hit,
     code: req.body.notice_code,
+    user_id: req.body.notice_user_id,
   };
 
   let insertQuery = mybatisMapper.getStatement(
@@ -129,7 +128,7 @@ app.post("/write", async (req, res) => {
 }); // 공지사항 글 작성 end
 
 // 공지사항 글 수정 add (01.24 hhs)
-app.patch("/updatenotice", async (req, res) => {
+app.patch("/update", async (req, res) => {
   if (!req.body) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
@@ -197,145 +196,5 @@ app.delete("/delete/:no", async (req, res) => {
   }
   return res.json({ success: "notice delete success" });
 }); // 공지사항 삭제 end
-
-// 비밀번호 수정(fix 01.21 OYT)
-app.patch("/updatepw", verifyToken, async (req, res) => {
-  if (!req.body || !req.body.user_id) {
-    res.status(403).send({ msg: "잘못된 파라미터입니다." });
-    return;
-  }
-  //존재하는 회원인지 확인
-  if (!req.body || !req.body.user_id) {
-    res.status(403).send({ msg: "잘못된 파라미터입니다." });
-    return;
-  }
-
-  var selectParams = {
-    id: req.body.user_id,
-  };
-
-  let selectQuery = mybatisMapper.getStatement(
-    "USER",
-    "AUTH.SELECT.userexist",
-    selectParams,
-    { language: "sql", indent: "  " }
-  );
-  console.log(selectQuery);
-  let data = [];
-  try {
-    data = await req.sequelize.query(selectQuery, {
-      type: req.sequelize.QueryTypes.SELECT,
-    });
-    console.log("TCL: data", data);
-  } catch (error) {
-    res.status(403).send({ msg: "존재하지 않는 유저입니다.", error: error });
-    return;
-  }
-  //존재하는 유저인지 확인 end
-  const hashedPassword = await hashPassword(req.body.user_new_pw);
-  var updateParams = {
-    id: req.body.user_id,
-    pw: req.body.user_pw,
-    new_pw: hashedPassword,
-  };
-
-  const result = await comparePassword(updateParams.pw, data[0].user_pw);
-
-  if (result) {
-    var updateQuery = mybatisMapper.getStatement(
-      "USER",
-      "AUTH.UPDATE.USERPWUPDATE",
-      updateParams,
-      { language: "sql", indent: "  " }
-    );
-
-    let data = [];
-    try {
-      data = await req.sequelize.query(updateQuery, {
-        type: req.sequelize.QueryTypes.UPDATE,
-      });
-      console.log("TCL: data", data);
-    } catch (error) {
-      res
-        .status(403)
-        .send({ msg: "pw update에 실패하였습니다.", error: error });
-      return;
-    }
-
-    if (data.length == 0) {
-      res.status(403).send({ msg: "정보가 없습니다." });
-      return;
-    }
-    res.json({ success: "pw update success" });
-  } else {
-    res.json({ error: "pw 일치하지 않음" });
-  }
-});
-// 비밀번호 수정 end
-
-// 회원 로그인 (fix 01.20 OYT)
-app.post("/login", async (req, res) => {
-  //존재하는 회원인지 확인
-  if (!req.body || !req.body.user_id) {
-    res.status(403).send({ msg: "잘못된 파라미터입니다." });
-    return;
-  }
-
-  var selectParams = {
-    id: req.body.user_id,
-  };
-
-  let selectQuery = mybatisMapper.getStatement(
-    "USER",
-    "AUTH.SELECT.userexist",
-    selectParams,
-    { language: "sql", indent: "  " }
-  );
-  console.log(selectQuery);
-  let data = [];
-  try {
-    data = await req.sequelize.query(selectQuery, {
-      type: req.sequelize.QueryTypes.SELECT,
-    });
-    console.log("TCL: data", data);
-  } catch (error) {
-    res
-      .status(403)
-      .send({ msg: "로그인 중 문제가 발생했습니다.", error: error });
-    return;
-  }
-  //존재하는 유저인지 확인 end
-  if (data.length == 0) {
-    return res.status(200).json({ code: 200, msg: "로그인 정보를 확인하세요" });
-  } else {
-    //비밀번호 비교
-    const result = await comparePassword(req.body.user_pw, data[0].user_pw);
-
-    if (result) {
-      const token = jwt.sign(
-        {
-          id: data[0].user_id,
-        },
-        envJson.JWT_SECRET,
-        { expiresIn: "24h" }
-      );
-      console.log(token);
-      return res.status(200).json({
-        code: 200,
-        msg: "로그인 성공",
-        token: token,
-        id: data[0].user_id,
-        name: data[0].user_nickName,
-      });
-    } else {
-      return res
-        .status(200)
-        .json({ code: 200, msg: "로그인 정보를 확인하세요" });
-    }
-  }
-});
-
-//비밀번호 비교 end
-// 회원 로그인 end
 
 module.exports = app;

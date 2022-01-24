@@ -14,13 +14,16 @@
   </select>
 
   <select id="NOTICE.SELECT.noticelist">
-    /* 공지사항 글 전체 목록 */
+    /* 공지사항 글 전체 목록 */ 
     SELECT  
         notice_no,
         notice_title,
         notice_author,
         notice_date,
-        notice_hit
+        notice_content,
+        notice_hit,
+        notice_code,
+        notice_user_id
     FROM notice_T
     order by notice_no desc;
   </select>
@@ -33,7 +36,8 @@
         notice_author,
         notice_date,
         notice_content,
-        notice_code
+        notice_code,
+        notice_user_id
     )
     VALUES
     (
@@ -41,7 +45,8 @@
         #{author},
         now(),
         #{content},
-        #{code}
+        #{code},
+        #{user_id}
     )
   </insert>
 
@@ -64,11 +69,8 @@
 
 
 <select id="NOTICE.SELECT.noticesearch">
-  	/* 공지사항 글 찾기(닉네임+제목) */
-    SELECT * 
-    FROM notice_t
-    WHERE notice_title like %{#title}% 
-      or notice_author like %{#author}%
+  	/* 공지사항 글 찾기(제목 + 글 내용) */
+    
   </select>
 
 </mapper>
