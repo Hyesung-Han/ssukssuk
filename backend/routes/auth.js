@@ -373,7 +373,7 @@ app.post("/login", async (req, res) => {
       return res.status(200).json({
         code: 200,
         msg: "로그인 성공",
-        status: login,
+        status: "login",
         token: token,
         id: data[0].user_id,
         name: data[0].user_nickName,
@@ -382,7 +382,7 @@ app.post("/login", async (req, res) => {
     } else {
       return res
         .status(200)
-        .json({ code: 200, status: fail, msg: "로그인 정보를 확인하세요" });
+        .json({ code: 200, status: "fail", msg: "로그인 정보를 확인하세요" });
     }
   }
 });

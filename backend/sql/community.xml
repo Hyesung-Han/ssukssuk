@@ -68,8 +68,23 @@
     /* 글정보 삭제 */
     Delete
     From community_T
-    Where community_no = #{no}
-      
+    Where community_no = #{no}      
   </delete>
+
+  <select id="COMMUNITY.SELECT.search">
+  	/* 글 목록 검색 */
+    SELECT  
+        community_no,
+        community_title,
+        community_author,
+        community_date,
+        community_hit,
+        community_code,
+        community_user_id
+    FROM community_T
+      <if test="keyword != undefined"> where community_title like CONCAT('%',#{keyword},'%') 
+      OR community_content like CONCAT('%',#{keyword},'%')</if>
+    order by community_no desc;
+  </select>
 
 </mapper>

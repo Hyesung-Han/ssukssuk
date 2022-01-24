@@ -195,4 +195,41 @@ app.delete("/delete/:community_no", async function (req, res) {
   res.json({ success: "delete success" });
 }); // 글 삭제 end
 
+// 글 목록 검색(add 01.24 OYT)
+app.get("/search", async function (req, res) {
+  var selectParams = {
+    keyword: req.query.keyword,
+  };
+  var selectQuery = mybatisMapper.getStatement(
+    "COMMUNITY",
+    "COMMUNITY.SELECT.search",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "글목록 불러오기에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "작성된 글이 없습니다." });
+    return;
+  }
+
+  // 글 목록 꺼내오기
+  res.json({
+    msg: "글 목록",
+    user: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 글 목록 end
+
 module.exports = app;

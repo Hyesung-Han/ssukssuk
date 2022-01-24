@@ -61,6 +61,25 @@ paths:
         default:
           description: "successful operation"
 
+  /community/search:
+    get:
+      tags:
+        - "community"
+      summary: "list search"
+      description: "글 목록 검색"
+      operationId: "community list search"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
   /community/update:
     put:
       tags:
