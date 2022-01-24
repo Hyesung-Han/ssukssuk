@@ -204,4 +204,43 @@ app.delete("/delete/:no", async (req, res) => {
   return res.json({ success: "notice delete success" });
 }); // 공지사항 삭제 end
 
+// 공지사항 글 검색(제목+글 내용) add (01.24 hhs)
+app.get("/search", async function (req, res) {
+  var selectParams = {
+    keyword: req.query.keyword,
+  };
+  var selectQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.SELECT.noticesearch",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res
+      .status(403)
+      .send({ msg: "글목록 불러오기에 실패하였습니다.", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ msg: "작성된 글이 없습니다." });
+    return;
+  }
+
+  // 글 목록 꺼내오기
+  res.json({
+    msg: "글 목록",
+    user: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 공지사항 글 전체 목록 end
+
 module.exports = app;
