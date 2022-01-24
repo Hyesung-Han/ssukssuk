@@ -168,20 +168,19 @@ app.patch("/updatenotice", async (req, res) => {
 });
 // 공지사항 글 수정 end
 
-// 회원탈퇴 add (01.19 csw)
-app.delete("/delete/:id", async (req, res) => {
-  if (!req.params || !req.params.id) {
+// 공지사항 삭제 add (01.24 hhs)
+app.delete("/delete/:no", async (req, res) => {
+  if (!req.params || !req.params.no) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
   var deleteParams = {
-    id: req.params.id,
+    no: req.params.no,
   };
-  2;
 
   var deleteQuery = mybatisMapper.getStatement(
-    "USER",
-    "AUTH.DELETE.USERDELETE",
+    "NOTICE",
+    "NOTICE.DELETE.NOTICEDELETE",
     deleteParams,
     { language: "sql", indent: "  " }
   );
@@ -191,13 +190,13 @@ app.delete("/delete/:id", async (req, res) => {
     data = await req.sequelize.query(deleteQuery, {
       type: req.sequelize.QueryTypes.DELETE,
     });
-    console.log("user-delete success");
+    console.log("notice-delete success");
   } catch (error) {
     res.status(403).send({ msg: "delete에 실패하였습니다.", error: error });
     return;
   }
-  return res.json({ success: "nickname update success" });
-}); // 회원탈퇴 end
+  return res.json({ success: "notice delete success" });
+}); // 공지사항 삭제 end
 
 // 비밀번호 수정(fix 01.21 OYT)
 app.patch("/updatepw", verifyToken, async (req, res) => {
