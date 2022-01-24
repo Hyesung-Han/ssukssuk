@@ -1,0 +1,89 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+  - name: "community"
+    description: "Operations about user"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://swagger.io"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /community/regi:
+    post:
+      tags:
+        - "community"
+      summary: "Create"
+      description: "This can only be done by the logged in user."
+      operationId: "Create content"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Created user object"
+          required: true
+          schema:
+            $ref: "#/definitions/community"
+      responses:
+        default:
+          description: "successful operation"
+  /community/list:
+    get:
+      tags:
+        - "community"
+      summary: "list"
+      description: ""
+      operationId: "community list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: "Authorization"
+    in: "header"
+
+definitions:
+  community:
+    type: "object"
+    properties:
+      community_title:
+        type: "string"
+      community_author:
+        type: "string"
+      community_content:
+        type: "string"
+      community_code:
+        type: "string"
+    xml:
+      name: "community"
+  community_search:
+    type: "object"
+    properties:
+      community_title:
+        type: "string"
+      community_author:
+        type: "string"
+    xml:
+      name: "community_search"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

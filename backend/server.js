@@ -39,7 +39,7 @@ app.use(require(`${__dirname}/middleware/db`));
 //----------------------------------
 // routes
 app.use(uploadFilePath, express.static(path.join(__dirname + uploadFilePath)));
-app.use("/community", require(`${__dirname}/routes/base`));
+app.use("/community", require(`${__dirname}/routes/community`));
 app.use("/user", require(`${__dirname}/routes/auth`));
 
 app.get("/", function (req, res) {
