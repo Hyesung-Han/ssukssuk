@@ -39,8 +39,8 @@ app.use(require(`${__dirname}/middleware/db`));
 //----------------------------------
 // routes
 app.use(uploadFilePath, express.static(path.join(__dirname + uploadFilePath)));
-app.use("/base", require(`${__dirname}/routes/base/base`));
-app.use("/user", require(`${__dirname}/routes/base/auth`));
+app.use("/community", require(`${__dirname}/routes/base`));
+app.use("/user", require(`${__dirname}/routes/auth`));
 
 app.get("/", function (req, res) {
   res.send("Hello node.js");
