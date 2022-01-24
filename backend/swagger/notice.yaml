@@ -1,0 +1,158 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+  - name: "notice"
+    description: "Operations about notice"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://swagger.io"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /notice/delete/{no}:
+    delete:
+      tags:
+        - "notice"
+      summary: "Delete by notice_no"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "deletenotice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "no"
+          description: "no of the notice that needs to be deleted"
+          required: true
+          type: "integer"
+    responses:
+      default:
+        description: "successful operation"
+
+  /notice/detail/{no}:
+    get:
+      tags:
+        - "notice"
+      summary: "get notice detail"
+      description: "get notice detail"
+      operationId: "notice detail no"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: "no"
+          description: "detail no"
+          required: true
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/list:
+    get:
+      tags:
+        - "notice"
+      summary: "get notice list"
+      description: "get notice list"
+      operationId: "notice list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/write:
+    post:
+      tags:
+        - "notice"
+      summary: "write notice"
+      description: "write notice"
+      operationId: "write notice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "write notice"
+          required: true
+          schema:
+            $ref: "#/definitions/notice_write"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/update:
+    patch:
+      tags:
+        - "notice"
+      summary: "Update notice"
+      description: "Update notice"
+      operationId: "updatenotice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update notice"
+          required: true
+          schema:
+            $ref: "#/definitions/notice_update"
+      responses:
+        default:
+          description: "successful operation"
+
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: "Authorization"
+    in: "header"
+
+definitions:
+  notice_update:
+    type: "object"
+    properties:
+      notice_no:
+        type: "integer"
+      notice_title:
+        type: "string"
+      notice_content:
+        type: "string"
+    xml:
+      name: "notice_update"
+
+  notice_write:
+    type: "object"
+    properties:
+      notice_title:
+        type: "string"
+      notice_author:
+        type: "string"
+      notice_date:
+        type: "string"
+      notice_content:
+        type: "string"
+      notice_code:
+        type: "string"
+      notice_user_id:
+        type: "string"
+    xml:
+      name: "notice_write"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
