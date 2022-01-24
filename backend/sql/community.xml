@@ -12,8 +12,10 @@
         community_author,
         community_date,
         community_hit,
-        community_code
+        community_code,
+        community_user_id
     FROM community_T
+      <if test="type != undefined"> where community_code = #{type}</if>
     order by community_no desc;
   </select>
 
@@ -25,7 +27,8 @@
         community_author,
         community_date,
         community_content,
-        community_code
+        community_code,
+        community_user_id
     )
     VALUES
     (
@@ -33,8 +36,40 @@
         #{author}, 
         now(),
         #{content},
-        #{code}
+        #{code},
+        #{user_id}
     )
   </insert>
+
+  <update id = "COMMUNITY.UPDATE.updateArticle ">
+    /* 글 업데이트 */
+      update community_T set
+      community_title = #{title},
+      community_content = #{content}
+      where community_no = #{no}
+  </update>
+
+  <select id="COMMUNITY.SELECT.Detail">
+  	/* 글 상세 조회 */
+    SELECT  
+        community_no,
+        community_title,
+        community_author,
+        community_content,
+        community_date,
+        community_hit,
+        community_code,
+        community_user_id
+    FROM community_T
+    where community_no = #{no};
+  </select>
+
+  <delete id="COMMUNITY.DELETE.article">
+    /* 글정보 삭제 */
+    Delete
+    From community_T
+    Where community_no = #{no}
+      
+  </delete>
 
 </mapper>

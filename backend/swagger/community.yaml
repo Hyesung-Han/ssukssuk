@@ -26,7 +26,7 @@ paths:
       tags:
         - "community"
       summary: "Create"
-      description: "This can only be done by the logged in user."
+      description: "글 작성."
       operationId: "Create content"
       produces:
         - "application/xml"
@@ -46,12 +46,76 @@ paths:
       tags:
         - "community"
       summary: "list"
-      description: ""
+      description: "글 목록 보기"
       operationId: "community list"
       produces:
         - "application/xml"
         - "application/json"
-      parameters: []
+      parameters:
+        - name: "community_code"
+          in: "query"
+          description: "The user name for login"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/update:
+    put:
+      tags:
+        - "community"
+      summary: "update community"
+      description: "글 정보 업데이트"
+      operationId: "update content"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "update object"
+          required: true
+          schema:
+            $ref: "#/definitions/community_update"
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/detail/{community_no}:
+    get:
+      tags:
+        - "community"
+      summary: "view detail"
+      description: "선택된 글 상세보기"
+      operationId: "view Detail"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: "community_no"
+          description: "view object"
+          required: true
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/delete/{community_no}:
+    delete:
+      tags:
+        - "community"
+      summary: "delete"
+      description: "선택된 글 삭제"
+      operationId: "delete"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: "community_no"
+          description: "view object"
+          required: true
       responses:
         default:
           description: "successful operation"
@@ -73,6 +137,8 @@ definitions:
         type: "string"
       community_code:
         type: "string"
+      community_user_id:
+        type: "string"
     xml:
       name: "community"
   community_search:
@@ -81,6 +147,20 @@ definitions:
       community_title:
         type: "string"
       community_author:
+        type: "string"
+    xml:
+      name: "community_search"
+  community_update:
+    type: "object"
+    properties:
+      community_title:
+        type: "string"
+      community_content:
+        type: "string"
+      community_no:
+        type: "integer"
+        format: "int64"
+      community_user_id:
         type: "string"
     xml:
       name: "community_search"
