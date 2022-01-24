@@ -1,14 +1,14 @@
 var express = require("express");
-var { hashPassword, comparePassword } = require("../../utils/bcrypt");
+var { hashPassword, comparePassword } = require("../utils/bcrypt");
 const jwt = require("jsonwebtoken");
-const envJson = require(`${__dirname}/../../env/env.json`);
-const { verifyToken } = require("../../utils/jwt");
+const envJson = require(`${__dirname}/../env/env.json`);
+const { verifyToken } = require("../utils/jwt");
 
 // DB 연동
 const path = require("path");
 const mybatisMapper = require("mybatis-mapper");
-const version = process.env.VERSION ? process.env.VERSION : "base";
-const sqlPath = path.join(__dirname, "..", ".", `../sql/${version}/`);
+// const version = process.env.VERSION ? process.env.VERSION : "base";
+const sqlPath = path.join(__dirname, "..", ".", `/sql/`);
 
 // mapper 설정
 mybatisMapper.createMapper([`${sqlPath}/base.xml`]);
