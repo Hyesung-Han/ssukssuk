@@ -22,6 +22,7 @@
         notice_date,
         notice_hit
     FROM notice_T
+    order by notice_no desc;
   </select>
 
   <insert id="NOTICE.INSERT.noticewrite">
