@@ -25,6 +25,7 @@
         notice_code,
         notice_user_id
     FROM notice_T
+    <if test="type != undefined"> where notice_code = #{type}</if>
     order by notice_no desc;
   </select>
 

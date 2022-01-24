@@ -58,10 +58,14 @@ app.get("/detail/:no", async (req, res) => {
 }); // 공지사항 글 상세보기 end
 
 // 공지사항 글 전체 목록 add (01.24 hhs)
-app.get("/list", async (req, res) => {
+app.get("/list", async function (req, res) {
+  var selectParams = {
+    type: req.query.notice_code,
+  };
   var selectQuery = mybatisMapper.getStatement(
     "NOTICE",
     "NOTICE.SELECT.noticelist",
+    selectParams,
     { language: "sql", indent: "  " }
   );
 
@@ -72,17 +76,20 @@ app.get("/list", async (req, res) => {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "rdb select에 실패하였습니다.", error: error });
+    res
+      .status(403)
+      .send({ msg: "글목록 불러오기에 실패하였습니다.", error: error });
     return;
   }
 
   if (data.length == 0) {
-    res.status(403).send({ msg: "정보가 없습니다." });
+    res.status(403).send({ msg: "작성된 글이 없습니다." });
     return;
   }
 
+  // 글 목록 꺼내오기
   res.json({
-    msg: "RDB에서 정보 꺼내오기",
+    msg: "글 목록",
     user: data.map((x) => {
       return x;
     }),

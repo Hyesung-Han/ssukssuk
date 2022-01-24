@@ -64,12 +64,18 @@ paths:
     get:
       tags:
         - "notice"
-      summary: "get notice list"
-      description: "get notice list"
+      summary: "list"
+      description: "글 목록 보기"
       operationId: "notice list"
       produces:
         - "application/xml"
         - "application/json"
+      parameters:
+        - name: "notice_code"
+          in: "query"
+          description: "notice list"
+          required: false
+          type: "string"
       responses:
         default:
           description: "successful operation"
