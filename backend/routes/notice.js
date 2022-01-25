@@ -339,4 +339,41 @@ app.delete("/comment/delete/:no", async (req, res) => {
   res.json({ result: "success" });
 }); // 공지사항 댓글 삭제 ends
 
+// 공지사항 댓글 전체 목록 add (01.25 hhs)
+app.get("/comment/list", async function (req, res) {
+  var selectParams = {
+    no: req.query.notice_no,
+  };
+  var selectQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.SELECT.commentlist",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+
+  // 댓글 목록 꺼내오기
+  res.json({
+    result: "success",
+    user: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 공지사항 댓글 전체 목록 end
+
 module.exports = app;

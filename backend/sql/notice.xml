@@ -122,5 +122,18 @@
     Where comment_no = #{no}
   </delete>
 
+  <select id="NOTICE.SELECT.commentlist">
+    /* 공지사항 댓글 전체 목록 */ 
+    SELECT  
+        comment_no,
+        comment_user_nickName,
+        notice_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    FROM n_comment_t
+      where notice_no = #{no}</if>
+    order by comment_no desc;
+    </select>
 
 </mapper>

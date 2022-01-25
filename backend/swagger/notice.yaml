@@ -203,6 +203,26 @@ paths:
       default:
         description: "successful operation"
 
+  /notice/comment/list:
+    get:
+      tags:
+        - "notice_comment"
+      summary: "list"
+      description: "댓글 목록 보기"
+      operationId: "notice comment list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "notice_no"
+          in: "query"
+          description: "notice comment list"
+          required: false
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
 securityDefinitions:
   jwt:
     type: apiKey
