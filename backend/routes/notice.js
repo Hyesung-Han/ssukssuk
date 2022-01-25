@@ -237,7 +237,6 @@ app.get("/search", async function (req, res) {
 // 공지사항 댓글 작성 add (01.25 hhs)
 app.post("/comment/write", async (req, res) => {
   var insertParams = {
-    comment_no: req.body.comment_no,
     user_nickName: req.body.comment_user_nickName,
     notice_no: req.body.notice_no,
     text: req.body.comment_text,

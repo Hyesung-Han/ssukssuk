@@ -241,8 +241,6 @@ definitions:
   notice_comment_write:
     type: "object"
     properties:
-      comment_no:
-        type: "integer"
       comment_user_nickName:
         type: "string"
       notice_no:
