@@ -132,7 +132,7 @@
         comment_date,
         comment_user_id
     FROM n_comment_t
-      where notice_no = #{no}</if>
+    where notice_no = #{no}
     order by comment_no desc;
     </select>
 
