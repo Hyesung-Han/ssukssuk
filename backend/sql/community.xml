@@ -87,4 +87,54 @@
     order by community_no desc;
   </select>
 
+<!-- 댓글 기능 -->
+ <insert id="COMMUNITY.INSERT.commentwrite">
+  	/* 커뮤니티 댓글쓰기 */
+    INSERT INTO c_comment_T
+    (
+        comment_user_nickName,
+        community_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    )
+    VALUES
+    (
+        #{user_nickName},
+        #{community_no},
+        #{text},
+        now(),
+        #{user_id}
+    )
+  </insert>
+
+  <update id = "COMMUNITY.UPDATE.COMMENTUPDATE">
+  /* 커뮤니티 댓글 수정 */
+      update c_comment_t set
+      comment_text = #{text}
+      where comment_no = #{no}
+  </update>
+
+
+  <delete id="COMMUNITY.DELETE.COMMENTDELETE">
+    /* 커뮤니티 댓글 삭제 */
+    Delete
+    From c_comment_t
+    Where comment_no = #{no}
+  </delete>
+
+  <select id="COMMUNITY.SELECT.commentlist">
+    /* 커뮤니티 댓글 전체 목록 */ 
+    SELECT  
+        comment_no,
+        comment_user_nickName,
+        community_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    FROM c_comment_t
+      where community_no = #{no}
+    order by comment_no asc;
+  </select>
+
 </mapper>

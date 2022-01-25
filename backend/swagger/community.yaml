@@ -138,6 +138,89 @@ paths:
       responses:
         default:
           description: "successful operation"
+
+  /community/comment/write:
+    post:
+      tags:
+        - "community_comment"
+      summary: "write community_comment"
+      description: "write community_comment"
+      operationId: "write community_comment"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "write community_comment"
+          required: true
+          schema:
+            $ref: "#/definitions/community_comment_write"
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/comment/update:
+    put:
+      tags:
+        - "community_comment"
+      summary: "Update community_comment"
+      description: "Update community_comment"
+      operationId: "Update community_comment"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update community_comment"
+          required: true
+          schema:
+            $ref: "#/definitions/community_comment_update"
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/comment/delete/{no}:
+    delete:
+      tags:
+        - "community_comment"
+      summary: "Delete by community_comment"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "delete community_comment"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "no"
+          description: "no of the notice that needs to be deleted"
+          required: true
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/comment/list:
+    get:
+      tags:
+        - "community_comment"
+      summary: "list"
+      description: "댓글 목록 보기"
+      operationId: "community comment list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "community_no"
+          in: "query"
+          description: "community comment list"
+          required: false
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
 securityDefinitions:
   jwt:
     type: apiKey
@@ -183,6 +266,31 @@ definitions:
         type: "string"
     xml:
       name: "community_search"
+
+  community_comment_write:
+    type: "object"
+    properties:
+      comment_user_nickName:
+        type: "string"
+      community_no:
+        type: "integer"
+      comment_text:
+        type: "string"
+      comment_user_id:
+        type: "string"
+    xml:
+      name: "community_comment_write"
+
+  community_comment_update:
+    type: "object"
+    properties:
+      comment_no:
+        type: "integer"
+      comment_text:
+        type: "string"
+    xml:
+      name: "community_comment_update"
+
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

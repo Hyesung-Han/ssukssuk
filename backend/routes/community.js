@@ -182,7 +182,6 @@ app.delete("/delete/:community_no", async function (req, res) {
     { language: "sql", indent: "  " }
   );
 
-  let data = [];
   try {
     data = await req.sequelize.query(deleteQuery, {
       type: req.sequelize.QueryTypes.DELETE,
@@ -231,5 +230,148 @@ app.get("/search", async function (req, res) {
     }),
   });
 }); // 글 검색 end
+
+// 커뮤니티 댓글 작성 add (01.25 OYT)
+app.post("/comment/write", async (req, res) => {
+  var insertParams = {
+    user_nickName: req.body.comment_user_nickName,
+    community_no: req.body.community_no,
+    text: req.body.comment_text,
+    user_id: req.body.comment_user_id,
+  };
+
+  let insertQuery = mybatisMapper.getStatement(
+    "COMMUNITY",
+    "COMMUNITY.INSERT.commentwrite",
+    insertParams,
+    { language: "sql", indent: "  " }
+  );
+  console.log(insertQuery);
+  let data = [];
+  try {
+    data = await req.sequelize.query(insertQuery, {
+      type: req.sequelize.QueryTypes.INSERT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+  res.json({
+    result: "success",
+    url: req.url,
+    body: req.body,
+  });
+}); // 커뮤니티 댓글 작성 end
+
+
+// 커뮤니티 댓글 수정 add (01.25 OYT)
+app.put("/comment/update", async (req, res) => {
+  if (!req.body) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+  var updateParams = {
+    no: req.body.comment_no,
+    text: req.body.comment_text,
+  };
+
+  var updateQuery = mybatisMapper.getStatement(
+    "COMMUNITY",
+    "COMMUNITY.UPDATE.COMMENTUPDATE",
+    updateParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+  res.json({ result: "success" });
+});
+// 커뮤니티 댓글 수정 end
+
+// 커뮤니티 댓글 삭제 add (01.25 OYT)
+app.delete("/comment/delete/:no", async (req, res) => {
+  if (!req.params || !req.params.no) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+  var deleteParams = {
+    no: req.params.no,
+  };
+
+  var deleteQuery = mybatisMapper.getStatement(
+    "COMMUNITY",
+    "COMMUNITY.DELETE.COMMENTDELETE",
+    deleteParams,
+    { language: "sql", indent: "  " }
+  );
+
+  try {
+    data = await req.sequelize.query(deleteQuery, {
+      type: req.sequelize.QueryTypes.DELETE,
+    });
+    console.log("comment delete success");
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+  res.json({ result: "success" });
+}); // 커뮤니티 댓글 삭제 end
+
+// 커뮤니티 댓글 전체 목록 add (01.25 hhs)
+app.get("/comment/list", async function (req, res) {
+  var selectParams = {
+    no: req.query.community_no,
+  };
+  var selectQuery = mybatisMapper.getStatement(
+    "COMMUNITY",
+    "COMMUNITY.SELECT.commentlist",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+
+  // 댓글 목록 꺼내오기
+  res.json({
+    result: "success",
+    user: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 커뮤니티 댓글 전체 목록 end
+
 
 module.exports = app;
