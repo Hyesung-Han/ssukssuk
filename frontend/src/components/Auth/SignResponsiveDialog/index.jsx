@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
+import store from 'store';
 import crypto from 'crypto';
 import { ViewContext } from '../../../context/ViewContext';
 import { CommonContext } from '../../../context/CommonContext';
@@ -15,24 +16,36 @@ import {
   Typography,
   Divider,
   TextField,
+  MenuItem,
 } from '@material-ui/core';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 // Input 안에 icon 넣을 거라면
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Wrapper from './styles';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 import userData from './dump.json';
 
-// 이메일 체크 정규식
-const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+// 아이디 체크 (영소문자+숫자, 4자이상)
+const regId = /^[a-z0-9]{4,}$/;
 
-// 비밀번호 체크 정규식
-// var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-// 특수 / 문자 / 숫자 포함 형태 (8~15)
+// 비번/비번확인 체크 (영문소문자+숫자+특수문자 최소 1개 이상, 8~15자리)
+const regPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
+const regPwdCf = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
 
-// 핸드폰 번호 체크 정규식
-// var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+// 이름/닉네임 체크 (한글만, 2자이상)
+const regNm = /^[ㄱ-ㅎ|가-힣]+.{1,}$/;
+const regNnm = /^[ㄱ-ㅎ|가-힣]+.{1,}$/;
+
+// 이메일 체크 (대소문자 구분 X, 문자/숫자연속가능)
+const regEma = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+const successSign = withReactContent(Swal);
 
 const DialogTitleComponent = () => {
   return (
@@ -56,32 +69,63 @@ const SignInSection01 = () => {
     user,
     setUser,
     setSignDialogOpen,
-    serverUrl,
+    serverUrlBase,
     setIsShowKeyborad,
   } = useContext(CommonContext);
 
   const OnChangeHandler = name => e => {
     setSignInUserData({ ...signInUserData, [name]: e.target.value });
+    if (name === 'id') {
+      if (e.target.value.length === 0) {
+        setsSgnInIdErr(false);
+        setSingInidErrMsg();
+      } else {
+        if (!regId.test(signInUserData.id)) {
+          setsSgnInIdErr(true);
+          setSingInidErrMsg('제대로 입력해주세요!');
+        } else {
+          setsSgnInIdErr(false);
+          setSingInidErrMsg();
+        }
+      }
+    }
+    if (name === 'password') {
+      if (e.target.value.length === 0) {
+        setSignInPwdErr(false);
+        setSignInPwdErrMsg();
+      } else {
+        if (!regPwd.test(signInUserData.password)) {
+          setSignInPwdErr(true);
+          setSignInPwdErrMsg('제대로 입력해주세요!');
+        } else {
+          setSignInPwdErr(false);
+          setSignInPwdErrMsg();
+        }
+      }
+    }
   };
-
   const onClickHandler = () => {
     setIsSignUp('ForgotPw');
   };
 
+  const [signInIdErr, setsSgnInIdErr] = useState(false);
+  const [singInidErrMsg, setSingInidErrMsg] = useState();
+
+  const [signInPwdErr, setSignInPwdErr] = useState(false);
+  const [signInPwdErrMsg, setSignInPwdErrMsg] = useState();
+
   const onSignInHandler = async e => {
     var { id, password } = signInUserData;
 
-    console.log('TCL: onSignInHandler -> id, password', id, password);
+    // console.log('TCL: onSignInHandler -> id, password', id, password); # 아이디 비번 둘다 확인 잘 됩니다!
+    // console.log(regId.test(id));         # 잘 뜹니다! (true/false)
+    // console.log(regPwd.test(password));  # 잘 뜹니다! (true/false)
 
+    // 이게 유효성 검사? (DB랑 비교를 하는 그런?)
     if (!password || !id) {
       alert('You need both email and password.');
       return;
     }
-
-    // if (!regExp.test(id)) {
-    //   alert('The email format is invalid.');
-    //   return;
-    // }
 
     let respone = [];
     let hashPassword = '';
@@ -94,33 +138,67 @@ const SignInSection01 = () => {
       return;
     }
 
-    setUser({ ...userData });
-    // 지금은 dump지만 / 나중엔 signInUserData?
+    Axios.post(serverUrlBase + `/user/login/`, {
+      user_id: id,
+      user_pw: hashPassword,
+    })
+      .then(data => {
+        const login_user = data.data;
+        if (login_user.status === 'login') {
+          // 로그인 성공
+          setUser({ ...login_user });
+          store.set('user', { ...login_user });
+          // header에 token 저장
+          Axios.defaults.headers.common['x-access-token'] = login_user.token;
 
-    setSignDialogOpen(false);
-    setIsSignUp('SignIn');
-
-    history.goBack();
+          setSignDialogOpen(false);
+          setIsSignUp('SignIn');
+          successSign.fire({
+            icon: 'success',
+            title: <strong>어서오십쇼~</strong>,
+            html: <i>다양하게 즐겨보십쇼...</i>,
+          });
+          console.log('login');
+          console.log(store.get('user'));
+          history.goBack();
+        } else {
+          // 로그인 실패
+          alert(login_user.msg);
+        }
+      })
+      .catch(function(error) {
+        console.log('로그인 오류 발생 : ' + error);
+      });
   };
 
   useEffect(() => {
-    console.log({ user });
-    if (signInUserData.id !== '' && signInUserData.password !== '') {
+    // 여기가 콘솔로 확인하는 것! [존..매우 중요]
+    console.log({ signInUserData });
+
+    if (
+      signInUserData.id !== '' &&
+      signInUserData.password !== '' &&
+      signInIdErr === false &&
+      signInPwdErr === false
+    ) {
       setDisabled(false);
     }
 
-    if (signInUserData.id === '' || signInUserData.password === '') {
+    if (
+      signInUserData.id === '' ||
+      signInUserData.password === '' ||
+      signInIdErr === true ||
+      signInPwdErr === true
+    ) {
       setDisabled(true);
     }
-  }, [signInUserData.id, signInUserData.password, user]);
-  //   if (signInUserData.id !== '' && signInUserData.email !== '') {
-  //     setDisabled(false);
-  //   }
-
-  //   if (signInUserData.id === '' || signInUserData.email === '') {
-  //     setDisabled(true);
-  //   }
-  // }, [signInUserData.id, signInUserData.email, user]);
+  }, [
+    signInUserData.id,
+    signInUserData.password,
+    signInIdErr,
+    signInPwdErr,
+    user,
+  ]);
 
   return (
     <Wrapper>
@@ -135,6 +213,8 @@ const SignInSection01 = () => {
         <Grid item xs={12}>
           <TextField
             required
+            error={signInIdErr}
+            helperText={singInidErrMsg}
             id="outlined-required"
             label="아이디"
             className="text-field"
@@ -158,6 +238,8 @@ const SignInSection01 = () => {
         <Grid item xs={12}>
           <TextField
             required
+            error={signInPwdErr}
+            helperText={signInPwdErrMsg}
             id="outlined-password-input"
             label="비밀번호"
             className="text-field"
@@ -176,11 +258,11 @@ const SignInSection01 = () => {
           <Button
             variant="contained"
             disabled={disabled}
-            // disabled={false}
             fullWidth={true}
             // color="primary"
             onClick={onSignInHandler}
             className="grid-item-button"
+            type="submit"
           >
             로그인
           </Button>
@@ -208,7 +290,6 @@ const SignInSection01 = () => {
             </Grid>
           </Grid>
         </Grid> */}
-
         <Grid item xs={12}>
           <Grid container direction="row" justify="center" alignItems="center">
             <IconButton
@@ -284,7 +365,7 @@ const SignUpSection01 = () => {
   return (
     <Wrapper>
       <Typography align="center" className="sign-up1">
-        쑥쑥에 가입해서 ... 해보세요
+        쑥쑥에 가입해서 수확 많이 하세요💚
       </Typography>
     </Wrapper>
   );
@@ -295,34 +376,147 @@ const SignUpSection02 = () => {
   const { signUpUserData, setSignUpUserData, setIsSignUp } = useContext(
     ViewContext,
   );
-  const { serverUrl } = useContext(CommonContext);
+  const { serverUrlBase } = useContext(CommonContext);
 
+  /// 변화가 일어날 때마다 (값)
   const OnChangeHandler = name => e => {
-    if (
-      signUpUserData.id !== '' &&
-      signUpUserData.password !== '' &&
-      signUpUserData.passwordConfirmation !== '' &&
-      signUpUserData.name !== '' &&
-      signUpUserData.nickname !== '' &&
-      signUpUserData.email !== ''
-    ) {
-      setDisabled(false);
-    }
-
-    if (
-      signUpUserData.id === '' ||
-      signUpUserData.password === '' ||
-      signUpUserData.passwordConfirmation === '' ||
-      signUpUserData.name === '' ||
-      signUpUserData.nickname === '' ||
-      signUpUserData.email === ''
-    ) {
-      setDisabled(true);
-    }
-
     setSignUpUserData({ ...signUpUserData, [name]: e.target.value });
+    if (name === 'id') {
+      if (e.target.value.length === 0) {
+        setSignUpIdErr(false);
+        setSignUpIdErrMsg();
+      } else {
+        if (!regId.test(signUpUserData.id)) {
+          setSignUpIdErr(true);
+          setSignUpIdErrMsg('영문 소문자 + 숫자 / 4자 이상');
+        } else {
+          setSignUpIdErr(false);
+          setSignUpIdErrMsg();
+        }
+      }
+    }
+    if (name === 'id' && e.target.value.length > 3) {
+      Axios.get(serverUrlBase + `/user/checkid/` + e.target.value).then(
+        data => {
+          // console.log(data.data.idchk);
+          if (data.data.idchk === false) {
+            setSignUpIdErr(true);
+            setSignUpIdErrMsg('이미 있는 아이디입니다!');
+          } else {
+            setSignUpIdErr(false);
+            setSignUpIdErrMsg();
+          }
+        },
+      );
+    }
+    if (name === 'password') {
+      if (e.target.value.length === 0) {
+        setSignUpPwdErr(false);
+        setSignUpPwdErrMsg();
+      } else {
+        if (!regPwd.test(signUpUserData.password)) {
+          setSignUpPwdErr(true);
+          setSignUpPwdErrMsg(
+            '영문 소문자 + 숫자 + 특수문자(각 1개 이상) /  8 ~ 15자',
+          );
+        } else {
+          setSignUpPwdErr(false);
+          setSignUpPwdErrMsg();
+        }
+      }
+    }
+    if (name === 'passwordConfirmation') {
+      if (e.target.value.length === 0) {
+        setSignUpPwdCfErr(false);
+        setSignUpPwdCfErrMsg();
+      } else {
+        if (!regPwdCf.test(signUpUserData.passwordConfirmation)) {
+          setSignUpPwdCfErr(true);
+          setSignUpPwdCfErrMsg('비밀번호를 다시 한번 입력 바람');
+        } else {
+          setSignUpPwdCfErr(false);
+          setSignUpPwdCfErrMsg();
+        }
+      }
+    }
+    if (name === 'name') {
+      if (e.target.value.length === 0) {
+        setSignUpNmErr(false);
+        setSignUpNmErrMsg();
+      } else {
+        if (!regNm.test(signUpUserData.name)) {
+          setSignUpNmErr(true);
+          setSignUpNmErrMsg('한글만 / 2자 이상');
+        } else {
+          setSignUpNmErr(false);
+          setSignUpNmErrMsg();
+        }
+      }
+    }
+    if (name === 'nickname') {
+      if (e.target.value.length === 0) {
+        setSignUpNnmErr(false);
+        setSignUpNnmErrMsg();
+      } else {
+        if (!regNnm.test(signUpUserData.nickname)) {
+          setSignUpNnmErr(true);
+          setSignUpNnmErrMsg('한글만 / 2자 이상');
+        } else {
+          setSignUpNnmErr(false);
+          setSignUpNnmErrMsg();
+        }
+      }
+    }
+    if (name === 'nickname' && e.target.value.length > 1) {
+      Axios.get(serverUrlBase + `/user/checknick/` + e.target.value).then(
+        data => {
+          if (data.data.nickchk === false) {
+            setSignUpNnmErr(true);
+            setSignUpNnmErrMsg('이미 있는 별명입니다!');
+          } else {
+            setSignUpNnmErr(false);
+            setSignUpNnmErrMsg();
+          }
+        },
+      );
+    }
+    if (name === 'email') {
+      if (e.target.value.length === 0) {
+        setSignUpEmaErr(false);
+        setSignUpEmaErrMsg();
+      } else {
+        if (!regEma.test(signUpUserData.email)) {
+          setSignUpEmaErr(true);
+          setSignUpEmaErrMsg('이메일 형식에 맞게 작성 바람');
+        } else {
+          setSignUpEmaErr(false);
+          setSignUpEmaErrMsg();
+        }
+      }
+    }
   };
 
+  console.log(signUpUserData);
+
+  const [signUpIdErr, setSignUpIdErr] = useState(false);
+  const [signUpIdErrMsg, setSignUpIdErrMsg] = useState();
+
+  const [signUpPwdErr, setSignUpPwdErr] = useState(false);
+  const [signUpPwdErrMsg, setSignUpPwdErrMsg] = useState();
+
+  const [signUpPwdCfErr, setSignUpPwdCfErr] = useState(false);
+  const [signUpPwdCfErrMsg, setSignUpPwdCfErrMsg] = useState();
+
+  const [signUpNmErr, setSignUpNmErr] = useState(false);
+  const [signUpNmErrMsg, setSignUpNmErrMsg] = useState();
+
+  const [signUpNnmErr, setSignUpNnmErr] = useState(false);
+  const [signUpNnmErrMsg, setSignUpNnmErrMsg] = useState();
+
+  const [signUpEmaErr, setSignUpEmaErr] = useState(false);
+  const [signUpEmaErrMsg, setSignUpEmaErrMsg] = useState();
+
+  // 회원가입 버튼 클릭시
   const onSignUpHandler = async () => {
     var {
       id,
@@ -331,24 +525,48 @@ const SignUpSection02 = () => {
       name,
       nickname,
       email,
+      grade,
     } = signUpUserData;
 
-    if (
-      id === '' ||
-      password === '' ||
-      passwordConfirmation === '' ||
-      name === '' ||
-      nickname === '' ||
-      email === ''
-    ) {
-      alert('You need 문구는 수정해야 ! both email and password and username.');
-      return;
-    }
+    // 비번 일치 유무... 안됨
+    // if (signUpUserData.password !== signUpUserData.passwordConfirmation) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: '비번 불일치 오류',
+    //     text: '비번 통일 시키세요~',
+    //     footer: '<a href="">Why do I have this issue?</a>',
+    //     target: document.querySelector('.MuiDialog-root'),
+    //   });
+    // }
 
-    if (!regExp.test(email)) {
-      alert('The email format is invalid.');
-      return;
-    }
+    // if (
+    //   id === '' ||
+    //   password === '' ||
+    //   passwordConfirmation === '' ||
+    //   name === '' ||
+    //   nickname === '' ||
+    //   email === '' ||
+    //   grade === ''
+    // ) {
+    //   alert('You need 문구는 수정해야 ! both email and password and username.');
+    //   return;
+    // }
+
+    // if (!regId.test(signUpUserData.id)) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: '아이디 형식 오류',
+    //     text: '영소문자+숫자, 4자이상',
+    //     footer: '<a href="">Why do I have this issue?</a>',
+    //     target: document.querySelector('.MuiDialog-root'),
+    //   });
+    //   setSignUpIdErr(true);
+    //   setSignUpIdErrMsg('영소문자+숫자, 4자이상');
+    //   return;
+    // } else {
+    //   setSignUpIdErr(false);
+    //   setSignUpIdErrMsg();
+    // }
 
     let respone = [];
     let hashPassword = 'test2';
@@ -361,15 +579,48 @@ const SignUpSection02 = () => {
       console.log('PPAP: signInHandler -> error', error);
     }
 
-    // 여기 잠시만...??
-    var body = {
-      id: id,
-      name: name,
-      pwd: hashPassword,
-    };
-    console.log('PPAP: signUpHandler -> body', body);
+    // var body = {
+    //   user_id: id,
+    //   user_pw: password,
+    //   user_name: name,
+    //   user_nickName: nickname,
+    //   user_email: email,
+    //   user_code: 'U01',
+    // };
+    // console.log('PPAP: signUpHandler -> body', body);
+
+    // 회원가입 result
+    // result : success 아니면 false
+    // success 아니면 fail
+    Axios.post(serverUrlBase + `/user/regi`, {
+      user_id: id,
+      user_pw: hashPassword,
+      user_name: name,
+      user_nickName: nickname,
+      user_email: email,
+      user_code: 'U01',
+    })
+      .then(data => {
+        const join_result = data.data.result;
+        console.log(join_result);
+        if (join_result === 'success') {
+          console.log(data);
+          successSign.fire({
+            title: <strong>환영합니다~</strong>,
+            html: <i>회원가입 성공!</i>,
+            icon: 'success',
+            target: document.querySelector('.MuiDialog-root'),
+          });
+        } else {
+          alert('가입에 실패하였습니다.');
+        }
+      })
+      .catch(function(error) {
+        console.log('회원가입 오류 발생 : ' + error);
+      });
 
     setIsSignUp('SignIn');
+
     setSignUpUserData({
       id: '',
       password: '',
@@ -377,8 +628,71 @@ const SignUpSection02 = () => {
       name: '',
       nickname: '',
       email: '',
+      grade: '',
     });
   };
+
+  const grades = [
+    {
+      value: '멘토',
+      label: '멘토',
+    },
+    {
+      value: '일반',
+      label: '일반',
+    },
+  ];
+
+  useEffect(() => {
+    if (
+      signUpUserData.id !== '' &&
+      signUpUserData.password !== '' &&
+      signUpUserData.passwordConfirmation !== '' &&
+      signUpUserData.name !== '' &&
+      signUpUserData.nickname !== '' &&
+      signUpUserData.email !== '' &&
+      signUpUserData.grade !== '' &&
+      signUpIdErr === false &&
+      signUpPwdErr === false &&
+      signUpPwdCfErr === false &&
+      signUpNmErr === false &&
+      signUpNnmErr === false &&
+      signUpEmaErr === false
+    ) {
+      setDisabled(false);
+    }
+    if (
+      signUpUserData.id === '' ||
+      signUpUserData.password === '' ||
+      signUpUserData.passwordConfirmation === '' ||
+      signUpUserData.name === '' ||
+      signUpUserData.nickname === '' ||
+      signUpUserData.email === '' ||
+      signUpUserData.grade === '' ||
+      signUpIdErr === true ||
+      signUpPwdErr === true ||
+      signUpPwdCfErr === true ||
+      signUpNmErr === true ||
+      signUpNnmErr === true ||
+      signUpEmaErr === true
+    ) {
+      setDisabled(true);
+    }
+  }, [
+    signUpUserData.id,
+    signUpUserData.password,
+    signUpUserData.passwordConfirmation,
+    signUpUserData.name,
+    signUpUserData.nickname,
+    signUpUserData.email,
+    signUpUserData.grade,
+    signUpIdErr,
+    signUpPwdErr,
+    signUpPwdCfErr,
+    signUpNmErr,
+    signUpNnmErr,
+    signUpEmaErr,
+  ]);
 
   return (
     <Wrapper>
@@ -394,6 +708,8 @@ const SignUpSection02 = () => {
         <Grid item xs={12} className="sign-up-grid">
           <TextField
             required
+            error={signUpIdErr}
+            helperText={signUpIdErrMsg}
             id="outlined-required"
             label="아이디"
             defaultValue={signUpUserData.id}
@@ -407,6 +723,8 @@ const SignUpSection02 = () => {
         <Grid item xs={12} className="sign-up-grid-item2">
           <TextField
             required
+            error={signUpPwdErr}
+            helperText={signUpPwdErrMsg}
             id="outlined-password-input"
             label="비밀번호"
             className="text-Field"
@@ -422,6 +740,8 @@ const SignUpSection02 = () => {
         <Grid item xs={12} className="sign-up-grid-item2">
           <TextField
             required
+            error={signUpPwdCfErr}
+            helperText={signUpPwdCfErrMsg}
             id="outlined-password-input"
             label="비밀번호확인"
             className="text-Field"
@@ -431,12 +751,14 @@ const SignUpSection02 = () => {
             variant="outlined"
             placeholder=""
             fullWidth={true}
-            onChange={OnChangeHandler('password')}
+            onChange={OnChangeHandler('passwordConfirmation')}
           />
         </Grid>
         <Grid item xs={12} className="sign-up-grid-item1">
           <TextField
             required
+            error={signUpNmErr}
+            helperText={signUpNmErrMsg}
             id="outlined-required"
             label="이름"
             defaultValue={signUpUserData.name}
@@ -450,6 +772,8 @@ const SignUpSection02 = () => {
         <Grid item xs={12} className="sign-up-grid-item1">
           <TextField
             required
+            error={signUpNnmErr}
+            helperText={signUpNnmErrMsg}
             id="outlined-required"
             label="별명"
             defaultValue={signUpUserData.nickname}
@@ -457,12 +781,14 @@ const SignUpSection02 = () => {
             variant="outlined"
             placeholder=""
             fullWidth={true}
-            onChange={OnChangeHandler('name')}
+            onChange={OnChangeHandler('nickname')}
           />
         </Grid>
         <Grid item xs={12} className="sign-up-grid">
           <TextField
             required
+            error={signUpEmaErr}
+            helperText={signUpEmaErrMsg}
             id="outlined-required"
             label="이메일"
             defaultValue={signUpUserData.email}
@@ -470,8 +796,27 @@ const SignUpSection02 = () => {
             variant="outlined"
             placeholder=""
             fullWidth={true}
-            onChange={OnChangeHandler('id')}
+            onChange={OnChangeHandler('email')}
           />
+        </Grid>
+        <Grid item xs={12} className="sign-up-grid">
+          <TextField
+            id="outlined-select-grade"
+            select
+            required
+            label="등급"
+            defaultValue="일반"
+            onChange={OnChangeHandler('grade')}
+            // helperText="등급 선택 꼭 해주세요! (넣지마?)"
+            variant="outlined"
+            fullWidth={true}
+          >
+            {grades.map(option => (
+              <MenuItem key={option.index} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={12} className="sign-up-grid-item3">
           <Button
@@ -517,7 +862,6 @@ const SignUpSection03 = () => {
           {/* <Grid item xs={5}>
             <Divider />
           </Grid> */}
-
           {/* <Grid item xs={2}>
             <Typography
               align="center"
@@ -526,7 +870,6 @@ const SignUpSection03 = () => {
               or
             </Typography>
           </Grid> */}
-
           <Grid item xs={12}>
             <Divider />
           </Grid>
@@ -614,7 +957,7 @@ const ForgotPwGroupComponent = () => {
     setIsSignUp(whichGroup);
   };
   const sendSearchWordHandler = async searchWord => {
-    // if (!regExp.test(searchWord)) {
+    // if (!regEma.test(searchWord)) {
     //   alert('The email format is invalid.');
     //   return;
     // } else {
@@ -635,10 +978,7 @@ const ForgotPwGroupComponent = () => {
         className="forgot-pw"
       >
         <h2>비밀번호를 잊어버리셨나요?</h2>
-        <h3>
-          Enter the user ID and the verification code will be sent to the
-          registered email.
-        </h3>
+        <h3>아이디를 입력하시면 등록된 이메일로 인증번호가 발송됩니다.</h3>
         <input type="text" placeholder="아이디" ref={inputRef} />
         <button
           type="button"
@@ -647,20 +987,32 @@ const ForgotPwGroupComponent = () => {
             sendSearchWordHandler(inputRef.current.value);
           }}
         >
-          Send Login Link
+          인증번호 발송
         </button>
-        <h4 className="divider">
-          <span>계정이 없다면 바로 가입하세요!</span>
-        </h4>
-        <h5
+        <Grid item xs={12}>
+          <h3>계정이 없다면 바로 가입하세요!</h3>
+        </Grid>
+        {/* <h5
           className="btn-to-sign-up"
           onClick={() => {
             onClickHandler(`SignUp`);
           }}
         >
           회원가입
-        </h5>
-        <button
+        </h5> */}
+        <Grid item xs={12}>
+          <IconButton
+            className="sign-in-butoon grid-item-icon-button"
+            onClick={() => {
+              onClickHandler(`SignUp`);
+            }}
+          >
+            <Typography className="grid-item-typography3">
+              {'회원가입'}
+            </Typography>
+          </IconButton>
+        </Grid>
+        {/* <button
           type="button"
           className="btn-login"
           onClick={() => {
@@ -668,7 +1020,18 @@ const ForgotPwGroupComponent = () => {
           }}
         >
           로그인하기
-        </button>
+        </button> */}
+        <Grid item xs={12}>
+          <Button
+            fullWidth={true}
+            onClick={() => {
+              onClickHandler(`SignIn`);
+            }}
+            className="grid2-item-button"
+          >
+            {`로그인`}
+          </Button>
+        </Grid>
         <Grid item xs={12}>
           <div>&nbsp;</div>
         </Grid>
@@ -676,6 +1039,8 @@ const ForgotPwGroupComponent = () => {
     </Wrapper>
   );
 };
+
+////////////////////////////////////////////////////////////////////////////////
 
 // RecoverPw
 const RecoverPwGroupComponent = () => {
@@ -793,9 +1158,13 @@ const ResponsiveDialogSign = () => {
   const fullScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
   let history = useHistory();
 
-  const { signDialogOpen, setSignDialogOpen, serverImgUrl, isSignUp, setIsSignUp } = useContext(
-    CommonContext,
-  );
+  const {
+    signDialogOpen,
+    setSignDialogOpen,
+    serverImgUrl,
+    isSignUp,
+    setIsSignUp,
+  } = useContext(CommonContext);
 
   const handleClose = () => {
     setSignDialogOpen(false);
@@ -810,8 +1179,12 @@ const ResponsiveDialogSign = () => {
   });
   const [signUpUserData, setSignUpUserData] = useState({
     id: '',
-    name: '',
     password: '',
+    passwordConfirmation: '',
+    name: '',
+    nickname: '',
+    email: '',
+    grade: '일반',
   });
   const [recoverPwUserData, setRecoverPwUserData] = useState({
     email: '',

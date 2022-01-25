@@ -34,12 +34,9 @@ const Header = props => {
   } = useContext(CommonContext);
 
   const handleSignInDialogOpen = name => e => {
-    if(name==='me')
-    {
-      setIsSignUp('SignIn')
-    }
-    else if(name==="SignUp")
-    {
+    if (name === 'me') {
+      setIsSignUp('SignIn');
+    } else if (name === 'SignUp') {
       setIsSignUp('SignUp');
     }
     history.push('/Auth');
@@ -62,14 +59,18 @@ const Header = props => {
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
     setUser({
-      user_no: 0,
-      user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
+      id: '',
+      name: '',
       token: '',
+      status: '',
+      type: '',
+    });
+    store.set('user', {
+      id: '',
+      name: '',
+      token: '',
+      status: '',
+      type: '',
     });
 
     alert('You are logged out.');
@@ -109,7 +110,12 @@ const Header = props => {
           align-items="center"
           className={drawerOpen ? 'appbar appbar-shift' : 'appbar'}
         >
-          <Grid className='appbar-wrap' container justify="space-between" alignItems="center">
+          <Grid
+            className="appbar-wrap"
+            container
+            justify="space-between"
+            alignItems="center"
+          >
             <Grid item>
               <Typography
                 variant="h6"
@@ -146,24 +152,24 @@ const Header = props => {
                     문의사항
                   </Button>
                 </Grid>
-                {user.status &&
-                <Grid item>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={onClickRedirectPathHandler('/Ask')}
-                    className="display-none header-button"
-                  >
-                    내 농장
-                  </Button>
-                </Grid>
-                }
+                {user.status === 'login' && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={onClickRedirectPathHandler('/Ask')}
+                      className="display-none header-button"
+                    >
+                      내 농장
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
 
             <Grid item>
               <Grid container alignItems="center">
-                {user.user_type === 'A' && (
+                {(user.type === 'U02' || user.type === 'U03') && (
                   <Grid item>
                     <Button
                       color="primary"
@@ -175,18 +181,18 @@ const Header = props => {
                     </Button>
                   </Grid>
                 )}
-                {!user.status&&
-                <Grid item>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleSignInDialogOpen('SignUp')}
-                    className="display-none header-button"
-                  >
-                    회원가입
-                  </Button>
-                </Grid>
-                }
+                {!user.status && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={handleSignInDialogOpen('SignUp')}
+                      className="display-none header-button"
+                    >
+                      회원가입
+                    </Button>
+                  </Grid>
+                )}
                 <Grid item>
                   <Button
                     color="primary"
@@ -197,18 +203,18 @@ const Header = props => {
                     {user.status === 'login' ? '내 정보' : '로그인'}
                   </Button>
                 </Grid>
-                {user.status&&
-                <Grid item>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={onClickSignOutOpenHandler}
-                    className="display-none header-button"
-                  >
-                    로그아웃
-                  </Button>
-                </Grid>
-                }
+                {user.status === 'login' && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={onClickSignOutOpenHandler}
+                      className="display-none header-button"
+                    >
+                      로그아웃
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
