@@ -21,10 +21,15 @@
   <select id="AUTH.SELECT.userInfo">
   	/* 사용자, 유저 정보 조회 */
     SELECT  
-        *
-    FROM user_T
-    WHERE user_id = #{id}
-    LIMIT 1
+        u.user_id,
+        u.user_name,
+        u.user_nickName,
+        u.user_email,
+        u.user_code,
+        c.code_name
+    FROM user_T u, code_t c
+    WHERE code_id = user_code and user_id = #{id}
+    LIMIT 1;
   </select>
 
 
