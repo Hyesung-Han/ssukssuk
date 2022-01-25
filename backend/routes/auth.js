@@ -86,15 +86,15 @@ app.post("/regi", async (req, res) => {
   } catch (error) {
     res
       .status(403)
-      .send({ msg: "user insert에 실패하였습니다.", error: error });
+      .send({ result : "fail", error: error });
     return;
   }
 
   if (data.length == 0) {
-    res.status(403).send({ msg: "입력된 정보가 없습니다." });
+    res.status(403).send({ result : "fail" });
     return;
   }
-  res.json({ success: "회원가입 성공!", url: req.url, body: req.body });
+  res.json({  result : "success" , url: req.url, body: req.body });
 }); // 회원가입 end
 
 // ID 중복검사 (add 01.19 OYT)
@@ -374,7 +374,7 @@ app.post("/login", async (req, res) => {
         code: 200,
         msg: "로그인 성공",
         status: "login",
-        token: token,
+        token,
         id: data[0].user_id,
         name: data[0].user_nickName,
         type: data[0].user_code,

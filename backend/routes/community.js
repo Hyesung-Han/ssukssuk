@@ -230,6 +230,6 @@ app.get("/search", async function (req, res) {
       return x;
     }),
   });
-}); // 글 목록 end
+}); // 글 검색 end
 
 module.exports = app;
