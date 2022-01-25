@@ -26,7 +26,7 @@
         notice_user_id
     FROM notice_T
     <if test="type != undefined"> where notice_code = #{type}</if>
-    order by notice_no desc;
+     order by notice_code, notice_no desc;
   </select>
 
   <insert id="NOTICE.INSERT.noticewrite">
@@ -95,7 +95,8 @@
         comment_user_nickName,
         notice_no,
         comment_text,
-        comment_date
+        comment_date,
+        comment_user_id
     )
     VALUES
     (
@@ -103,7 +104,8 @@
         #{user_nickName},
         #{notice_no},
         #{text},
-        now()
+        now(),
+        #{user_id}
     )
   </insert>
 
