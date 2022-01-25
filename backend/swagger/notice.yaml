@@ -37,9 +37,9 @@ paths:
           description: "no of the notice that needs to be deleted"
           required: true
           type: "integer"
-    responses:
-      default:
-        description: "successful operation"
+      responses:
+        default:
+          description: "successful operation"
 
   /notice/detail/{no}:
     get:
