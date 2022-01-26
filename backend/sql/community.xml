@@ -14,14 +14,14 @@
         community_hit,
         community_code,
         community_user_id
-    FROM community_T
+    FROM community_t
       <if test="type != undefined"> where community_code = #{type}</if>
     order by community_no desc;
   </select>
 
   <insert id="COMMUNITY.INSERT.regi">
   	/* 글 작성 */
-    INSERT INTO community_T
+    INSERT INTO community_t
     (
         community_title,
         community_author,
@@ -41,9 +41,9 @@
     )
   </insert>
 
-  <update id = "COMMUNITY.UPDATE.updateArticle ">
+  <update id = "COMMUNITY.UPDATE.updateArticle">
     /* 글 업데이트 */
-      update community_T set
+      UPDATE community_t SET
       community_title = #{title},
       community_content = #{content}
       where community_no = #{no}
@@ -60,14 +60,14 @@
         community_hit,
         community_code,
         community_user_id
-    FROM community_T
+    FROM community_t
     where community_no = #{no};
   </select>
 
   <delete id="COMMUNITY.DELETE.article">
     /* 글정보 삭제 */
     Delete
-    From community_T
+    From community_t
     Where community_no = #{no}      
   </delete>
 
@@ -81,7 +81,7 @@
         community_hit,
         community_code,
         community_user_id
-    FROM community_T
+    FROM community_t
       <if test="keyword != undefined"> where community_title like CONCAT('%',#{keyword},'%') 
       OR community_content like CONCAT('%',#{keyword},'%')</if>
     order by community_no desc;
@@ -90,7 +90,7 @@
 <!-- 댓글 기능 -->
  <insert id="COMMUNITY.INSERT.commentwrite">
   	/* 커뮤니티 댓글쓰기 */
-    INSERT INTO c_comment_T
+    INSERT INTO c_comment_t
     (
         comment_user_nickName,
         community_no,

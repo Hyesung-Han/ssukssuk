@@ -262,10 +262,8 @@ definitions:
       community_no:
         type: "integer"
         format: "int64"
-      community_user_id:
-        type: "string"
     xml:
-      name: "community_search"
+      name: "community_update"
 
   community_comment_write:
     type: "object"

@@ -99,7 +99,7 @@ app.put("/update", async function (req, res) {
     title: req.body.community_title,
     content: req.body.community_content,
     no: req.body.community_no,
-    user_id: req.body.community_user_id,
+    // user_id: req.body.community_user_id,
   };
 
   var updateQuery = mybatisMapper.getStatement(
