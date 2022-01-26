@@ -80,6 +80,26 @@ paths:
         default:
           description: "successful operation"
 
+  /notice/listcount:
+    get:
+      tags:
+        - "notice"
+      summary: "listcount"
+      description: "글 목록 개수 보기"
+      operationId: "notice list count"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "notice_code"
+          in: "query"
+          description: "notice list count"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
   /notice/write:
     post:
       tags:
@@ -100,6 +120,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+
   /notice/search:
     get:
       tags:
@@ -107,6 +128,26 @@ paths:
       summary: "list search"
       description: "글 목록 검색"
       operationId: "notice list search"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/searchcount:
+    get:
+      tags:
+        - "notice"
+      summary: "list search count"
+      description: "글 목록 검색 개수"
+      operationId: "notice list search count"
       produces:
         - "application/xml"
         - "application/json"

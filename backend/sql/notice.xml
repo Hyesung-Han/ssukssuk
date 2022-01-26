@@ -29,6 +29,16 @@
      order by notice_code, notice_no desc;
   </select>
 
+  <select id="NOTICE.SELECT.noticelistcount">
+    /* 공지사항 글 전체 목록 개수 */ 
+    SELECT  
+        count(notice_no),
+        notice_code
+    FROM notice_T
+    <if test="type != undefined"> where notice_code = #{type}</if>
+    ;
+  </select>
+
   <insert id="NOTICE.INSERT.noticewrite">
   	/* 공지사항 글쓰기 */
     INSERT INTO notice_T
@@ -85,6 +95,17 @@
     or notice_content like concat('%',#{keyword}, '%')
     </if>
     order by notice_no desc;
+  </select>
+
+<select id="NOTICE.SELECT.noticesearchcount">
+  	/* 공지사항 글 찾기(제목 + 글 내용) 개수 */
+      SELECT  
+        count(notice_no)
+    FROM notice_T
+    <if test="keyword != undefined"> where notice_title like concat('%',#{keyword}, '%')
+    or notice_content like concat('%',#{keyword}, '%')
+    </if>
+    ;
   </select>
 
 <insert id="NOTICE.INSERT.commentwrite">
