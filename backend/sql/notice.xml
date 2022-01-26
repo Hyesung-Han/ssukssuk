@@ -33,7 +33,8 @@
     or notice_content like concat('%',#{keyword}, '%')</if>
     </where>
     group by notice_t.notice_no
-    order by notice_code, notice_no desc;
+    order by notice_code, notice_no desc
+    LIMIT ${length} OFFSET ${start} ;
   </select>
 
   <select id="NOTICE.SELECT.noticelistcount">
