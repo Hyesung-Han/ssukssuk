@@ -19,6 +19,7 @@ var app = express.Router();
 app.get("/list", async function (req, res) {
   var selectParams = {
     type: req.query.community_code,
+    keyword: req.query.keyword,
   };
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",
@@ -38,15 +39,19 @@ app.get("/list", async function (req, res) {
     return;
   }
 
+  // 글이 없는 경우
   if (data.length == 0) {
-    res.status(403).send({ msg: "작성된 글이 없습니다." });
+    res.json({
+      result: "success",
+      data: [{}],
+    });
     return;
   }
 
   // 글 목록 꺼내오기
   res.json({
     msg: "글 목록",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
@@ -155,10 +160,10 @@ app.get("/detail/:community_no", async function (req, res) {
     return;
   }
 
-  // 글 목록 꺼내오기
+  // 글 내용 꺼내오기
   res.json({
     msg: data[0].community_no + "의 글 정보",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
@@ -194,14 +199,15 @@ app.delete("/delete/:community_no", async function (req, res) {
   res.json({ success: "delete success" });
 }); // 글 삭제 end
 
-// 글 목록 검색(add 01.24 OYT)
-app.get("/search", async function (req, res) {
+// 커뮤니티 글 개수 add (01.26 OYT)
+app.get("/listcount", async function (req, res) {
   var selectParams = {
+    type: req.query.community_code,
     keyword: req.query.keyword,
   };
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",
-    "COMMUNITY.SELECT.search",
+    "COMMUNITY.SELECT.communitylistcount",
     selectParams,
     { language: "sql", indent: "  " }
   );
@@ -213,23 +219,28 @@ app.get("/search", async function (req, res) {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "글목록 불러오기에 실패하였습니다.", error: error });
+    res.status(403).send({ result: "fail", error: error });
     return;
   }
 
+  // 글이 없는 경우
   if (data.length == 0) {
-    res.status(403).send({ msg: "작성된 글이 없습니다." });
+    res.json({
+      result: "success",
+      data: [{list_cnt: 0}],
+    });
     return;
   }
 
-  // 글 목록 꺼내오기
+  // 글 개수 꺼내오기
   res.json({
-    msg: "글 목록",
-    user: data.map((x) => {
+    result: "success",
+    data: data.map((x) => {
       return x;
     }),
   });
-}); // 글 검색 end
+}); // 커뮤니티 글 개수 end
+
 
 // 커뮤니티 댓글 작성 add (01.25 OYT)
 app.post("/comment/write", async (req, res) => {

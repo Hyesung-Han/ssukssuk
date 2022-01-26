@@ -57,21 +57,6 @@ paths:
           description: "The user name for login"
           required: false
           type: "string"
-      responses:
-        default:
-          description: "successful operation"
-
-  /community/search:
-    get:
-      tags:
-        - "community"
-      summary: "list search"
-      description: "글 목록 검색"
-      operationId: "community list search"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
         - name: "keyword"
           in: "query"
           description: "검색어"
@@ -80,6 +65,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+
   /community/update:
     put:
       tags:
@@ -135,6 +121,31 @@ paths:
           name: "community_no"
           description: "view object"
           required: true
+      responses:
+        default:
+          description: "successful operation"
+
+  /community/listcount:
+    get:
+      tags:
+        - "community"
+      summary: "listcount"
+      description: "글 목록 개수 보기"
+      operationId: "community list count"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "community_code"
+          in: "query"
+          description: "community list count"
+          required: false
+          type: "string"
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
       responses:
         default:
           description: "successful operation"
