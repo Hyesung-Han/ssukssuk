@@ -24,22 +24,30 @@
         notice_hit,
         notice_code,
         notice_user_id,
-        count(comment_no) 
+        count(comment_no) as 'comment_cnt' 
     FROM notice_t left 
     outer join n_comment_t on notice_t.notice_no = n_comment_t.notice_no
-    <if test="type != undefined"> where notice_code = #{type}</if>
+    <where>
+    <if test="type != undefined"> and notice_code = #{type}</if>
+    <if test="keyword != undefined"> and notice_title like concat('%',#{keyword}, '%')
+    or notice_content like concat('%',#{keyword}, '%')</if>
+    </where>
     group by notice_t.notice_no
     order by notice_code, notice_no desc;
   </select>
 
   <select id="NOTICE.SELECT.noticelistcount">
     /* 공지사항 글 전체 목록 개수 */ 
-    SELECT  
-        count(notice_no),
+     SELECT  
+        count(notice_no) as 'list_cnt',
         notice_code
     FROM notice_t
-    <if test="type != undefined"> where notice_code = #{type}</if>
-    ;
+    <Where>
+      <if test="type != undefined"> and notice_code = #{type}</if>
+      <if test="keyword != undefined"> and notice_title like CONCAT('%',#{keyword},'%') 
+      OR notice_content like CONCAT('%',#{keyword},'%')</if>
+    </Where>
+    group by notice_t.notice_no;
   </select>
 
   <insert id="NOTICE.INSERT.noticewrite">
@@ -80,39 +88,6 @@
     Where notice_no = #{no}
       
   </delete>
-
-
-<select id="NOTICE.SELECT.noticesearch">
-  	/* 공지사항 글 찾기(제목 + 글 내용) */
-      SELECT  
-        notice_t.notice_no,
-        notice_title,
-        notice_author,
-        notice_date,
-        notice_content,
-        notice_hit,
-        notice_code,
-        notice_user_id,
-        count(comment_no)
-    FROM notice_t 
-      left outer join n_comment_t on notice_t.notice_no = n_comment_t.notice_no
-    <if test="keyword != undefined"> where notice_title like concat('%',#{keyword}, '%')
-    or notice_content like concat('%',#{keyword}, '%')
-    </if>
-    group by notice_t.notice_no
-    order by notice_no desc;
-  </select>
-
-<select id="NOTICE.SELECT.noticesearchcount">
-  	/* 공지사항 글 찾기(제목 + 글 내용) 개수 */
-      SELECT  
-        count(notice_no)
-    FROM notice_t
-    <if test="keyword != undefined"> where notice_title like concat('%',#{keyword}, '%')
-    or notice_content like concat('%',#{keyword}, '%')
-    </if>
-    ;
-  </select>
 
 <insert id="NOTICE.INSERT.commentwrite">
   	/* 공지사항 댓글쓰기 */

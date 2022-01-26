@@ -76,6 +76,12 @@ paths:
           description: "notice list"
           required: false
           type: "string"
+
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
       responses:
         default:
           description: "successful operation"
@@ -93,7 +99,13 @@ paths:
       parameters:
         - name: "notice_code"
           in: "query"
-          description: "notice list count"
+          description: "notice list"
+          required: false
+          type: "string"
+
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
           required: false
           type: "string"
       responses:
@@ -117,46 +129,6 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/notice_write"
-      responses:
-        default:
-          description: "successful operation"
-
-  /notice/search:
-    get:
-      tags:
-        - "notice"
-      summary: "list search"
-      description: "글 목록 검색"
-      operationId: "notice list search"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: "keyword"
-          in: "query"
-          description: "검색어"
-          required: false
-          type: "string"
-      responses:
-        default:
-          description: "successful operation"
-
-  /notice/searchcount:
-    get:
-      tags:
-        - "notice"
-      summary: "list search count"
-      description: "글 목록 검색 개수"
-      operationId: "notice list search count"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: "keyword"
-          in: "query"
-          description: "검색어"
-          required: false
-          type: "string"
       responses:
         default:
           description: "successful operation"
