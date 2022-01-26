@@ -39,6 +39,18 @@
     ;
   </select>
 
+  <select id="NOTICE.SELECT.noticelistcommentcount">
+    /* 공지사항 글 전체 목록 댓글 개수 */ 
+    SELECT notice_t.notice_no, 
+    notice_code,
+    count(comment_no) 
+    FROM notice_t left 
+    outer join n_comment_t on notice_t.notice_no = n_comment_t.notice_no
+    <if test="type != undefined"> where notice_code = #{type}</if>
+    group by notice_t.notice_no;
+    
+  </select>
+
   <insert id="NOTICE.INSERT.noticewrite">
   	/* 공지사항 글쓰기 */
     INSERT INTO notice_T
@@ -106,6 +118,19 @@
     or notice_content like concat('%',#{keyword}, '%')
     </if>
     ;
+  </select>
+
+<select id="NOTICE.SELECT.noticesearchcommentcount">
+  	/* 공지사항 글 찾기(제목 + 글 내용) 댓글 개수 */  
+      SELECT notice_t.notice_no, 
+        notice_code,
+        count(comment_no) 
+      FROM notice_t left 
+      outer join n_comment_t on notice_t.notice_no = n_comment_t.notice_no
+      <if test="keyword != undefined"> where notice_title like concat('%',#{keyword}, '%')
+        or notice_content like concat('%',#{keyword}, '%')
+        </if>
+    group by notice_t.notice_no;
   </select>
 
 <insert id="NOTICE.INSERT.commentwrite">

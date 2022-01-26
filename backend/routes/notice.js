@@ -131,6 +131,43 @@ app.get("/listcount", async function (req, res) {
   });
 }); // 공지사항 글 전체 개수 end
 
+// 공지사항 각 글에 대한 댓글 개수 add (01.26 hhs)
+app.get("/listcommentcount", async function (req, res) {
+  var selectParams = {
+    type: req.query.notice_code,
+  };
+  var selectQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.SELECT.noticelistcommentcount",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+
+  // 글 목록 꺼내오기
+  res.json({
+    result: "success",
+    user: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 공지사항 각 글에 대한 댓글 개수 end
+
 // 공지사항 글 작성 add (01.24 hhs)
 app.post("/write", async (req, res) => {
   var insertParams = {
@@ -307,6 +344,43 @@ app.get("/searchcount", async function (req, res) {
     }),
   });
 }); // 공지사항 글 검색 목록 개수 end
+
+// 공지사항 글 검색(제목+글 내용) 목록 댓글 개수 add (01.26 hhs)
+app.get("/searchcommentcount", async function (req, res) {
+  var selectParams = {
+    keyword: req.query.keyword,
+  };
+  var selectQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.SELECT.noticesearchcommentcount",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let data = [];
+  try {
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+
+  // 글 목록 꺼내오기
+  res.json({
+    result: "success",
+    list: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 공지사항 글 검색 목록 댓글 개수 end
 
 // 공지사항 댓글 작성 add (01.25 hhs)
 app.post("/comment/write", async (req, res) => {
