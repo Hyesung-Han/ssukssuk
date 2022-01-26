@@ -8,7 +8,7 @@
   	/* 공지사항 글 상세보기 */
     SELECT  
         *
-    FROM notice_T
+    FROM notice_t
     WHERE notice_no = #{no}
     LIMIT 1
   </select>
@@ -24,7 +24,7 @@
         notice_hit,
         notice_code,
         notice_user_id
-    FROM notice_T
+    FROM notice_t
     <if test="type != undefined"> where notice_code = #{type}</if>
      order by notice_code, notice_no desc;
   </select>
@@ -34,7 +34,7 @@
     SELECT  
         count(notice_no),
         notice_code
-    FROM notice_T
+    FROM notice_t
     <if test="type != undefined"> where notice_code = #{type}</if>
     ;
   </select>
@@ -53,7 +53,7 @@
 
   <insert id="NOTICE.INSERT.noticewrite">
   	/* 공지사항 글쓰기 */
-    INSERT INTO notice_T
+    INSERT INTO notice_t
     (
         notice_title,
         notice_author,
@@ -85,7 +85,7 @@
   <delete id="NOTICE.DELETE.NOTICEDELETE">
     /* 공지사항 삭제 */
     Delete
-    From notice_T
+    From notice_t
     Where notice_no = #{no}
       
   </delete>
@@ -102,7 +102,7 @@
         notice_hit,
         notice_code,
         notice_user_id
-    FROM notice_T
+    FROM notice_t
     <if test="keyword != undefined"> where notice_title like concat('%',#{keyword}, '%')
     or notice_content like concat('%',#{keyword}, '%')
     </if>
@@ -113,7 +113,7 @@
   	/* 공지사항 글 찾기(제목 + 글 내용) 개수 */
       SELECT  
         count(notice_no)
-    FROM notice_T
+    FROM notice_t
     <if test="keyword != undefined"> where notice_title like concat('%',#{keyword}, '%')
     or notice_content like concat('%',#{keyword}, '%')
     </if>
@@ -135,7 +135,7 @@
 
 <insert id="NOTICE.INSERT.commentwrite">
   	/* 공지사항 댓글쓰기 */
-    INSERT INTO n_comment_T
+    INSERT INTO n_comment_t
     (
         comment_user_nickName,
         notice_no,
