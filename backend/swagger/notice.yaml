@@ -140,25 +140,6 @@ paths:
       responses:
         default:
           description: "successful operation"
-  /notice/searchcommentcount:
-    get:
-      tags:
-        - "notice"
-      summary: "noticesearchcommentcount"
-      description: "글 검색 결과에 따른 각 댓글 개수"
-      operationId: "notice search comment count"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: "keyword"
-          in: "query"
-          description: "검색어"
-          required: false
-          type: "string"
-      responses:
-        default:
-          description: "successful operation"
 
   /notice/searchcount:
     get:
@@ -174,26 +155,6 @@ paths:
         - name: "keyword"
           in: "query"
           description: "검색어"
-          required: false
-          type: "string"
-      responses:
-        default:
-          description: "successful operation"
-
-  /notice/listcommentcount:
-    get:
-      tags:
-        - "notice"
-      summary: "list comment count"
-      description: "글 댓글 목록 검색 개수"
-      operationId: "notice list search count"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: "notice_code"
-          in: "query"
-          description: "코드"
           required: false
           type: "string"
       responses:
