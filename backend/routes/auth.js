@@ -375,9 +375,10 @@ app.post("/login", async (req, res) => {
         msg: "로그인 성공",
         status: "login",
         token,
-        id: data[0].user_id,
-        name: data[0].user_nickName,
-        type: data[0].user_code,
+        user_id: data[0].user_id,
+        user_nickName: data[0].user_nickName,
+        user_code: data[0].user_code,
+        code_name: data[0].code_name
       });
     } else {
       return res
