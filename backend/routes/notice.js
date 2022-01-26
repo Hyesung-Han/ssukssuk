@@ -80,9 +80,14 @@ app.get("/list", async function (req, res) {
     res.status(403).send({ result: "fail", error: error });
     return;
   }
-
+  //글이 없는 경우
   if (data.length == 0) {
-    res.status(403).send({ result: "fail" });
+    res.json({
+      result: "success",
+      data: {
+        list_cnt: 0,
+      },
+    });
     return;
   }
 
@@ -118,9 +123,14 @@ app.get("/listcount", async function (req, res) {
     res.status(403).send({ result: "fail", error: error });
     return;
   }
-
+  //글이 없는 경우
   if (data.length == 0) {
-    res.status(403).send({ result: "fail" });
+    res.json({
+      result: "success",
+      data: {
+        list_cnt: 0,
+      },
+    });
     return;
   }
 
