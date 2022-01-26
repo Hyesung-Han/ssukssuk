@@ -17,9 +17,14 @@ var app = express.Router();
 
 // 글 목록 가져오기 (add 01.24 OYT)
 app.get("/list", async function (req, res) {
+  
+  const page_no = ((req.query.page_no - 1) * 10)+1;
+
   var selectParams = {
     type: req.query.community_code,
     keyword: req.query.keyword,
+    length: 10,
+    start : page_no
   };
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",

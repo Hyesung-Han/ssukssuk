@@ -22,7 +22,8 @@
       OR c.community_content like CONCAT('%',#{keyword},'%')</if>
     </Where>
     group by c.community_no
-    order by c.community_no desc;
+    order by c.community_no desc
+    LIMIT ${length} OFFSET ${start}
   </select>
 
   <insert id="COMMUNITY.INSERT.regi">
