@@ -219,13 +219,15 @@ app.patch("/updateinfo", verifyToken, async (req, res) => {
 // 회원 정보 수정 end
 
 // 회원탈퇴 add (01.19 csw)
-app.delete("/delete/:id", async (req, res) => {
-  if (!req.params || !req.params.id) {
+app.delete("/delete", async (req, res) => {
+  if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
+  const hashedPassword = await hashPassword(req.body.user_pw);
   var deleteParams = {
-    id: req.params.id,
+    id: req.body.user_id,
+    pw: hashedPassword
   };
 
   var deleteQuery = mybatisMapper.getStatement(

@@ -37,7 +37,7 @@
     /* 사용자, 유저 정보 삭제 */
     Delete
     From user_t
-    Where user_id = #{id}
+    Where user_id = #{id} and user_pw = #{pw}
       
   </delete>
 
