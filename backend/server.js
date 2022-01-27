@@ -13,7 +13,7 @@ const { swaggerUi, specs } = require("./swagger");
 // env
 const envJson = require(`${__dirname}/env/env.json`);
 const uploadFilePath = envJson.uploadFilePath;
-const port = envJson.port ? envJson.port : 3001;
+const port = envJson.port ? envJson.port : 8080;
 
 //----------------------------------
 // middleware
