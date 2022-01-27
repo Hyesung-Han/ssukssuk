@@ -1,0 +1,146 @@
+<!-- /server/sql/community.xml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="COMMUNITY">  
+
+  <select id="COMMUNITY.SELECT.list">
+  	/* 글 목록 조회 */
+     SELECT  
+        c.community_no,
+        c.community_title,
+        c.community_author,
+        c.community_date,
+        c.community_hit,
+        c.community_code,
+        c.community_user_id,
+        count(cc.comment_no) as 'comment_cnt'
+    FROM community_t c LEFT JOIN c_comment_t cc ON c.community_no = cc.community_no
+    <Where>
+      <if test="type != undefined"> and c.community_code = #{type}</if>
+      <if test="keyword != undefined"> and c.community_title like CONCAT('%',#{keyword},'%') 
+      OR c.community_content like CONCAT('%',#{keyword},'%')</if>
+    </Where>
+    group by c.community_no
+    order by c.community_no desc
+    LIMIT ${length} OFFSET ${start}
+  </select>
+
+  <insert id="COMMUNITY.INSERT.regi">
+  	/* 글 작성 */
+    INSERT INTO community_t
+    (
+        community_title,
+        community_author,
+        community_date,
+        community_content,
+        community_code,
+        community_user_id
+    )
+    VALUES
+    (
+        #{title}, 
+        #{author}, 
+        now(),
+        #{content},
+        #{code},
+        #{user_id}
+    )
+  </insert>
+
+  <update id = "COMMUNITY.UPDATE.updateArticle">
+    /* 글 업데이트 */
+      UPDATE community_t SET
+      community_title = #{title},
+      community_content = #{content}
+      where community_no = #{no}
+  </update>
+
+  <select id="COMMUNITY.SELECT.Detail">
+  	/* 글 상세 조회 */
+    SELECT  
+        community_no,
+        community_title,
+        community_author,
+        community_content,
+        community_date,
+        community_hit,
+        community_code,
+        community_user_id
+    FROM community_t
+    where community_no = #{no};
+  </select>
+
+  <delete id="COMMUNITY.DELETE.article">
+    /* 글정보 삭제 */
+    Delete
+    From community_t
+    Where community_no = #{no}      
+  </delete>
+
+  <select id="COMMUNITY.SELECT.communitylistcount">
+    /* 커뮤니티 글 전체 목록 개수 */ 
+    SELECT  
+        count(community_no) as 'list_cnt',
+        community_code
+    FROM community_t
+    <Where>
+      <if test="type != undefined"> and community_code = #{type}</if>
+      <if test="keyword != undefined"> and community_title like CONCAT('%',#{keyword},'%') 
+      OR community_content like CONCAT('%',#{keyword},'%')</if>
+    </Where>
+    group by community_code
+  </select>
+
+
+<!-- 댓글 기능 -->
+ <insert id="COMMUNITY.INSERT.commentwrite">
+  	/* 커뮤니티 댓글쓰기 */
+    INSERT INTO c_comment_t
+    (
+        comment_user_nickName,
+        community_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    )
+    VALUES
+    (
+        #{user_nickName},
+        #{community_no},
+        #{text},
+        now(),
+        #{user_id}
+    )
+  </insert>
+
+  <update id = "COMMUNITY.UPDATE.COMMENTUPDATE">
+  /* 커뮤니티 댓글 수정 */
+      update c_comment_t set
+      comment_text = #{text}
+      where comment_no = #{no}
+  </update>
+
+
+  <delete id="COMMUNITY.DELETE.COMMENTDELETE">
+    /* 커뮤니티 댓글 삭제 */
+    Delete
+    From c_comment_t
+    Where comment_no = #{no}
+  </delete>
+
+  <select id="COMMUNITY.SELECT.commentlist">
+    /* 커뮤니티 댓글 전체 목록 */ 
+    SELECT  
+        comment_no,
+        comment_user_nickName,
+        community_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    FROM c_comment_t
+      where community_no = #{no}
+    order by comment_no desc;
+  </select>
+
+</mapper>

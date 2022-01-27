@@ -40,7 +40,7 @@ app.get("/myInfo/:id", async (req, res) => {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "rdb select에 실패하였습니다.", error: error });
+    res.status(403).send({ result : "fail", error: error });
     return;
   }
 
@@ -50,7 +50,7 @@ app.get("/myInfo/:id", async (req, res) => {
   }
 
   res.json({
-    msg: "RDB에서 정보 꺼내오기",
+    result : "success",
     user: data.map((x) => {
       return x;
     }),
@@ -86,15 +86,15 @@ app.post("/regi", async (req, res) => {
   } catch (error) {
     res
       .status(403)
-      .send({ msg: "user insert에 실패하였습니다.", error: error });
+      .send({ result : "fail", error: error });
     return;
   }
 
   if (data.length == 0) {
-    res.status(403).send({ msg: "입력된 정보가 없습니다." });
+    res.status(403).send({ result : "fail" });
     return;
   }
-  res.json({ success: "회원가입 성공!", url: req.url, body: req.body });
+  res.json({  result : "success" , url: req.url, body: req.body });
 }); // 회원가입 end
 
 // ID 중복검사 (add 01.19 OYT)
@@ -121,7 +121,7 @@ app.get("/checkid/:id", async (req, res) => {
   } catch (error) {
     res
       .status(403)
-      .send({ msg: "아이디 중복검사에 실패하였습니다.", error: error });
+      .send({ result : "fail", error: error });
     return;
   }
   let checkid = new Object();
@@ -132,7 +132,7 @@ app.get("/checkid/:id", async (req, res) => {
     checkid.tf = false;
   }
   return res.json({
-    msg: "id 중복검사",
+    result : "success",
     code: 200,
     idchk: checkid.tf,
   });
@@ -162,7 +162,7 @@ app.get("/checknick/:nickName", async (req, res) => {
   } catch (error) {
     res
       .status(403)
-      .send({ msg: "닉네임 중복검사에 실패하였습니다.", error: error });
+      .send({ result : "fail", error: error });
     return;
   }
   let checkNick = new Object();
@@ -173,7 +173,7 @@ app.get("/checknick/:nickName", async (req, res) => {
     checkNick.tf = false;
   }
   return res.json({
-    msg: "닉네임 중복검사",
+    result : "success",
     code: 200,
     nickchk: checkNick.tf,
   });
@@ -206,15 +206,15 @@ app.patch("/updateinfo", verifyToken, async (req, res) => {
   } catch (error) {
     res
       .status(403)
-      .send({ msg: "nick name update에 실패하였습니다.", error: error });
+      .send({ result : "fail", error: error });
     return;
   }
 
   if (data.length == 0) {
-    res.status(403).send({ msg: "정보가 없습니다." });
+    res.status(403).send({ result : "fail" });
     return;
   }
-  res.json({ success: "nickname update success" });
+  res.json({ result : "success" });
 });
 // 회원 정보 수정 end
 
@@ -226,7 +226,7 @@ app.delete("/delete/:id", async (req, res) => {
   }
   var deleteParams = {
     id: req.params.id,
-  };2
+  };
 
   var deleteQuery = mybatisMapper.getStatement(
     "USER",
@@ -242,10 +242,10 @@ app.delete("/delete/:id", async (req, res) => {
     });
     console.log("user-delete success");
   } catch (error) {
-    res.status(403).send({ msg: "delete에 실패하였습니다.", error: error });
+    res.status(403).send({ result : "fail", error: error });
     return;
   }
-  return res.json({ success: "nickname update success" });
+  res.json({ result : "success" });
 }); // 회원탈퇴 end
 
 // 비밀번호 수정(fix 01.21 OYT)
@@ -308,7 +308,7 @@ app.patch("/updatepw", verifyToken, async (req, res) => {
     } catch (error) {
       res
         .status(403)
-        .send({ msg: "pw update에 실패하였습니다.", error: error });
+        .send({ result : "fail", error: error });
       return;
     }
 
@@ -316,9 +316,9 @@ app.patch("/updatepw", verifyToken, async (req, res) => {
       res.status(403).send({ msg: "정보가 없습니다." });
       return;
     }
-    res.json({ success: "pw update success" });
+    res.json({ result : "success" });
   } else {
-    res.json({ error: "pw 일치하지 않음" });
+    res.json({ result : "fail", error: "pw 일치하지 않음" });
   }
 });
 // 비밀번호 수정 end
@@ -373,14 +373,17 @@ app.post("/login", async (req, res) => {
       return res.status(200).json({
         code: 200,
         msg: "로그인 성공",
-        token: token,
-        id: data[0].user_id,
-        name: data[0].user_nickName,
+        status: "login",
+        token,
+        user_id: data[0].user_id,
+        user_nickName: data[0].user_nickName,
+        user_code: data[0].user_code,
+        code_name: data[0].code_name
       });
     } else {
       return res
         .status(200)
-        .json({ code: 200, msg: "로그인 정보를 확인하세요" });
+        .json({ code: 200, status: "fail", msg: "로그인 정보를 확인하세요" });
     }
   }
 });
