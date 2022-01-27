@@ -218,7 +218,7 @@ app.patch("/updateinfo", verifyToken, async (req, res) => {
 });
 // 회원 정보 수정 end
 
-// 회원탈퇴 add (01.19 csw)
+// 회원탈퇴 fix (01.27 OYT)
 app.delete("/delete", async (req, res) => {
   if (!req.body || !req.body.user_id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
