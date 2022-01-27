@@ -54,7 +54,7 @@ paths:
       parameters:
         - name: "community_code"
           in: "query"
-          description: "The user name for login"
+          description: "커뮤니티 코드"
           required: false
           type: "string"
         - name: "keyword"
@@ -65,7 +65,7 @@ paths:
         - name: "page_no"
           in: "query"
           description: "page Number"
-          required: false
+          required: true
           type: "integer"
       responses:
         default:

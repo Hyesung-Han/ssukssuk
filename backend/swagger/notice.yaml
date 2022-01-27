@@ -86,7 +86,7 @@ paths:
         - name: "page_no"
           in: "query"
           description: "페이지 수"
-          required: false
+          required: true
           type: "integer"
       responses:
         default:

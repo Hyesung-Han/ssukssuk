@@ -59,7 +59,7 @@ app.get("/detail/:no", async (req, res) => {
 
 // 공지사항 글 전체 목록 add (01.24 hhs)
 app.get("/list", async function (req, res) {
-  const page_no = (req.query.page_no - 1) * 10 + 1;
+  const page_no = (req.query.page_no - 1) * 10;
   var selectParams = {
     type: req.query.notice_code,
     keyword: req.query.keyword,
