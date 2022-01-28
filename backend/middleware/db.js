@@ -2,8 +2,8 @@ const Sequelize = require("sequelize");
 const envType = process.env.ENV ? process.env.ENV : "dev";
 
 // DB connection 정보
-const sequelize = new Sequelize("jeans", "sowon", "sowonwow1@", {
-  host: "127.0.0.1",
+const sequelize = new Sequelize("jeans", "ssukssuk", "cjdcnsdmsqkfhwlrma", {
+  host: "i6a103.p.ssafy.io",
   dialect: "mysql",
 });
 
