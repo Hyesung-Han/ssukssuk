@@ -501,20 +501,17 @@ const SignUpSection02 = () => {
     } catch (error) {
       console.log('PPAP: signInHandler -> error', error);
     }
-
     Axios.post(serverUrlBase + `/user/regi`, {
       user_id: id,
       user_pw: hashPassword,
       user_name: name,
       user_nickName: nickname,
       user_email: email,
-      user_code: 'U01',
+      user_code: grade,
     })
       .then(data => {
         const join_result = data.data.result;
-        console.log(join_result);
         if (join_result === 'success') {
-          console.log(data);
           successSign.fire({
             title: <strong>환영합니다~</strong>,
             html: <i>회원가입 성공!</i>,
@@ -551,12 +548,12 @@ const SignUpSection02 = () => {
   // value를 고치면 될 듯
   const grades = [
     {
-      value: '멘토',
-      label: '멘토',
+      value: 'U01',
+      label: '일반',
     },
     {
-      value: '일반',
-      label: '일반',
+      value: 'U02',
+      label: '멘토',
     },
   ];
 
@@ -722,13 +719,13 @@ const SignUpSection02 = () => {
             select
             required
             label="등급"
-            defaultValue="일반"
+            defaultValue="U01"
             onChange={OnChangeHandler('grade')}
             variant="outlined"
             fullWidth={true}
           >
             {grades.map(option => (
-              <MenuItem key={option.index} value={option.value}>
+              <MenuItem key={option.id} value={option.value}>
                 {option.label}
               </MenuItem>
             ))}
@@ -1072,7 +1069,7 @@ const ResponsiveDialogSign = () => {
     name: '',
     nickname: '',
     email: '',
-    grade: '일반',
+    grade: 'U01',
   });
   const [recoverPwUserData, setRecoverPwUserData] = useState({
     email: '',

@@ -163,7 +163,7 @@ const Header = props => {
 
             <Grid item>
               <Grid container alignItems="center">
-                {(user.type === 'U02' || user.type === 'U03') && (
+                {(user.user_code === 'U03' || user.user_code === 'U04') && (
                   <Grid item>
                     <Button
                       color="primary"

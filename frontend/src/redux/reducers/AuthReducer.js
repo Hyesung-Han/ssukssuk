@@ -30,7 +30,7 @@ export const AuthReducer = (state = AuthInitialState, action) => {
   switch (action.type) {
     case SET_TOKEN:
       return {
-        ...state,
+        state,
         user: action.token,
       };
     case SET_NICKNAME:
@@ -38,10 +38,10 @@ export const AuthReducer = (state = AuthInitialState, action) => {
       return { ...state };
     case SET_INIT:
       return {
-        ...state,
+        state,
         user: AuthInitialState.user,
       };
     default:
-      return { ...state };
+      return state;
   }
 };
