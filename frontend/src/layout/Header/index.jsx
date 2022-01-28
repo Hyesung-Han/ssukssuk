@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import store from 'store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setInit } from '../../redux/reducers/AuthReducer';
 
 import { CommonContext } from '../../context/CommonContext';
 import SignResponsiveDialog from '../../components/Auth/SignResponsiveDialog/';
@@ -19,12 +20,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import Wrapper from './styles';
 
 const Header = props => {
+  const dispatch = useDispatch();
   let history = useHistory();
   const isTablet = useMediaQuery('(max-width:1100px)');
 
   const {
-    user,
-    setUser,
     drawerOpen,
     setDrawerOpen,
     setSignDialogOpen,
@@ -33,8 +33,12 @@ const Header = props => {
     setInfoDetailDialogOpen,
   } = useContext(CommonContext);
 
+  const user = useSelector(state => state.Auth.user);
   const handleSignInDialogOpen = name => e => {
-    if(name==='me')
+    // Need props function
+    // 나중에 여기서 컴포넌트 바꾸는거 context쓰면 관련된거 다시 렌더링되니까 auth에서 바꾸도록 props줘서 변경하는 방법으로 가고싶다ㅎㅎ
+    // 다른 사람들이랑 충돌 안나도록 일단은 이렇게 하고 나중에 다 만들고 나서 바꿀 수 있으면 바꾸자
+    if(name==='SignIn')
     {
       setIsSignUp('SignIn')
     }
@@ -50,7 +54,6 @@ const Header = props => {
     if (name === '/SearchVote') {
       if (history.location.pathname === name) {
         history.goBack();
-        store.remove('search');
       } else {
         history.push(name);
       }
@@ -59,18 +62,10 @@ const Header = props => {
     }
   };
 
+  // 로그아웃
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
-    setUser({
-      user_no: 0,
-      user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
-      token: '',
-    });
+    dispatch(setInit());
 
     alert('You are logged out.');
 
@@ -109,7 +104,12 @@ const Header = props => {
           align-items="center"
           className={drawerOpen ? 'appbar appbar-shift' : 'appbar'}
         >
-          <Grid className='appbar-wrap' container justify="space-between" alignItems="center">
+          <Grid
+            className="appbar-wrap"
+            container
+            justify="space-between"
+            alignItems="center"
+          >
             <Grid item>
               <Typography
                 variant="h6"
@@ -118,7 +118,7 @@ const Header = props => {
               >
                 <img
                   className="logo_img"
-                  src="images/ssug_green.png"
+                  src={history.location.pathname.indexOf("/CommunityDetail")==-1?"images/ssug_green.png":"../images/ssug_green.png"}
                   alt="logo"
                 />
               </Typography>
@@ -146,24 +146,24 @@ const Header = props => {
                     문의사항
                   </Button>
                 </Grid>
-                {user.status &&
-                <Grid item>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={onClickRedirectPathHandler('/Ask')}
-                    className="display-none header-button"
-                  >
-                    내 농장
-                  </Button>
-                </Grid>
-                }
+                {user.status === 'login' && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={onClickRedirectPathHandler('/Ask')}
+                      className="display-none header-button"
+                    >
+                      내 농장
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
 
             <Grid item>
               <Grid container alignItems="center">
-                {user.user_type === 'A' && (
+                {(user.type === 'U02' || user.type === 'U03') && (
                   <Grid item>
                     <Button
                       color="primary"
@@ -175,40 +175,40 @@ const Header = props => {
                     </Button>
                   </Grid>
                 )}
-                {!user.status&&
+                {!user.status && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={handleSignInDialogOpen('SignUp')}
+                      className="display-none header-button"
+                    >
+                      회원가입
+                    </Button>
+                  </Grid>
+                )}
                 <Grid item>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={handleSignInDialogOpen('SignUp')}
-                    className="display-none header-button"
-                  >
-                    회원가입
-                  </Button>
-                </Grid>
-                }
-                <Grid item>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleSignInDialogOpen('me')}
+                    onClick={handleSignInDialogOpen('SignIn')}
                     className="display-none header-button"
                   >
                     {user.status === 'login' ? '내 정보' : '로그인'}
                   </Button>
                 </Grid>
-                {user.status&&
-                <Grid item>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={onClickSignOutOpenHandler}
-                    className="display-none header-button"
-                  >
-                    로그아웃
-                  </Button>
-                </Grid>
-                }
+                {user.status === 'login' && (
+                  <Grid item>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={onClickSignOutOpenHandler}
+                      className="display-none header-button"
+                    >
+                      로그아웃
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>

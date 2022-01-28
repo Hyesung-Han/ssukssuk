@@ -157,9 +157,6 @@ const Wrapper = styled.div`
   .logo_img {
     height: 50px;
   }
-  .text-field {
-    color: #66930C;
-  }
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -175,7 +172,6 @@ const Wrapper = styled.div`
   }
   .grid {
     padding: 14px;
-    
   }
   .grid-item {
     margin: 8px 0;
@@ -270,7 +266,6 @@ const Wrapper = styled.div`
   }
   .sign-up-grid-item3 {
     padding: 0px 0px 16px 14px;
-    background
   }
   .sign-up-grid-item4 {
     padding: 0 0 26px 14px;

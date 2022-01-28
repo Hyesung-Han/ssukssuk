@@ -1,0 +1,68 @@
+{
+    "items":[
+        { 
+            "community_no":1,
+            "community_title":"test_title",
+            "community_author":"test_author",
+            "community_date":"20220121",
+            "community_content":"test_content",
+            "community_hit":2,
+            "community_code":"free"
+        },
+        {
+            "community_no":2,
+            "community_title":"test_title2",
+            "community_author":"test_author2",
+            "community_date":"20220121",
+            "community_content":"test_content2",
+            "community_hit":1,
+            "community_code":"free"
+        },
+        {
+            "community_no":3,
+            "community_title":"아 망했네",
+            "community_author":"귀농할꺼니까",
+            "community_date":"20220121",
+            "community_content":"test_content3",
+            "community_hit":4,
+            "community_code":"free"
+        },
+        {
+            "community_no":4,
+            "community_title":"할아버지 고맙습니다!",
+            "community_author":"귀농 12일차",
+            "community_date":"20220121",
+            "community_content":"test_content4",
+            "community_hit":12,
+            "community_code":"free"
+        },
+        {
+            "community_no":5,
+            "community_title":"이거 맞나요?",
+            "community_author":"부인따라옴",
+            "community_date":"20220121",
+            "community_content":"test_content5",
+            "community_hit":0,
+            "community_code":"free"
+        },
+        {
+            "community_no":6,
+            "community_title":"[정보글] 귀농 3년이면 과일도 심는다?",
+            "community_author":"도시보다 시골",
+            "community_date":"20220121",
+            "community_content":"test_content6",
+            "community_hit":0,
+            "community_code":"free"
+        },
+        {
+            "community_no":7,
+            "community_title":"수박키우기 이렇게만 해라",
+            "community_author":"수박만함",
+            "community_date":"20220121",
+            "community_content":"test_content7",
+            "community_hit":99,
+            "community_code":"free"
+        }
+
+    ]
+}

@@ -1,5 +1,7 @@
 import React, { useContext, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setInit } from '../../redux/reducers/AuthReducer';
 import { CommonContext } from '../../context/CommonContext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -21,7 +23,10 @@ import Wrapper from './styles';
 
 const DrawerHeaderGroup = () => {
   let history = useHistory();
-  const { setDrawerOpen, user, setUser } = useContext(CommonContext);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.Auth.user);
+
+  const { setDrawerOpen } = useContext(CommonContext);
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
@@ -33,32 +38,12 @@ const DrawerHeaderGroup = () => {
   };
 
   const handleSignInDialogOpen = () => {
-    setUser({
-      user_no: 0,
-      user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
-      token: '',
-    });
-
     history.push('/Auth');
   };
 
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
-    setUser({
-      user_no: 0,
-      user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
-      token: '',
-    });
+    dispatch(setInit());
 
     alert('You are logged out.');
 
@@ -94,9 +79,10 @@ const DrawerHeaderGroup = () => {
 
 const DrawerListGroup = () => {
   let history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.Auth.user);
+
   const {
-    user,
-    setUser,
     setUserDetailDialogOpen,
     setUserDialogIndex,
     setDrawerOpen,
