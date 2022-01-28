@@ -35,9 +35,15 @@ const Header = props => {
 
   const user = useSelector(state => state.Auth.user);
   const handleSignInDialogOpen = name => e => {
-    if (name === 'me') {
-      setIsSignUp('SignIn');
-    } else if (name === 'SignUp') {
+    // Need props function
+    // 나중에 여기서 컴포넌트 바꾸는거 context쓰면 관련된거 다시 렌더링되니까 auth에서 바꾸도록 props줘서 변경하는 방법으로 가고싶다ㅎㅎ
+    // 다른 사람들이랑 충돌 안나도록 일단은 이렇게 하고 나중에 다 만들고 나서 바꿀 수 있으면 바꾸자
+    if(name==='SignIn')
+    {
+      setIsSignUp('SignIn')
+    }
+    else if(name==="SignUp")
+    {
       setIsSignUp('SignUp');
     }
     history.push('/Auth');
@@ -112,7 +118,7 @@ const Header = props => {
               >
                 <img
                   className="logo_img"
-                  src="images/ssug_green.png"
+                  src={history.location.pathname.indexOf("/CommunityDetail")==-1?"images/ssug_green.png":"../images/ssug_green.png"}
                   alt="logo"
                 />
               </Typography>
@@ -185,7 +191,7 @@ const Header = props => {
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={handleSignInDialogOpen('me')}
+                    onClick={handleSignInDialogOpen('SignIn')}
                     className="display-none header-button"
                   >
                     {user.status === 'login' ? '내 정보' : '로그인'}
