@@ -24,13 +24,15 @@ import Ask from './pages/Ask/';
 import Community from './pages/Community/';
 import Admin from './pages/Admin/';
 import MyFarm from './pages/MyFarm/';
+import CommunityDetail from './pages/CommunityDetail';
+import CommunityWrite from './pages/CommunityWrite';
 
 // css
 // import './index.css';
 
 // const
 const defaultThumbnailImage = 'default_user.jpg';
-const HOST = '192.168.0.82:3001';
+const HOST = '52.79.38.33:3001';
 const serverUrl = `http://${HOST}/v1`;
 const serverUrlBase = `http://${HOST}`;
 const serverImgUrl = `https://ssafy-viba-s3.s3.ap-northeast-2.amazonaws.com/public/`;
@@ -61,14 +63,11 @@ const theme = createTheme({
 const App = () => {
   const [user, setUser] = useLocalStorageSetState(
     {
-      user_no: 0,
       user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
+      user_nickName: '',
       token: '',
+      status: '',
+      user_code: '',
     },
     'user',
   );
@@ -125,6 +124,8 @@ const App = () => {
             <Route exact path="/Community" component={Community} />
             <Route exact path="/MyFarm" component={MyFarm} />
             <Route exact path="/Admin" component={Admin} />
+            <Route exact path="/CommunityDetail/:no" component={CommunityDetail} />
+            <Route exact path="/CommunityWrite" component={CommunityWrite} />
             <Redirect to="/not-found" />
           </Switch>
         </BrowserRouter>

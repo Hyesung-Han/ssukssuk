@@ -68,7 +68,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 90px;
     
-    transition: all 0.3s ease;
+    // transition: all 0.3s ease;
     box-sizing: border-box;
 
     background-color: #ffffff;
@@ -95,7 +95,7 @@ const Wrapper = styled.div`
     letter-spacing: 1px;
     text-transform: none;
     opacity: 0.7;
-    transition: all 0.2s;
+    // transition: all 0.2s;
 
     font-size: 18px;
     color:#000000;
