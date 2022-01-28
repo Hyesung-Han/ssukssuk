@@ -352,7 +352,7 @@ app.delete("/comment/delete/:no", async (req, res) => {
   res.json({ result: "success" });
 }); // 커뮤니티 댓글 삭제 end
 
-// 커뮤니티 댓글 전체 목록 add (01.25 hhs)
+// 커뮤니티 댓글 전체 목록 fix (01.28 OYT)
 app.get("/comment/list", async function (req, res) {
   var selectParams = {
     no: req.query.community_no,
@@ -376,17 +376,22 @@ app.get("/comment/list", async function (req, res) {
   }
 
   if (data.length == 0) {
-    res.status(403).send({ result: "fail" });
+    res.json({
+      result: "success",
+      data: data = {}
+    });
     return;
-  }
-
-  // 댓글 목록 꺼내오기
+  }else{
+      // 댓글 목록 꺼내오기
   res.json({
     result: "success",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
+  }
+
+
 }); // 커뮤니티 댓글 전체 목록 end
 
 
