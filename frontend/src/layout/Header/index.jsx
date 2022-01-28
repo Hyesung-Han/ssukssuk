@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import store from 'store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setInit } from '../../redux/reducers/AuthReducer';
 
 import { CommonContext } from '../../context/CommonContext';
 import SignResponsiveDialog from '../../components/Auth/SignResponsiveDialog/';
@@ -19,12 +20,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import Wrapper from './styles';
 
 const Header = props => {
+  const dispatch = useDispatch();
   let history = useHistory();
   const isTablet = useMediaQuery('(max-width:1100px)');
 
   const {
-    user,
-    setUser,
     drawerOpen,
     setDrawerOpen,
     setSignDialogOpen,
@@ -33,6 +33,7 @@ const Header = props => {
     setInfoDetailDialogOpen,
   } = useContext(CommonContext);
 
+  const user = useSelector(state => state.Auth.user);
   const handleSignInDialogOpen = name => e => {
     if (name === 'me') {
       setIsSignUp('SignIn');
@@ -47,7 +48,6 @@ const Header = props => {
     if (name === '/SearchVote') {
       if (history.location.pathname === name) {
         history.goBack();
-        store.remove('search');
       } else {
         history.push(name);
       }
@@ -56,22 +56,10 @@ const Header = props => {
     }
   };
 
+  // 로그아웃
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
-    setUser({
-      id: '',
-      name: '',
-      token: '',
-      status: '',
-      type: '',
-    });
-    store.set('user', {
-      id: '',
-      name: '',
-      token: '',
-      status: '',
-      type: '',
-    });
+    dispatch(setInit());
 
     alert('You are logged out.');
 

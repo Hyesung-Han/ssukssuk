@@ -1,5 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setInit } from '../../../redux/reducers/AuthReducer';
 import Axios from 'axios';
 import crypto from 'crypto';
 import { CommonContext } from '../../../context/CommonContext';
@@ -14,6 +16,13 @@ import {
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Wrapper from './styles';
 
+import store from 'store';
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const successSign = withReactContent(Swal);
+
 const InputComponent = props => {
   let { name } = props;
   const { inputValue, setInputValue } = useContext(ViewContext);
@@ -23,6 +32,14 @@ const InputComponent = props => {
     setInputValue({ ...inputValue, [name]: e.target.value });
     console.log('OnChangeHandler -> inputValue', inputValue);
   };
+
+  useEffect(() => {
+    if (!!inputValue['비밀번호']) {
+      props.setDisabled(false);
+    } else {
+      props.setDisabled(true);
+    }
+  }, [inputValue['비밀번호']]);
 
   const onClickHandler = () => {
     setIsShowPassword(!isShowPassword);
@@ -39,30 +56,38 @@ const InputComponent = props => {
           <>
             <TextField
               required
+              // required={name === '비밀번호' ? true : false}
+              // disabled={name === '비밀번호' ? false : true}
               id={`outlined-password-input-${name}`}
               label={name}
               defaultValue={inputValue[name]}
               variant="outlined"
               autoComplete="current-password"
               onChange={OnChangeHandler(name)}
-              type={
-                `${name}` === 'PASSWORD'
-                  ? isShowPassword
-                    ? ''
-                    : 'password'
-                  : ''
-              }
-              //type={isShowPassword ? '' : 'password'}
+              // type={
+              //   `${name}` === 'PASSWORD'
+              //     ? isShowPassword
+              //       ? ''
+              //       : 'password'
+              //     : ''
+              // }
+              type={isShowPassword ? '' : 'password'}
               className="input-component-text-field"
             />
-            {name === 'PASSWORD' && (
+            <IconButton
+              onClick={onClickHandler}
+              className="input-component-icon-button"
+            >
+              <VisibilityIcon />
+            </IconButton>
+            {/* {name === 'PASSWORD' && (
               <IconButton
                 onClick={onClickHandler}
                 className="input-component-icon-button"
               >
                 <VisibilityIcon />
               </IconButton>
-            )}
+            )} */}
           </>
         }
       />
@@ -70,6 +95,7 @@ const InputComponent = props => {
   );
 };
 
+// 글 왼쪽/오른쪽 나눈거 (왼쪽 = 라벨 / 오른쪽 = 인풋)
 const ContentDefaultComponent = props => {
   const { LeftComponent, RightComponet } = props;
   return (
@@ -92,11 +118,13 @@ const ContentDefaultComponent = props => {
   );
 };
 
+// 우하단 버튼들 관련
 const MyInfoButtonGroupComponent = props => {
   let history = useHistory();
-  const { setUserDetailDialogOpen, user, serverUrl, setUser } = useContext(
-    CommonContext,
-  );
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.Auth.user);
+  const { setUserDetailDialogOpen, serverUrlBase } = useContext(CommonContext);
+
   const { inputValue } = useContext(ViewContext);
 
   const handleClose = () => {
@@ -104,42 +132,67 @@ const MyInfoButtonGroupComponent = props => {
     history.goBack();
   };
 
+  // 확인버튼을 누르면 실행되는 기능
   const onMyInfoSaveHandelr = async props => {
-    var before_pwd = inputValue['Before Password'];
-    var password = inputValue['New Password'];
-    var changePassword = inputValue['New Password Confirm'];
-    if (password !== changePassword) {
-      alert('Passwords that do not match between passwords.');
-      return;
-    }
-    if (!password || password.lengh < 5) {
-      alert('Wrong password.');
-      return;
-    }
+    var Pwd = inputValue['비밀번호'];
 
-    let respone = [];
-    let hashPassword = 'test2';
-    let hashBeforePwd = 'test2';
+    let hashPwd = '';
+
     try {
-      hashPassword = crypto
+      hashPwd = crypto
         .createHash('sha512')
-        .update(password)
-        .digest('hex');
-      hashBeforePwd = crypto
-        .createHash('sha512')
-        .update(before_pwd)
+        .update(Pwd)
         .digest('hex');
     } catch (error) {
       console.log('signInHandler -> error', error);
+      return;
     }
 
-    var body = {
-      new_pwd: hashPassword,
-      before_pwd: hashBeforePwd,
-      user_id: user.user_id,
-    };
+    // path[url 그냥], body[data 받아서], query[글자 검색]
+    Axios.defaults.headers.common['authorization'] = user.token;
+    Axios.delete(serverUrlBase + '/user/delete/', {
+      data: {
+        user_id: user.user_id,
+        user_pw: hashPwd,
+      },
+    })
+      .then(data => {
+        if (data.status === 200) {
+          console.log(data);
+          if (data.data.result === 'success') {
+            dispatch(setInit());
 
-    alert('Not implemented yet.');
+            successSign.fire({
+              icon: 'success',
+              title: <strong>탈퇴!</strong>,
+              html: <i>다신 보지 말자구요 ^^</i>,
+            });
+
+            history.goBack();
+          } else {
+            console.log(data);
+            Swal.fire({
+              icon: 'error',
+              title: '입력 정보 오류',
+              text: '비밀번호 다시 틀렸어요!',
+              footer: '<a href="">Why do I have this issue?</a>',
+              target: document.querySelector('.MuiDialog-root'),
+            });
+          }
+        } else {
+          console.log(data);
+          Swal.fire({
+            icon: 'error',
+            title: '탈퇴 실패!',
+            text: '좀 더 있으라구 그냥 ^^',
+            footer: '<a href="">Why do I have this issue?</a>',
+            target: document.querySelector('.MuiDialog-root'),
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     // if (respone['status'] === 200) {
     //   alert('Has changed.');
@@ -163,24 +216,27 @@ const MyInfoButtonGroupComponent = props => {
           onClick={handleClose}
           className="cancel-fab my-info-button-group-component-grid-fab1"
         >
-          취소하기
+          취소
         </Fab>
 
         <Fab
           variant="extended"
+          disabled={props.disabled}
           aria-label="like"
           color="inherit"
           onClick={onMyInfoSaveHandelr}
           className="upload-fab my-info-button-group-component-grid-fab2"
         >
-          탈퇴하기
+          탈퇴
         </Fab>
       </Grid>
     </Wrapper>
   );
 };
 
-const ChangePasswordComponent = params => {
+// 전체 구조
+const DeleteUserComponent = params => {
+  const [disabled, setDisabled] = useState(true);
   return (
     <Wrapper>
       <form noValidate autoComplete="off">
@@ -197,15 +253,15 @@ const ChangePasswordComponent = params => {
             xs={12}
             className="change-password-component-grid-item"
           ></Grid>
+          {/* <Grid item xs={12}>
+            <InputComponent name={'아이디'} setDisabled={setDisabled} />
+          </Grid> */}
           <Grid item xs={12}>
-            <InputComponent name={'ID'} />
-          </Grid>
-          <Grid item xs={12}>
-            <InputComponent name={'PASSWORD'} />
+            <InputComponent name={'비밀번호'} setDisabled={setDisabled} />
           </Grid>
 
           <Grid item xs={12}>
-            <MyInfoButtonGroupComponent />
+            <MyInfoButtonGroupComponent disabled={disabled} />
           </Grid>
         </Grid>
       </form>
@@ -213,14 +269,14 @@ const ChangePasswordComponent = params => {
   );
 };
 
-const ChangePassword = () => {
+const DeleteUser = () => {
   const [inputValue, setInputValue] = useState('');
 
   return (
     <ViewContext.Provider value={{ inputValue, setInputValue }}>
-      <ChangePasswordComponent />
+      <DeleteUserComponent />
     </ViewContext.Provider>
   );
 };
 
-export default ChangePassword;
+export default DeleteUser;

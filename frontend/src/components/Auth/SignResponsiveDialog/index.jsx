@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
-import store from 'store';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../../redux/reducers/AuthReducer';
 import crypto from 'crypto';
 import { ViewContext } from '../../../context/ViewContext';
 import { CommonContext } from '../../../context/CommonContext';
@@ -28,8 +29,6 @@ import Wrapper from './styles';
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-
-import userData from './dump.json';
 
 // 아이디 체크 (영소문자+숫자, 4자이상)
 const regId = /^[a-z0-9]{4,}$/;
@@ -58,6 +57,7 @@ const DialogTitleComponent = () => {
 };
 
 const SignInSection01 = () => {
+  const dispatch = useDispatch();
   let history = useHistory();
 
   const [disabled, setDisabled] = useState(true);
@@ -65,13 +65,9 @@ const SignInSection01 = () => {
     ViewContext,
   );
 
-  const {
-    user,
-    setUser,
-    setSignDialogOpen,
-    serverUrlBase,
-    setIsShowKeyborad,
-  } = useContext(CommonContext);
+  const { setSignDialogOpen, serverUrlBase, setIsShowKeyborad } = useContext(
+    CommonContext,
+  );
 
   const OnChangeHandler = name => e => {
     setSignInUserData({ ...signInUserData, [name]: e.target.value });
@@ -114,20 +110,9 @@ const SignInSection01 = () => {
   const [signInPwdErr, setSignInPwdErr] = useState(false);
   const [signInPwdErrMsg, setSignInPwdErrMsg] = useState();
 
+  // 로그인 버튼을 누르면 실행되는 기능
   const onSignInHandler = async e => {
     var { id, password } = signInUserData;
-
-    // console.log('TCL: onSignInHandler -> id, password', id, password); # 아이디 비번 둘다 확인 잘 됩니다!
-    // console.log(regId.test(id));         # 잘 뜹니다! (true/false)
-    // console.log(regPwd.test(password));  # 잘 뜹니다! (true/false)
-
-    // 이게 유효성 검사? (DB랑 비교를 하는 그런?)
-    if (!password || !id) {
-      alert('You need both email and password.');
-      return;
-    }
-
-    let respone = [];
     let hashPassword = '';
     try {
       hashPassword = crypto
@@ -145,12 +130,7 @@ const SignInSection01 = () => {
       .then(data => {
         const login_user = data.data;
         if (login_user.status === 'login') {
-          // 로그인 성공
-          setUser({ ...login_user });
-          store.set('user', { ...login_user });
-          // header에 token 저장
-          Axios.defaults.headers.common['x-access-token'] = login_user.token;
-
+          dispatch(setToken(login_user));
           setSignDialogOpen(false);
           setIsSignUp('SignIn');
           successSign.fire({
@@ -158,12 +138,17 @@ const SignInSection01 = () => {
             title: <strong>어서오십쇼~</strong>,
             html: <i>다양하게 즐겨보십쇼...</i>,
           });
-          console.log('login');
-          console.log(store.get('user'));
           history.goBack();
         } else {
           // 로그인 실패
-          alert(login_user.msg);
+          Swal.fire({
+            icon: 'error',
+            title: '입력 정보 오류!',
+            text: '아이디 또는 비밀번호를 확인 바랍니다!',
+            footer: '<a href="">Why do I have this issue?</a>',
+            target: document.querySelector('.MuiDialog-root'),
+          });
+          // alert(login_user.msg);
         }
       })
       .catch(function(error) {
@@ -173,7 +158,7 @@ const SignInSection01 = () => {
 
   useEffect(() => {
     // 여기가 콘솔로 확인하는 것! [존..매우 중요]
-    console.log({ signInUserData });
+    //console.log({ signInUserData });
 
     if (
       signInUserData.id !== '' &&
@@ -192,13 +177,7 @@ const SignInSection01 = () => {
     ) {
       setDisabled(true);
     }
-  }, [
-    signInUserData.id,
-    signInUserData.password,
-    signInIdErr,
-    signInPwdErr,
-    user,
-  ]);
+  }, [signInUserData.id, signInUserData.password, signInIdErr, signInPwdErr]);
 
   return (
     <Wrapper>
@@ -267,29 +246,6 @@ const SignInSection01 = () => {
             로그인
           </Button>
         </Grid>
-        {/* <Grid item xs={12} className="grid-item">
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            spacing={0}
-          >
-            <Grid item xs={5}>
-              <Divider />
-            </Grid>
-
-            <Grid item xs={2}>
-              <Typography align="center" className="grid-item-typography1">
-                or
-              </Typography>
-            </Grid>
-
-            <Grid item xs={5}>
-              <Divider />
-            </Grid>
-          </Grid>
-        </Grid> */}
         <Grid item xs={12}>
           <Grid container direction="row" justify="center" alignItems="center">
             <IconButton
@@ -398,7 +354,6 @@ const SignUpSection02 = () => {
     if (name === 'id' && e.target.value.length > 3) {
       Axios.get(serverUrlBase + `/user/checkid/` + e.target.value).then(
         data => {
-          // console.log(data.data.idchk);
           if (data.data.idchk === false) {
             setSignUpIdErr(true);
             setSignUpIdErrMsg('이미 있는 아이디입니다!');
@@ -496,8 +451,6 @@ const SignUpSection02 = () => {
     }
   };
 
-  console.log(signUpUserData);
-
   const [signUpIdErr, setSignUpIdErr] = useState(false);
   const [signUpIdErrMsg, setSignUpIdErrMsg] = useState();
 
@@ -528,48 +481,18 @@ const SignUpSection02 = () => {
       grade,
     } = signUpUserData;
 
-    // 비번 일치 유무... 안됨
-    // if (signUpUserData.password !== signUpUserData.passwordConfirmation) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: '비번 불일치 오류',
-    //     text: '비번 통일 시키세요~',
-    //     footer: '<a href="">Why do I have this issue?</a>',
-    //     target: document.querySelector('.MuiDialog-root'),
-    //   });
-    // }
+    if (signUpUserData.password !== signUpUserData.passwordConfirmation) {
+      Swal.fire({
+        icon: 'error',
+        title: '비밀번호 불일치',
+        text: '다시 한번 확인해 주세요!',
+        footer: '<a href="">Why do I have this issue?</a>',
+        target: document.querySelector('.MuiDialog-root'),
+      });
+      return;
+    }
 
-    // if (
-    //   id === '' ||
-    //   password === '' ||
-    //   passwordConfirmation === '' ||
-    //   name === '' ||
-    //   nickname === '' ||
-    //   email === '' ||
-    //   grade === ''
-    // ) {
-    //   alert('You need 문구는 수정해야 ! both email and password and username.');
-    //   return;
-    // }
-
-    // if (!regId.test(signUpUserData.id)) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: '아이디 형식 오류',
-    //     text: '영소문자+숫자, 4자이상',
-    //     footer: '<a href="">Why do I have this issue?</a>',
-    //     target: document.querySelector('.MuiDialog-root'),
-    //   });
-    //   setSignUpIdErr(true);
-    //   setSignUpIdErrMsg('영소문자+숫자, 4자이상');
-    //   return;
-    // } else {
-    //   setSignUpIdErr(false);
-    //   setSignUpIdErrMsg();
-    // }
-
-    let respone = [];
-    let hashPassword = 'test2';
+    let hashPassword = '';
     try {
       hashPassword = crypto
         .createHash('sha512')
@@ -579,19 +502,6 @@ const SignUpSection02 = () => {
       console.log('PPAP: signInHandler -> error', error);
     }
 
-    // var body = {
-    //   user_id: id,
-    //   user_pw: password,
-    //   user_name: name,
-    //   user_nickName: nickname,
-    //   user_email: email,
-    //   user_code: 'U01',
-    // };
-    // console.log('PPAP: signUpHandler -> body', body);
-
-    // 회원가입 result
-    // result : success 아니면 false
-    // success 아니면 fail
     Axios.post(serverUrlBase + `/user/regi`, {
       user_id: id,
       user_pw: hashPassword,
@@ -612,7 +522,13 @@ const SignUpSection02 = () => {
             target: document.querySelector('.MuiDialog-root'),
           });
         } else {
-          alert('가입에 실패하였습니다.');
+          Swal.fire({
+            icon: 'error',
+            title: '회원가입 실패!',
+            text: '?',
+            footer: '<a href="">Why do I have this issue?</a>',
+            target: document.querySelector('.MuiDialog-root'),
+          });
         }
       })
       .catch(function(error) {
@@ -632,6 +548,7 @@ const SignUpSection02 = () => {
     });
   };
 
+  // value를 고치면 될 듯
   const grades = [
     {
       value: '멘토',
@@ -807,7 +724,6 @@ const SignUpSection02 = () => {
             label="등급"
             defaultValue="일반"
             onChange={OnChangeHandler('grade')}
-            // helperText="등급 선택 꼭 해주세요! (넣지마?)"
             variant="outlined"
             fullWidth={true}
           >
@@ -859,17 +775,6 @@ const SignUpSection03 = () => {
           spacing={1}
           className="sign-up3-grid-item"
         >
-          {/* <Grid item xs={5}>
-            <Divider />
-          </Grid> */}
-          {/* <Grid item xs={2}>
-            <Typography
-              align="center"
-              className="sign-up3-grid-item-typography"
-            >
-              or
-            </Typography>
-          </Grid> */}
           <Grid item xs={12}>
             <Divider />
           </Grid>
@@ -992,14 +897,6 @@ const ForgotPwGroupComponent = () => {
         <Grid item xs={12}>
           <h3>계정이 없다면 바로 가입하세요!</h3>
         </Grid>
-        {/* <h5
-          className="btn-to-sign-up"
-          onClick={() => {
-            onClickHandler(`SignUp`);
-          }}
-        >
-          회원가입
-        </h5> */}
         <Grid item xs={12}>
           <IconButton
             className="sign-in-butoon grid-item-icon-button"
@@ -1012,15 +909,6 @@ const ForgotPwGroupComponent = () => {
             </Typography>
           </IconButton>
         </Grid>
-        {/* <button
-          type="button"
-          className="btn-login"
-          onClick={() => {
-            onClickHandler(`SignIn`);
-          }}
-        >
-          로그인하기
-        </button> */}
         <Grid item xs={12}>
           <Button
             fullWidth={true}
