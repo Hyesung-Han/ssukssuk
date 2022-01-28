@@ -1,0 +1,142 @@
+<!-- /server/sql/base/base.xml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NOTICE">  
+
+  <select id="NOTICE.SELECT.noticedetail">
+  	/* 공지사항 글 상세보기 */
+    SELECT  
+        *
+    FROM notice_t
+    WHERE notice_no = #{no}
+    LIMIT 1
+  </select>
+
+  <select id="NOTICE.SELECT.noticelist">
+    /* 공지사항 글 전체 목록 */ 
+    SELECT  
+        notice_t.notice_no,
+        notice_title,
+        notice_author,
+        notice_date,
+        notice_content,
+        notice_hit,
+        notice_code,
+        notice_user_id,
+        count(comment_no) as 'comment_cnt' 
+    FROM notice_t left 
+    outer join n_comment_t on notice_t.notice_no = n_comment_t.notice_no
+    <where>
+    <if test="type != undefined"> and notice_code = #{type}</if>
+    <if test="keyword != undefined"> and notice_title like concat('%',#{keyword}, '%')
+    or notice_content like concat('%',#{keyword}, '%')</if>
+    </where>
+    group by notice_t.notice_no
+    order by notice_code, notice_no desc
+    LIMIT ${length} OFFSET ${start} ;
+  </select>
+
+  <select id="NOTICE.SELECT.noticelistcount">
+    /* 공지사항 글 전체 목록 개수 */ 
+     SELECT  
+        count(notice_no) as 'list_cnt',
+        notice_code
+    FROM notice_t
+    <Where>
+      <if test="type != undefined"> and notice_code = #{type}</if>
+      <if test="keyword != undefined"> and notice_title like CONCAT('%',#{keyword},'%') 
+      OR notice_content like CONCAT('%',#{keyword},'%')</if>
+    </Where>
+    group by notice_t.notice_no;
+  </select>
+
+  <insert id="NOTICE.INSERT.noticewrite">
+  	/* 공지사항 글쓰기 */
+    INSERT INTO notice_t
+    (
+        notice_title,
+        notice_author,
+        notice_date,
+        notice_content,
+        notice_code,
+        notice_user_id
+    )
+    VALUES
+    (
+        #{title}, 
+        #{author},
+        now(),
+        #{content},
+        #{code},
+        #{user_id}
+    )
+  </insert>
+
+  <update id = "NOTICE.UPDATE.NOTICEUPDATE">
+  /* 공지사항 글 수정 */
+      update notice_t set
+      notice_title = #{title},
+      notice_content = #{content}
+      where notice_no = #{no}
+  </update>
+
+
+  <delete id="NOTICE.DELETE.NOTICEDELETE">
+    /* 공지사항 삭제 */
+    Delete
+    From notice_t
+    Where notice_no = #{no}
+      
+  </delete>
+
+<insert id="NOTICE.INSERT.commentwrite">
+  	/* 공지사항 댓글쓰기 */
+    INSERT INTO n_comment_t
+    (
+        comment_user_nickName,
+        notice_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    )
+    VALUES
+    (
+        #{user_nickName},
+        #{notice_no},
+        #{text},
+        now(),
+        #{user_id}
+    )
+  </insert>
+
+  <update id = "NOTICE.UPDATE.COMMENTUPDATE">
+  /* 공지사항 댓글 수정 */
+      update n_comment_t set
+      comment_text = #{text}
+      where comment_no = #{no}
+  </update>
+
+
+  <delete id="NOTICE.DELETE.COMMENTDELETE">
+    /* 공지사항 댓글 삭제 */
+    Delete
+    From n_comment_t
+    Where comment_no = #{no}
+  </delete>
+
+  <select id="NOTICE.SELECT.commentlist">
+    /* 공지사항 댓글 전체 목록 */ 
+    SELECT  
+        comment_no,
+        comment_user_nickName,
+        notice_no,
+        comment_text,
+        comment_date,
+        comment_user_id
+    FROM n_comment_t
+    where notice_no = #{no}
+    order by comment_no desc;
+    </select>
+
+</mapper>

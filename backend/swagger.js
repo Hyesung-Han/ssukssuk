@@ -8,7 +8,18 @@ const options = {
             version: '1.0.0',
             description: 'SSSS API with express',
         },
-        host: 'localhost:3001',
+        securityDefinitions: {
+            jwt: {
+              type: 'apiKey',
+              name: 'Authorization',
+              in: 'header'
+            }
+        },
+        security: [
+            { jwt: [] }
+        ],
+        // host: 'localhost:3001',
+        host: '52.79.38.33:3001',
         basePath: '/'
     },
     apis: ['./routes/*.js', './swagger/*']

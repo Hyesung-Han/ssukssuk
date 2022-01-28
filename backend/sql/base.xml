@@ -21,24 +21,29 @@
   <select id="AUTH.SELECT.userInfo">
   	/* 사용자, 유저 정보 조회 */
     SELECT  
-        *
-    FROM user_T
-    WHERE user_id = #{id}
-    LIMIT 1
+        u.user_id,
+        u.user_name,
+        u.user_nickName,
+        u.user_email,
+        u.user_code,
+        c.code_name
+    FROM user_t u, code_t c
+    WHERE code_id = user_code and user_id = #{id}
+    LIMIT 1;
   </select>
 
 
   <delete id="AUTH.DELETE.USERDELETE">
     /* 사용자, 유저 정보 삭제 */
     Delete
-    From user_T
-    Where user_id = #{id}
+    From user_t
+    Where user_id = #{id} and user_pw = #{pw}
       
   </delete>
 
   <insert id="AUTH.INSERT.userRegi">
   	/* 사용자, 유저 정보 삽입 */
-    INSERT INTO user_T
+    INSERT INTO user_t
     (
         user_id,
         user_pw,
@@ -62,7 +67,7 @@
   	/*ID 중복검사*/
     SELECT  
         user_id
-    FROM user_T
+    FROM user_t
     WHERE user_id = #{user_id}
   </select>
 
@@ -70,21 +75,22 @@
   	/*닉네임 중복검사*/
     SELECT  
         user_nickName
-    FROM user_T
+    FROM user_t
     WHERE user_nickName = #{user_nickName}
   </select>
 
   <select id="AUTH.SELECT.userexist">
     /*로그인: 존재하는 회원인지 검사*/
     SELECT  
-        user_id,
-        user_pw,
-        user_name,
-        user_nickName,
-        user_email,
-        user_code
-    FROM user_T
-    WHERE user_id = #{id}
+        u.user_id,
+        u.user_pw,
+        u.user_name,
+        u.user_nickName,
+        u.user_email,
+        u.user_code,
+        c.code_name
+    FROM user_t u, code_t c
+    WHERE u.user_code = c.code_id and u.user_id = #{id}
     LIMIT 1
   </select>
 

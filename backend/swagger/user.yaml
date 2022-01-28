@@ -21,7 +21,7 @@ schemes:
   - "https"
   - "http"
 paths:
-  /user/delete/{id}:
+  /user/delete:
     delete:
       tags:
         - "user"
@@ -32,14 +32,19 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
-        - in: "path"
-          name: "id"
-          description: "ID of the order that needs to be deleted"
+        - name: "user_id"
+          in: "formData"
+          description: "ID"
           required: true
           type: "string"
-    responses:
-      default:
-        description: "successful operation"
+        - name: "user_pw"
+          in: "formData"
+          description: "password"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
 
   /user/myInfo/{id}:
     get:
@@ -64,9 +69,9 @@ paths:
     get:
       tags:
         - "user"
-      summary: "get userinfo"
+      summary: "get user id chk"
       description: "This can only be done by the logged in user."
-      operationId: "selectUser"
+      operationId: "chkIDUser"
       produces:
         - "application/xml"
         - "application/json"
@@ -83,7 +88,7 @@ paths:
     get:
       tags:
         - "user"
-      summary: "get userinfo"
+      summary: "get get user nick chk"
       description: "This can only be done by the logged in user."
       operationId: "chkNickNameUser"
       produces:
@@ -125,7 +130,7 @@ paths:
         - "user"
       summary: "Update userinfo"
       description: "This can only be done by the logged in user."
-      operationId: "createUser"
+      operationId: "updateinfo"
       produces:
         - "application/xml"
         - "application/json"
@@ -203,16 +208,9 @@ paths:
         "400":
           description: "Invalid username/password supplied"
 securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
+  jwt:
+    type: apiKey
+    name: "Authorization"
     in: "header"
 
 definitions:
