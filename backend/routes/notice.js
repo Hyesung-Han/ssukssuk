@@ -59,7 +59,7 @@ app.get("/detail/:no", async (req, res) => {
 
 // 공지사항 글 전체 목록 add (01.24 hhs)
 app.get("/list", async function (req, res) {
-  const page_no = (req.query.page_no - 1) * 10 + 1;
+  const page_no = (req.query.page_no - 1) * 10;
   var selectParams = {
     type: req.query.notice_code,
     keyword: req.query.keyword,
@@ -354,7 +354,7 @@ app.delete("/comment/delete/:no", async (req, res) => {
   res.json({ result: "success" });
 }); // 공지사항 댓글 삭제 ends
 
-// 공지사항 댓글 전체 목록 add (01.25 hhs)
+// 공지사항 댓글 전체 목록 fix (01.28 OYT)
 app.get("/comment/list", async function (req, res) {
   var selectParams = {
     no: req.query.notice_no,
@@ -378,9 +378,21 @@ app.get("/comment/list", async function (req, res) {
   }
 
   if (data.length == 0) {
-    res.status(403).send({ result: "fail" });
+    res.json({
+      result: "success",
+      data: data = {}
+    });
     return;
+  }else{
+    // 댓글 목록 꺼내오기
+    res.json({
+      result: "success",
+      user: data.map((x) => {
+        return x;
+      }),
+    });
   }
+<<<<<<< HEAD
 
   // 댓글 목록 꺼내오기
   res.json({
@@ -389,6 +401,8 @@ app.get("/comment/list", async function (req, res) {
       return x;
     }),
   });
+=======
+>>>>>>> 306f9542389cfa85a711456df60bcc4824551d8c
 }); // 공지사항 댓글 전체 목록 end
 
 module.exports = app;
