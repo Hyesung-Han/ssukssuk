@@ -1,0 +1,47 @@
+<!-- /server/sql/base/base.xml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MYFARM">  
+
+  <select id="MYFARM.SELECT.myfarmdetail">
+  	/* 내 농장 상세보기 */
+    SELECT  
+        *
+    FROM my_farm_t
+    WHERE farm_no = #{no}
+    LIMIT 1
+  </select>
+
+  <select id="MYFARM.SELECT.myfarmlist">
+    /* 내 농장 전체 목록 */ 
+    SELECT  
+        farm_no,
+        user_id,
+        farm_name,
+        farm_text
+    FROM my_farm_t
+    <where>
+    <if test="keyword != undefined"> and (farm_name like concat('%',#{keyword}, '%')
+    or farm_text like concat('%',#{keyword}, '%'))</if>
+    </where>
+    order by farm_no asc;
+  </select>
+
+  <update id = "MYFARM.UPDATE.myfarmupdate">
+  /* 내 농장 정보 수정 */
+      update my_farm_t set
+      farm_name = #{name},
+      farm_text = #{text}
+      where farm_no = #{no}
+  </update>
+
+
+  <delete id="MYFARM.DELETE.myfarmdelete">
+    /* 내 농장 정보 삭제 */
+    Delete
+    From my_farm_t
+    Where farm_no = #{no}
+  </delete>
+
+</mapper>
