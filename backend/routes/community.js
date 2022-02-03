@@ -168,9 +168,7 @@ app.get("/detail/:community_no", async function (req, res) {
   // 글 내용 꺼내오기
   res.json({
     msg: data[0].community_no + "의 글 정보",
-    data: data.map((x) => {
-      return x;
-    }),
+    data : data[0]
   });
 }); // 글 상세보기 end
 

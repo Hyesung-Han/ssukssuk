@@ -51,9 +51,7 @@ app.get("/detail/:no", async (req, res) => {
 
   res.json({
     result: "success",
-    data: data.map((x) => {
-      return x;
-    }),
+    data: data[0]
   });
 }); // 공지사항 글 상세보기 end
 
