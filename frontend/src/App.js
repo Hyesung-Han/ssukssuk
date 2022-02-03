@@ -20,7 +20,9 @@ import MainVote from './pages/MainVote/';
 import ContactUs from './pages/ContactUs/';
 import CreateVote from './pages/CreateVote/';
 import SearchVote from './pages/SearchVote/';
-import Ask from './pages/Ask/';
+import Notice from './pages/Notice';
+import NoticeDetail from './pages/Notice/Detail/';
+import NoticeWrite from './pages/Notice/Write/';
 import Community from './pages/Community/';
 import Admin from './pages/Admin/';
 import MyFarm from './pages/MyFarm/';
@@ -120,11 +122,17 @@ const App = () => {
             <Route exact path="/SearchVote" component={SearchVote} />
             <Route exact path="/not-found" component={NotFound} />
             <Route exact path="/CreateVote" component={CreateVote} />
-            <Route exact path="/Ask" component={Ask} />
+            <Route exact path="/Notice" component={Notice} />
+            <Route exact path="/NoticeDetail/:no" component={NoticeDetail} />
+            <Route exact path="/NoticeWrite" component={NoticeWrite} />
             <Route exact path="/Community" component={Community} />
             <Route exact path="/MyFarm" component={MyFarm} />
             <Route exact path="/Admin" component={Admin} />
-            <Route exact path="/CommunityDetail/:no" component={CommunityDetail} />
+            <Route
+              exact
+              path="/CommunityDetail/:no"
+              component={CommunityDetail}
+            />
             <Route exact path="/CommunityWrite" component={CommunityWrite} />
             <Redirect to="/not-found" />
           </Switch>
