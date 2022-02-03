@@ -1,5 +1,6 @@
 // import { Grid, Button } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
+import Axios from 'axios';
 
 import {
   Grid,
@@ -22,8 +23,7 @@ import { CommonContext } from '../../context/CommonContext';
 import { ViewContext } from '../../context/ViewContext';
 import Wrapper from './styles';
 
-import listData from './dump.json';
-import noticeData from './notice.json';
+import { useSelector, useDispatch } from 'react-redux'
 
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -38,14 +38,28 @@ const theme = createTheme({
   },
 });
 
+function createData(no, hit, title, author, date) {
+  return {
+    no,
+    hit,
+    title,
+    author,
+    date,
+  };
+}  
+
 const Community = () => {
-  const { user, setIsSignUp } = useContext(CommonContext);
+  const user = useSelector(state => state.Auth.user);
+  const { setIsSignUp, serverUrlBase } = useContext(CommonContext);
 
   let history = useHistory();
 
+  const [listData, setListData] = useState([]);
+  const [noticeData, setNoticeData] = useState([]);
+  const [freeLen, setFreeLen] = useState(0);
+  const [mentoLen, setMentoLen] = useState(0);
   const [category, setCategory] = React.useState(0);
-  const [isSearch, setIsSearch] = useState(false);
-  const [searchValue, setSearchValue] = useLocalStorageSetState('', 'search');
+  const [searchValue, setSearchValue] = useState(null);
   const [searchCategory, setSearchCategory] = useState(0);
   const [page, setPage] = React.useState(1);
 
@@ -59,39 +73,110 @@ const Community = () => {
 
   const onClickCommunityWriteHandler = () => {
     if (!user.status) {
-      // 여기도 SignUp 변경하는거 다른 사람들이랑 충돌 안나도록 일단은 이렇게 하고 나중에 다 만들고 나서 바꿀 수 있으면 최적화
-      alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-      setIsSignUp('SignIn');
-      history.push('/Auth');
+      alert('로그인이 필요합니다');
+      // setIsSignUp('SignIn');
+      // history.push('/Auth');
     } else {
       history.push('/CommunityWrite');
     }
   };
 
+  const pageLen = [];
+  const setPageLen = () => {
+    pageLen.splice(0, pageLen.length);
+
+    pageLen.push((freeLen+mentoLen===1)?0:parseInt((freeLen + mentoLen) / 10) + 1);
+    pageLen.push((freeLen===1)?0:parseInt(freeLen / 10) + 1);
+    pageLen.push((mentoLen===1)?0:parseInt(mentoLen / 10) + 1);
+  };
+
+  const getCommunityListCnt = () => {
+    Axios.get(serverUrlBase + `/community/listcount`, {
+      params: {
+        keyword: searchValue,
+      },
+    })
+      .then(data => {
+        let tf,tm;
+        tf=tm=0;
+
+        const cnt_data = data.data.data;
+        cnt_data.map(cur => {
+          if (cur.community_code === 'C01') tf=cur.list_cnt;
+          else if (cur.community_code === 'C02') tm=cur.list_cnt;
+        });
+        setFreeLen(tf)
+        setMentoLen(tm)
+      })
+      .catch(function(error) {
+        console.log('community list count error: ' + error);
+      });
+  };
+
+  const readCommunityList = () => {
+    const keyword = searchValue ? searchValue : null;
+    let communityCode;
+    if (category === 0) communityCode = null;
+    else if (category === 1) communityCode = 'c01';
+    else if (category === 2) communityCode = 'c02';
+
+    Axios.get(serverUrlBase + `/community/list`, {
+      params: {
+        community_code: communityCode,
+        keyword: keyword,
+        page_no: page,
+      },
+    })
+      .then(data => {
+        const tempList=[];
+        data.data.data.map(row => {
+          if(row.community_author){
+          tempList.push(
+              createData(
+                row.community_no,
+                row.community_hit,
+                row.community_title,
+                row.community_author,
+                row.community_date,
+              ),
+            );
+          }
+          });
+        setListData(tempList);
+      })
+      .catch(function(error) {
+        console.log('community list error: ' + error);
+      });
+  };
+
+  // useEffect를 3개로 나눠놓으니까 처음 실행할 때 서버에 3번 연결하네;;;;;
   useEffect(() => {
-    // 백엔드랑 연결되면 여기서 카테고리와 value, page를 사용해서 리스트 갱신해주는 것 추가
-    console.log(category, searchCategory, searchValue, page);
-    // 리스트 갱신되는지 확인함
-    listData.items.push({
-      community_no: listData.items.length + 1,
-      community_title: '[정보글] 귀농 3년이면 과일도 심는다?',
-      community_author: '도시보다 시골',
-      community_date: '20220121',
-      community_content: 'test_content6',
-      community_hit: 0,
-      community_code: 'free',
-    });
+    getCommunityListCnt();
+    setPageLen();
 
-    if (isSearch) {
+    if (page === 1) {
+      readCommunityList();
+      window.scrollTo(0, 0);
+    } else {
       setPage(1);
-      setIsSearch(!isSearch); // 이거때문에 한번 더 렌더링 되는거 같은데 어떻게 좀 바꿀 수 없을까
     }
-  }, [isSearch, page, category]);
+  }, [searchValue]);
 
-    // 이건 나중에 받아오는걸로
-    const free_len = listData.items.length;
-    const mento_len=10;
+  useEffect(() => {
+    if (page === 1) {
+      readCommunityList();
+      window.scrollTo(0, 0);
+    } else {
+      setPage(1);
+    }
+  }, [category]);
 
+  useEffect(() => {
+    readCommunityList();
+    window.scrollTo(0, 0); // 스크롤 맨 위로 이동
+  }, [page]);
+
+  setPageLen();
 
   return (
     <ViewContext.Provider
@@ -100,8 +185,6 @@ const Community = () => {
         setSearchValue,
         searchCategory,
         setSearchCategory,
-        isSearch,
-        setIsSearch,
       }}
     >
       <Layout>
@@ -124,13 +207,16 @@ const Community = () => {
                 >
                   <Tab
                     className="tab-style"
-                    label={'전체 게시판 ('+(free_len+mento_len)+')'}
+                    label={'전체 게시판 (' + (freeLen + mentoLen) + ')'}
                   />
                   <Tab
                     className="tab-style"
-                    label={'자유 게시판 ('+free_len+')'}
+                    label={'자유 게시판 (' + freeLen + ')'}
                   />
-                  <Tab className="tab-style" label={"멘토 게시판 (" + mento_len + ")"} />
+                  <Tab
+                    className="tab-style"
+                    label={'멘토 게시판 (' + mentoLen + ')'}
+                  />
                 </Tabs>
               </Grid>
             </ThemeProvider>
@@ -143,7 +229,7 @@ const Community = () => {
               </Button>
             </Grid>
           </Grid>
-
+          {/* {searchValue && <div className="result">{searchValue} 검색 결과</div>} */}
           <BoardList listData={listData} noticeData={noticeData} />
 
           <Grid
@@ -151,10 +237,13 @@ const Community = () => {
             container
             alignItems="flex-end"
             direction="column"
-          >
-          </Grid>
+          ></Grid>
           <Grid container alignItems="center" direction="column">
-            <Pagination count={10} page={page} onChange={handlePageChange} />
+            <Pagination
+              count={pageLen[category]}
+              page={page}
+              onChange={handlePageChange}
+            />
           </Grid>
           <SearchComponent />
         </Wrapper>
