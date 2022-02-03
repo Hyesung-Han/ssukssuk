@@ -1,0 +1,49 @@
+<!-- /server/sql/base/base.xml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MYFARM_SURVEY">  
+
+  <select id="MYFARM_SURVEY.SELECT.myfarm_surveylist">
+    /* 내 농장 설문 전체 목록 */ 
+    SELECT
+        user_t.user_id,
+        my_farm_t.farm_no,
+        survey_no,
+        temperature,
+        humidity,
+        survey_result,
+        survey_etc,
+    FROM survey_t join my_farm_t on survey_t.farm_no = my_farm_t.farm_no
+    WHERE farm_no = #{no} 
+    and my_farm_t.farm_no = survey_t.farm_no
+    and user_t.user_id = my_farm_t.user_id
+    order by survey_no desc
+    LIMIT ${length} OFFSET ${start} ;
+  </select>
+
+  <select id="MYFARM.SELECT.myfarm_surveydetail">
+  	/* 내 설문 상세보기 (모달 창 띄울 시 사용)*/
+    SELECT
+        user_id,  
+        farm_no,
+        survey_no,
+        temperature,
+        humidity,
+        survey_result,
+        survey_etc,
+    FROM my_farm_t
+    WHERE farm_no = #{farm_no} and survey_no= #{survey_no}
+    LIMIT 1
+  </select>
+
+  <select id="MYFARM_SURVEY.SELECT.myfarm_sensor">
+    /* 현재 농장 상태 가져오기 */ 
+    SELECT  
+      user_id,
+      
+    FROM survey_t
+    order by survey_no desc;
+  </select>
+
+</mapper>
