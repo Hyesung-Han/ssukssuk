@@ -41,6 +41,7 @@ app.use(uploadFilePath, express.static(path.join(__dirname + uploadFilePath)));
 app.use("/community", require(`${__dirname}/routes/community`));
 app.use("/user", require(`${__dirname}/routes/auth`));
 app.use("/notice", require(`${__dirname}/routes/notice`));
+app.use("/myfarm", require(`${__dirname}/routes/myfarm`));
 
 app.get("/", function (req, res) {
   res.send("Hello node.js");
