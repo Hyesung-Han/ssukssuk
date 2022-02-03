@@ -51,7 +51,7 @@ app.get("/detail/:no", async (req, res) => {
 
   res.json({
     result: "success",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
@@ -97,7 +97,7 @@ app.get("/list", async function (req, res) {
   // 글 목록 꺼내오기
   res.json({
     result: "success",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
@@ -140,7 +140,7 @@ app.get("/listcount", async function (req, res) {
   // 글 목록 꺼내오기
   res.json({
     result: "success",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
@@ -385,7 +385,7 @@ app.get("/comment/list", async function (req, res) {
   // 댓글 목록 꺼내오기
   res.json({
     result: "success",
-    user: data.map((x) => {
+    data: data.map((x) => {
       return x;
     }),
   });
