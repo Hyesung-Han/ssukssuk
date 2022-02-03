@@ -16,14 +16,15 @@ mybatisMapper.createMapper([`${sqlPath}/myfarm.xml`]);
 var app = express.Router();
 
 // 내 농장 상세보기 add (02.03 hhs)
-app.get("/detail/:no", async (req, res) => {
-  if (!req.params || !req.params.no) {
+app.get("/detail", async (req, res) => {
+  if (!req.query || !req.query.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
   }
 
   var selectParams = {
-    no: req.params.no,
+    id: req.query.id,
+    no: req.query.no
   };
 
   var selectQuery = mybatisMapper.getStatement(
@@ -61,6 +62,7 @@ app.get("/detail/:no", async (req, res) => {
 app.get("/list", async function (req, res) {
   var selectParams = {
     keyword: req.query.keyword,
+    id:req.query.id
   };
   var selectQuery = mybatisMapper.getStatement(
     "MYFARM",

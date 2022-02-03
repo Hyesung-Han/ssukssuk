@@ -9,7 +9,11 @@
     SELECT  
         *
     FROM my_farm_t
-    WHERE farm_no = #{no}
+    <WHERE>
+      <if test="no != undefined">farm_no = #{no} and</if> 
+      user_id = #{id}
+    </WHERE>
+    order by farm_no asc
     LIMIT 1
   </select>
 
@@ -22,6 +26,7 @@
         farm_text
     FROM my_farm_t
     <where>
+      user_id = #{id}
     <if test="keyword != undefined"> and (farm_name like concat('%',#{keyword}, '%')
     or farm_text like concat('%',#{keyword}, '%'))</if>
     </where>

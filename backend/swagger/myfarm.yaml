@@ -41,7 +41,7 @@ paths:
         default:
           description: "successful operation"
 
-  /myfarm/detail/{no}:
+  /myfarm/detail:
     get:
       tags:
         - "myfarm"
@@ -52,10 +52,16 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
-        - in: path
-          name: "no"
-          description: "myfarm no"
+        - name: "id"
+          in: "query"
+          description: "user ID"
           required: true
+          type: "string"
+        - name: "no"
+          in: "query"
+          description: "myfarm Number"
+          required: false
+          type: "integer"
       responses:
         default:
           description: "successful operation"
@@ -71,6 +77,11 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
+        - name: "id"
+          in: "query"
+          description: "user ID"
+          required: true
+          type: "string"
         - name: "keyword"
           in: "query"
           description: "검색어"
