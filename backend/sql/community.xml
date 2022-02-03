@@ -71,6 +71,13 @@
     where community_no = #{no};
   </select>
 
+  <update id = "COMMUNITY.UPDATE.hitcount">
+    /* 조회수 추가 */
+      UPDATE community_t SET
+      community_hit = community_hit + 1
+      where community_no = #{no}
+  </update>
+
   <delete id="COMMUNITY.DELETE.article">
     /* 글정보 삭제 */
     Delete

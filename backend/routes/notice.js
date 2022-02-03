@@ -15,7 +15,7 @@ mybatisMapper.createMapper([`${sqlPath}/notice.xml`]);
 
 var app = express.Router();
 
-// 공지사항 글 상세보기 add (01.24 hhs)
+// 공지사항 글 상세보기 fix (02.03 OYT)
 app.get("/detail/:no", async (req, res) => {
   if (!req.params || !req.params.no) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
@@ -26,6 +26,13 @@ app.get("/detail/:no", async (req, res) => {
     no: req.params.no,
   };
 
+  var updateQuery = mybatisMapper.getStatement(
+    "NOTICE",
+    "NOTICE.UPDATE.hitcount",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+
   var selectQuery = mybatisMapper.getStatement(
     "NOTICE",
     "NOTICE.SELECT.noticedetail",
@@ -34,6 +41,17 @@ app.get("/detail/:no", async (req, res) => {
   );
 
   let data = [];
+  // 조회수 업데이트
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "조회수 업데이트에 실패하였습니다.", error: error });
+    return;
+  }
+
   try {
     data = await req.sequelize.query(selectQuery, {
       type: req.sequelize.QueryTypes.SELECT,
