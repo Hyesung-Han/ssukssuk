@@ -380,29 +380,18 @@ app.get("/comment/list", async function (req, res) {
   if (data.length == 0) {
     res.json({
       result: "success",
-      data: data = {}
+      data: (data = {}),
     });
     return;
-  }else{
+  } else {
     // 댓글 목록 꺼내오기
     res.json({
       result: "success",
-      user: data.map((x) => {
+      data: data.map((x) => {
         return x;
       }),
     });
   }
-<<<<<<< HEAD
-
-  // 댓글 목록 꺼내오기
-  res.json({
-    result: "success",
-    data: data.map((x) => {
-      return x;
-    }),
-  });
-=======
->>>>>>> 306f9542389cfa85a711456df60bcc4824551d8c
 }); // 공지사항 댓글 전체 목록 end
 
 module.exports = app;
