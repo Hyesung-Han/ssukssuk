@@ -233,7 +233,7 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
-        - name: "notice_no"
+        - name: "article_no"
           in: "query"
           description: "notice comment list"
           required: false
@@ -282,7 +282,7 @@ definitions:
     properties:
       comment_user_nickName:
         type: "string"
-      notice_no:
+      article_no:
         type: "integer"
       comment_text:
         type: "string"
