@@ -17,14 +17,13 @@ var app = express.Router();
 
 // 글 목록 가져오기 (add 01.24 OYT)
 app.get("/list", async function (req, res) {
-  
-  const page_no = ((req.query.page_no - 1) * 10);
+  const page_no = (req.query.page_no - 1) * 10;
 
   var selectParams = {
     type: req.query.community_code,
     keyword: req.query.keyword,
     length: 10,
-    start : page_no
+    start: page_no,
   };
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",
@@ -40,7 +39,9 @@ app.get("/list", async function (req, res) {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "글목록 불러오기에 실패하였습니다.", error: error });
+    res
+      .status(403)
+      .send({ msg: "글목록 불러오기에 실패하였습니다.", error: error });
     return;
   }
 
@@ -64,7 +65,6 @@ app.get("/list", async function (req, res) {
 
 // 글 작성 (add 01.24 OYT)
 app.post("/regi", async function (req, res) {
-
   var insertParams = {
     title: req.body.community_title,
     author: req.body.community_author,
@@ -88,9 +88,7 @@ app.post("/regi", async function (req, res) {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res
-      .status(403)
-      .send({ msg: "글작성에 실패하였습니다.", error: error });
+    res.status(403).send({ msg: "글작성에 실패하였습니다.", error: error });
     return;
   }
 
@@ -104,7 +102,6 @@ app.post("/regi", async function (req, res) {
 
 // 글 수정 (add 01.24 OYT)
 app.put("/update", async function (req, res) {
-
   var updateParams = {
     title: req.body.community_title,
     content: req.body.community_content,
@@ -137,7 +134,6 @@ app.put("/update", async function (req, res) {
 
 // 글 상세 보기 (fix 02.03 OYT)
 app.get("/detail/:community_no", async function (req, res) {
-
   var selectParams = {
     no: req.params.community_no,
   };
@@ -164,7 +160,9 @@ app.get("/detail/:community_no", async function (req, res) {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "조회수 업데이트에 실패하였습니다.", error: error });
+    res
+      .status(403)
+      .send({ msg: "조회수 업데이트에 실패하였습니다.", error: error });
     return;
   }
 
@@ -174,7 +172,9 @@ app.get("/detail/:community_no", async function (req, res) {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "글 정보 불러오기에 실패하였습니다.", error: error });
+    res
+      .status(403)
+      .send({ msg: "글 정보 불러오기에 실패하였습니다.", error: error });
     return;
   }
 
@@ -183,15 +183,11 @@ app.get("/detail/:community_no", async function (req, res) {
     return;
   }
 
-
-
   // 글 내용 꺼내오기
   res.json({
     msg: data[0].community_no + "의 글 정보",
-    data : data[0]
+    data: data[0],
   });
-
-  
 }); // 글 상세보기 end
 
 // 글 삭제 (add 01.24 OYT)
@@ -199,7 +195,7 @@ app.delete("/delete/:community_no", async function (req, res) {
   if (!req.params || !req.params.community_no) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
     return;
-  };
+  }
 
   var deleteParams = {
     no: req.params.community_no,
@@ -252,7 +248,7 @@ app.get("/listcount", async function (req, res) {
   if (data.length == 0) {
     res.json({
       result: "success",
-      data: [{list_cnt: 0}],
+      data: [{ list_cnt: 0 }],
     });
     return;
   }
@@ -266,12 +262,11 @@ app.get("/listcount", async function (req, res) {
   });
 }); // 커뮤니티 글 개수 end
 
-
 // 커뮤니티 댓글 작성 add (01.25 OYT)
 app.post("/comment/write", async (req, res) => {
   var insertParams = {
     user_nickName: req.body.comment_user_nickName,
-    community_no: req.body.community_no,
+    community_no: req.body.article_no,
     text: req.body.comment_text,
     user_id: req.body.comment_user_id,
   };
@@ -304,7 +299,6 @@ app.post("/comment/write", async (req, res) => {
     body: req.body,
   });
 }); // 커뮤니티 댓글 작성 end
-
 
 // 커뮤니티 댓글 수정 add (01.25 OYT)
 app.put("/comment/update", async (req, res) => {
@@ -375,7 +369,7 @@ app.delete("/comment/delete/:no", async (req, res) => {
 // 커뮤니티 댓글 전체 목록 fix (01.28 OYT)
 app.get("/comment/list", async function (req, res) {
   var selectParams = {
-    no: req.query.community_no,
+    no: req.query.article_no,
   };
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",
@@ -398,20 +392,18 @@ app.get("/comment/list", async function (req, res) {
   if (data.length == 0) {
     res.json({
       result: "success",
-      data: data = {}
+      data: (data = {}),
     });
     return;
-  }else{
-      // 댓글 목록 꺼내오기
-  res.json({
-    result: "success",
-    data: data.map((x) => {
-      return x;
-    }),
-  });
+  } else {
+    // 댓글 목록 꺼내오기
+    res.json({
+      result: "success",
+      data: data.map((x) => {
+        return x;
+      }),
+    });
   }
-
-
 }); // 커뮤니티 댓글 전체 목록 end
 
 module.exports = app;
