@@ -24,7 +24,7 @@
         user_id != #{id}
         <if test="keyword != undefined"> and (user_id like CONCAT('%',#{keyword},'%'))</if>
     </where>
-    LIMIT ${length} OFFSET ${start}
+    <!-- LIMIT ${length} OFFSET ${start} -->
 </select>
 
 

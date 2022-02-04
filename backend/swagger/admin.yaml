@@ -42,16 +42,16 @@ paths:
           description: "검색어"
           required: false
           type: "string"
-        - name: "length"
-          in: "query"
-          description: "list length"
-          required: true
-          type: "integer"
-        - name: "page_no"
-          in: "query"
-          description: "page Number"
-          required: true
-          type: "integer"
+        # - name: "length"
+        #   in: "query"
+        #   description: "list length"
+        #   required: true
+        #   type: "integer"
+        # - name: "page_no"
+        #   in: "query"
+        #   description: "page Number"
+        #   required: true
+        #   type: "integer"
       responses:
         default:
           description: "successful operation"
