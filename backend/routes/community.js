@@ -135,12 +135,19 @@ app.put("/update", async function (req, res) {
   res.json({ success: "community update success" });
 }); // 글 수정 end
 
-// 글 상세 보기 (add 01.24 OYT)
+// 글 상세 보기 (fix 02.03 OYT)
 app.get("/detail/:community_no", async function (req, res) {
 
   var selectParams = {
     no: req.params.community_no,
   };
+
+  var updateQuery = mybatisMapper.getStatement(
+    "COMMUNITY",
+    "COMMUNITY.UPDATE.hitcount",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
 
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",
@@ -150,6 +157,17 @@ app.get("/detail/:community_no", async function (req, res) {
   );
 
   let data = [];
+  // 조회수 업데이트
+  try {
+    data = await req.sequelize.query(updateQuery, {
+      type: req.sequelize.QueryTypes.UPDATE,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ msg: "조회수 업데이트에 실패하였습니다.", error: error });
+    return;
+  }
+
   try {
     data = await req.sequelize.query(selectQuery, {
       type: req.sequelize.QueryTypes.SELECT,
@@ -165,11 +183,15 @@ app.get("/detail/:community_no", async function (req, res) {
     return;
   }
 
+
+
   // 글 내용 꺼내오기
   res.json({
     msg: data[0].community_no + "의 글 정보",
     data : data[0]
   });
+
+  
 }); // 글 상세보기 end
 
 // 글 삭제 (add 01.24 OYT)
@@ -391,6 +413,5 @@ app.get("/comment/list", async function (req, res) {
 
 
 }); // 커뮤니티 댓글 전체 목록 end
-
 
 module.exports = app;

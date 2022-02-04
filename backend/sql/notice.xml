@@ -13,6 +13,13 @@
     LIMIT 1
   </select>
 
+  <update id = "NOTICE.UPDATE.hitcount">
+    /* 조회수 추가 */
+      UPDATE notice_t SET
+      notice_hit = notice_hit + 1
+      where notice_no = #{no}
+  </update>
+
   <select id="NOTICE.SELECT.noticelist">
     /* 공지사항 글 전체 목록 */ 
     SELECT  
