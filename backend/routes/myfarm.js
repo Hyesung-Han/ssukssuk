@@ -169,4 +169,53 @@ app.delete("/delete/:no", async (req, res) => {
   return res.json({ result: "success" });
 }); // 내 농장 정보 삭제 end
 
+// 내 농장 이미지 업로드 add(02.04 OYT)
+app.post("/upload", upload.singie('image'), async(req,res) =>{
+  const imgfile = req.file;
+
+  // var insertParams = {
+  //   farm_no: req.body.farm_no,
+  //   file_name: req.body.community_no,
+  //   file_path: req.body.comment_text,
+  //   file_type: imgfile.mimetype,
+  //   file_size:req.body.comment_user_id,
+  //   file_date:req.body.comment_user_id,
+  // };
+
+  // let insertQuery = mybatisMapper.getStatement(
+  //   "COMMUNITY",
+  //   "COMMUNITY.INSERT.commentwrite",
+  //   insertParams,
+  //   { language: "sql", indent: "  " }
+  // );
+  // console.log(insertQuery);
+  // let data = [];
+  // try {
+  //   data = await req.sequelize.query(insertQuery, {
+  //     type: req.sequelize.QueryTypes.INSERT,
+  //   });
+  //   console.log("TCL: data", data);
+  // } catch (error) {
+  //   res.status(403).send({ result: "fail", error: error });
+  //   return;
+  // }
+
+  // if (data.length == 0) {
+  //   res.status(403).send({ result: "fail" });
+  //   return;
+  // }
+  // res.json({
+  //   result: "success",
+  //   url: req.url,
+  //   body: req.body,
+  // });
+
+}); // 내 농장 이미지 업로드 end
+
+// 내 농장 이미지 삭제 add (02.04 OYT)
+app.delete("/upload", async(req, res) => {
+
+  
+});// 내 농장 이미지 삭제 end
+
 module.exports = app;
