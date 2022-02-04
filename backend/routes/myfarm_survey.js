@@ -15,20 +15,16 @@ mybatisMapper.createMapper([`${sqlPath}/myfarm_survey.xml`]);
 
 var app = express.Router();
 
-// 내 농장 상세보기 add (02.03 hhs)
-app.get("/detail/:no", async (req, res) => {
-  if (!req.params || !req.params.no) {
-    res.status(403).send({ msg: "잘못된 파라미터입니다." });
-    return;
-  }
-
+// 내 설문 상세보기 add (02.03 hhs)
+app.get("/detail/", async (req, res) => {
   var selectParams = {
-    no: req.params.no,
+    id: req.query.user_id,
+    farm_no: req.query.farm_no,
+    survey_no: req.query.survey_no,
   };
-
   var selectQuery = mybatisMapper.getStatement(
-    "MYFARM",
-    "MYFARM.SELECT.myfarmdetail",
+    "MYFARM_SURVEY",
+    "MYFARM_SURVEY.SELECT.myfarm_surveydetail",
     selectParams,
     { language: "sql", indent: "  " }
   );
@@ -43,7 +39,6 @@ app.get("/detail/:no", async (req, res) => {
     res.status(403).send({ result: "fail", error: error });
     return;
   }
-
   if (data.length == 0) {
     res.status(403).send({ result: "fail" });
     return;
@@ -55,16 +50,20 @@ app.get("/detail/:no", async (req, res) => {
       return x;
     }),
   });
-}); // 내 농장 상세보기 end
+}); // 내 설문 상세 보기 end
 
-// 내 농장 전체 목록 add (02.03 hhs)
+// 내 설문 전체 목록 add (02.03 hhs)
 app.get("/list", async function (req, res) {
+  const page_no = (req.query.page_no - 1) * 5;
   var selectParams = {
-    keyword: req.query.keyword,
+    id: req.query.user_id,
+    no: req.query.farm_no,
+    length: 5,
+    start: page_no,
   };
   var selectQuery = mybatisMapper.getStatement(
-    "MYFARM",
-    "MYFARM.SELECT.myfarmlist",
+    "MYFARM_SURVEY",
+    "MYFARM_SURVEY.SELECT.myfarm_surveylist",
     selectParams,
     { language: "sql", indent: "  " }
   );
@@ -79,7 +78,7 @@ app.get("/list", async function (req, res) {
     res.status(403).send({ result: "fail", error: error });
     return;
   }
-  // 농장이 없는 경우
+  // 설문 없는 경우
   if (data.length == 0) {
     res.json({
       result: "success",
@@ -90,7 +89,7 @@ app.get("/list", async function (req, res) {
     return;
   }
 
-  // 농장 목록 꺼내오기
+  // 설문 목록 꺼내오기
   res.json({
     result: "success",
     data: data.map((x) => {
@@ -99,72 +98,90 @@ app.get("/list", async function (req, res) {
   });
 }); // 내 농장 전체 목록 end
 
-// 내 농장 정보 수정 add (02.03 hhs)
-app.patch("/update", async (req, res) => {
-  if (!req.body) {
-    res.status(403).send({ result: "fail" });
-    return;
-  }
-  var updateParams = {
-    no: req.body.farm_no,
-    name: req.body.farm_name,
-    text: req.body.farm_text,
+// 내 설문 그래프 나타내기 add (02.03 hhs)
+app.get("/graph", async function (req, res) {
+  var selectParams = {
+    id: req.query.user_id,
+    no: req.query.farm_no,
   };
-
-  var updateQuery = mybatisMapper.getStatement(
-    "MYFARM",
-    "MYFARM.UPDATE.myfarmupdate",
-    updateParams,
+  var selectQuery = mybatisMapper.getStatement(
+    "MYFARM_SURVEY",
+    "MYFARM_SURVEY.SELECT.myfarm_surveygraph",
+    selectParams,
     { language: "sql", indent: "  " }
   );
 
   let data = [];
   try {
-    data = await req.sequelize.query(updateQuery, {
-      type: req.sequelize.QueryTypes.UPDATE,
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
     });
     console.log("TCL: data", data);
   } catch (error) {
     res.status(403).send({ result: "fail", error: error });
     return;
   }
-
+  // 설문 없는 경우
   if (data.length == 0) {
-    res.status(403).send({ result: "fail" });
+    res.json({
+      result: "success",
+      data: {
+        list_cnt: 0,
+      },
+    });
     return;
   }
-  res.json({ result: "success" });
-});
-// 내 농장 정보 수정 end
 
-// 내 농장 정보 삭제 add (02.03 hhs)
-app.delete("/delete/:no", async (req, res) => {
-  if (!req.params || !req.params.no) {
-    res.status(403).send({ result: "fail" });
-    return;
-  }
-  var deleteParams = {
-    no: req.params.no,
+  // 설문 목록 꺼내오기
+  res.json({
+    result: "success",
+    data: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 내 설문 그래프 나타내기 end
+
+// 내 농장 상태 나타내기 add (02.04 hhs)
+app.get("/status", async function (req, res) {
+  var selectParams = {
+    id: req.query.user_id,
+    no: req.query.farm_no,
   };
-
-  var deleteQuery = mybatisMapper.getStatement(
-    "MYFARM",
-    "MYFARM.DELETE.myfarmdelete",
-    deleteParams,
+  var selectQuery = mybatisMapper.getStatement(
+    "MYFARM_SURVEY",
+    "MYFARM_SURVEY.SELECT.myfarm_sensor",
+    selectParams,
     { language: "sql", indent: "  " }
   );
 
   let data = [];
   try {
-    data = await req.sequelize.query(deleteQuery, {
-      type: req.sequelize.QueryTypes.DELETE,
+    data = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
     });
-    console.log("myfarm-delete success");
+    console.log("TCL: data", data);
   } catch (error) {
     res.status(403).send({ result: "fail", error: error });
     return;
   }
-  return res.json({ result: "success" });
-}); // 내 농장 정보 삭제 end
+  // 센서 값 없는 경우
+  if (data.length == 0) {
+    res.json({
+      result: "success",
+      data: {
+        list_cnt: 0,
+      },
+    });
+    return;
+  }
+
+  // 센서 목록 꺼내오기
+  res.json({
+    result: "success",
+    data: data.map((x) => {
+      return x;
+    }),
+  });
+}); // 내 농장 상태 나타내기 end
 
 module.exports = app;
