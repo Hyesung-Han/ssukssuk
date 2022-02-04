@@ -17,7 +17,7 @@ var app = express.Router();
 // 회원 리스트 add (02.03 OYT)
 app.get("/list", async (req, res) => {
   
-  const page_no = ((req.query.page_no - 1) * req.query.length);
+  // const page_no = ((req.query.page_no - 1) * req.query.length);
 
   if (!req.query || !req.query.id) {
     res.status(403).send({ msg: "잘못된 파라미터입니다." });
@@ -52,8 +52,8 @@ app.get("/list", async (req, res) => {
       var searchParams = {
           id: req.query.id,
           keyword: req.query.keyword,
-          length: req.query.length,
-          start : page_no
+          // length: req.query.length,
+          // start : page_no
         };
 
       selectQuery = mybatisMapper.getStatement(

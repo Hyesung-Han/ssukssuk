@@ -43,6 +43,7 @@ app.use("/user", require(`${__dirname}/routes/auth`));
 app.use("/notice", require(`${__dirname}/routes/notice`));
 app.use("/admin", require(`${__dirname}/routes/admin`));
 app.use("/myfarm", require(`${__dirname}/routes/myfarm`));
+app.use("/myfarm_survey", require(`${__dirname}/routes/myfarm_survey`));
 
 app.get("/", function (req, res) {
   res.send("Hello node.js");
