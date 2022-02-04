@@ -3,6 +3,7 @@ var { hashPassword, comparePassword } = require("../utils/bcrypt");
 const jwt = require("jsonwebtoken");
 const envJson = require(`${__dirname}/../env/env.json`);
 const { verifyToken } = require("../utils/jwt");
+const {upload} = require('../utils/multer');
 
 // DB 연동
 const path = require("path");
@@ -170,45 +171,44 @@ app.delete("/delete/:no", async (req, res) => {
 }); // 내 농장 정보 삭제 end
 
 // 내 농장 이미지 업로드 add(02.04 OYT)
-app.post("/upload", upload.singie('image'), async(req,res) =>{
+app.post("/upload", upload.single('farm'), async(req,res) =>{
   const imgfile = req.file;
 
-  // var insertParams = {
-  //   farm_no: req.body.farm_no,
-  //   file_name: req.body.community_no,
-  //   file_path: req.body.comment_text,
-  //   file_type: imgfile.mimetype,
-  //   file_size:req.body.comment_user_id,
-  //   file_date:req.body.comment_user_id,
-  // };
+  var insertParams = {
+    farm_no: req.body.farm_no,
+    file_name: imgfile.filename,
+    file_path: imgfile.path,
+    file_type: imgfile.mimetype,
+    file_size:imgfile.size,
+  };
 
-  // let insertQuery = mybatisMapper.getStatement(
-  //   "COMMUNITY",
-  //   "COMMUNITY.INSERT.commentwrite",
-  //   insertParams,
-  //   { language: "sql", indent: "  " }
-  // );
-  // console.log(insertQuery);
-  // let data = [];
-  // try {
-  //   data = await req.sequelize.query(insertQuery, {
-  //     type: req.sequelize.QueryTypes.INSERT,
-  //   });
-  //   console.log("TCL: data", data);
-  // } catch (error) {
-  //   res.status(403).send({ result: "fail", error: error });
-  //   return;
-  // }
+  let insertQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.INSERT.thumbnail",
+    insertParams,
+    { language: "sql", indent: "  " }
+  );
+  console.log(insertQuery);
+  let data = [];
+  try {
+    data = await req.sequelize.query(insertQuery, {
+      type: req.sequelize.QueryTypes.INSERT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
 
-  // if (data.length == 0) {
-  //   res.status(403).send({ result: "fail" });
-  //   return;
-  // }
-  // res.json({
-  //   result: "success",
-  //   url: req.url,
-  //   body: req.body,
-  // });
+  if (data.length == 0) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+  res.json({
+    result: "success",
+    url: req.url,
+    body: req.body,
+  });
 
 }); // 내 농장 이미지 업로드 end
 
