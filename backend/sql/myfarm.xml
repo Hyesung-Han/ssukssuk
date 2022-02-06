@@ -49,8 +49,7 @@
     Where farm_no = #{no}
   </delete>
 
-  <INSERT id="MYFARM.INSERT.thumbnail">
-    <!-- 내 농장 이미지 업로드 -->
+   <insert id="MYFARM.INSERT.image">
     INSERT INTO myfarm_image_t
     (
         farm_no,
@@ -69,7 +68,7 @@
         #{file_size},
         now()
     )
-  </INSERT>
+  </insert>
 
 
 </mapper>

@@ -173,18 +173,19 @@ app.delete("/delete/:no", async (req, res) => {
 // 내 농장 이미지 업로드 add(02.04 OYT)
 app.post("/upload", upload.single('farm'), async(req,res) =>{
   const imgfile = req.file;
+  
 
   var insertParams = {
     farm_no: req.body.farm_no,
     file_name: imgfile.filename,
-    file_path: imgfile.path,
+    file_path: imgfile.path.replace('\\', '\\\\'),
     file_type: imgfile.mimetype,
-    file_size:imgfile.size,
+    file_size: imgfile.size,
   };
 
   let insertQuery = mybatisMapper.getStatement(
     "MYFARM",
-    "MYFARM.INSERT.thumbnail",
+    "MYFARM.INSERT.image",
     insertParams,
     { language: "sql", indent: "  " }
   );
