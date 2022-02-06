@@ -1,9 +1,10 @@
 var express = require("express");
+var fs = require("fs");
 var { hashPassword, comparePassword } = require("../utils/bcrypt");
 const jwt = require("jsonwebtoken");
 const envJson = require(`${__dirname}/../env/env.json`);
 const { verifyToken } = require("../utils/jwt");
-const {upload} = require('../utils/multer');
+const { upload } = require("../utils/multer");
 
 // DB 연동
 const path = require("path");
@@ -25,7 +26,7 @@ app.get("/detail", async (req, res) => {
 
   var selectParams = {
     id: req.query.id,
-    no: req.query.no
+    no: req.query.no,
   };
 
   var selectQuery = mybatisMapper.getStatement(
@@ -63,7 +64,7 @@ app.get("/detail", async (req, res) => {
 app.get("/list", async function (req, res) {
   var selectParams = {
     keyword: req.query.keyword,
-    id:req.query.id
+    id: req.query.id,
   };
   var selectQuery = mybatisMapper.getStatement(
     "MYFARM",
@@ -170,15 +171,76 @@ app.delete("/delete/:no", async (req, res) => {
   return res.json({ result: "success" });
 }); // 내 농장 정보 삭제 end
 
-// 내 농장 이미지 업로드 add(02.04 OYT)
-app.post("/upload", upload.single('farm'), async(req,res) =>{
+// 내 농장 이미지 업로드  fix (02.06 OYT)
+app.post("/upload", upload.single("farm"), async (req, res) => {
+  if (!req.body || !req.body.farm_no) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+
+  // 기존 이미지 있는지 확인
+  // 있다면 file_name 받아오기
+  var selectParams = {
+    farm_no: req.body.farm_no,
+  };
+
+  var selectQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.SELECT.image",
+    selectParams,
+    { language: "sql", indent: " " }
+  );
+  let imgChk = [];
+  try {
+    imgChk = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: imgChk", imgChk);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  if (imgChk.length != 0) {
+    if (fs.existsSync("./uploads/" + imgChk[0].file_name)) {
+      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+      try {
+        fs.unlinkSync("./uploads/" + imgChk[0].file_name);
+        console.log("myfarm image delete");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    var deleteParams = {
+      farm_no: req.body.farm_no,
+    };
+
+    var deleteQuery = mybatisMapper.getStatement(
+      "MYFARM",
+      "MYFARM.DELETE.image",
+      deleteParams,
+      { language: "sql", indent: "  " }
+    );
+
+    let deleteData = [];
+    try {
+      deleteData = await req.sequelize.query(deleteQuery, {
+        type: req.sequelize.QueryTypes.DELETE,
+      });
+      console.log("myfarm-image-delete success");
+    } catch (error) {
+      res.status(403).send({ result: "fail", error: error });
+      return;
+    }
+  }
+
   const imgfile = req.file;
-  
 
   var insertParams = {
     farm_no: req.body.farm_no,
     file_name: imgfile.filename,
-    file_path: imgfile.path.replace('\\', '\\\\'),
+    file_path: imgfile.path.replace("\\", "\\\\"),
     file_type: imgfile.mimetype,
     file_size: imgfile.size,
   };
@@ -210,13 +272,74 @@ app.post("/upload", upload.single('farm'), async(req,res) =>{
     url: req.url,
     body: req.body,
   });
-
 }); // 내 농장 이미지 업로드 end
 
-// 내 농장 이미지 삭제 add (02.04 OYT)
-app.delete("/upload", async(req, res) => {
+// 내 농장 이미지 삭제 add (02.06 OYT)
+app.delete("/upload", async (req, res) => {
+  if (!req.body || !req.body.farm_no) {
+    res.status(403).send({ result: "fail1" });
+    return;
+  }
 
-  
-});// 내 농장 이미지 삭제 end
+  // 기존 이미지 있는지 확인
+  // 있다면 file_name 받아오기
+  var selectParams = {
+    farm_no: req.body.farm_no,
+  };
+
+  var selectQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.SELECT.image",
+    selectParams,
+    { language: "sql", indent: " " }
+  );
+  let imgChk = [];
+  try {
+    imgChk = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: imgChk", imgChk);
+  } catch (error) {
+    res.status(403).send({ result: "fail2", error: error });
+    return;
+  }
+
+  if (imgChk.length != 0) {
+    if (fs.existsSync("./uploads/" + imgChk[0].file_name)) {
+      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+      try {
+        fs.unlinkSync("./uploads/" + imgChk[0].file_name);
+        console.log("myfarm image delete");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    var deleteParams = {
+      farm_no: req.body.farm_no,
+    };
+
+    var deleteQuery = mybatisMapper.getStatement(
+      "MYFARM",
+      "MYFARM.DELETE.image",
+      deleteParams,
+      { language: "sql", indent: "  " }
+    );
+
+    let deleteData = [];
+    try {
+      deleteData = await req.sequelize.query(deleteQuery, {
+        type: req.sequelize.QueryTypes.DELETE,
+      });
+      console.log("myfarm-image-delete success");
+    } catch (error) {
+      res.status(403).send({ result: "fail3", error: error });
+      return;
+    }
+    res.json({
+      result: "success",
+    });
+  }
+}); // 내 농장 이미지 삭제 end
 
 module.exports = app;

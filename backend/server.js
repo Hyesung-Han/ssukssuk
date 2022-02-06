@@ -46,9 +46,9 @@ app.use("/myfarm", require(`${__dirname}/routes/myfarm`));
 app.use("/myfarm_survey", require(`${__dirname}/routes/myfarm_survey`));
 
 app.use(function (err, req, res, next) {
-  console.log('This is the invalid field ->', err.field)
-  next(err)
-})
+  console.log("This is the invalid field ->", err.field);
+  next(err);
+});
 
 app.get("/", function (req, res) {
   res.send("Hello node.js");
