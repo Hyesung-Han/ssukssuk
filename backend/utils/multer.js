@@ -20,7 +20,7 @@ const upload = multer({
   storage: multer.diskStorage({
     //폴더위치 지정
     destination: (req, file, done) => {
-      done(null, "../../myfarmIMG/");
+      done(null, "/home/ubuntu/myfarmIMG/");
     },
     filename: (req, file, done) => {
       const ext = path.extname(file.originalname);
