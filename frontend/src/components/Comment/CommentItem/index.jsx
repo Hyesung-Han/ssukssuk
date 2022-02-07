@@ -5,6 +5,9 @@ import { CommonContext } from '../../../context/CommonContext';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import EditIcon from '@material-ui/icons/Edit';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 import {
   TextField,
@@ -26,6 +29,10 @@ const CommentItem = ({
   const [isVisible, setIsVisible] = useState('visible');
   const [isDoneVisible, setIsDoneVisible] = useState('hidden');
   const [newComment, setNewComment] = useState(comment);
+  const [saveComment, setSaveComment] = useState(comment);
+  const [writterCode, setWritterCode]=useState('U02');
+
+  const { serverUrlBase } = useContext(CommonContext);
 
   const handleEditTextChange = e => {
     setNewComment({ ...newComment, comment_text: e.target.value });
@@ -35,6 +42,40 @@ const CommentItem = ({
     setIsEdit(false);
     setIsVisible('hidden');
     setIsDoneVisible('visible');
+
+    setSaveComment(comment);
+  };
+
+  const onUpdateCancelComment = () => {
+    setNewComment(saveComment);
+
+    setIsEdit(true);
+    setIsVisible('visible');
+    setIsDoneVisible('hidden');
+  };
+
+  function parsingDate(date) {
+    const day = date.substr(0, 10);
+    const time = date.substr(11, 5);
+
+    return day + ' ' + time;
+  }
+
+  const getCommentList = async () => {
+    try {
+      Axios.get(serverUrlBase + '/user/myInfo/'+comment.comment_user_id)
+        .then(data => {
+          if (data.status === 200) {
+            setWritterCode(data.data.user[0].user_code);
+            // console.log(writterCode)
+          }
+        })
+        .catch(e => {
+          console.log('notice comment write error', e);
+        });
+    } catch (e) {
+      console.log('getCommentList error', e);
+    }
   };
 
   useEffect(() => {
@@ -45,12 +86,27 @@ const CommentItem = ({
     }
   }, [updateDone]);
 
+  getCommentList()
+
   return (
     <>
       <ListItem key={comment.comment_no} alignItems="flex-start">
         <ListItemText
           primary={
             <React.Fragment>
+              {writterCode === 'U02' && (
+                <IconButton aria-label="mento">
+                  <EmojiEventsIcon />
+                </IconButton>
+              )}
+
+              {writterCode === 'U03' ||
+                writterCode === 'U04' && (
+                  <IconButton aria-label="manager">
+                    <ManageAccountsIcon />
+                  </IconButton>
+                )}
+
               <Typography
                 sx={{ display: 'inline' }}
                 component="span"
@@ -65,7 +121,7 @@ const CommentItem = ({
                 variant="caption"
               >
                 {' '}
-                | {comment.comment_date}
+                | {parsingDate(comment.comment_date)}
               </Typography>
             </React.Fragment>
           }
@@ -110,6 +166,13 @@ const CommentItem = ({
               onClick={() => onUpdateComment(newComment)}
             >
               <DoneOutlineIcon />
+            </IconButton>
+            <IconButton
+              aria-label="cancel"
+              sx={{ visibility: isDoneVisible }}
+              onClick={() => onUpdateCancelComment()}
+            >
+              <CancelIcon />
             </IconButton>
           </React.Fragment>
         )}

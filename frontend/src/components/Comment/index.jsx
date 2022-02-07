@@ -7,6 +7,8 @@ import { CommonContext } from '../../context/CommonContext';
 
 import { Grid, Button, FormControl, TextField } from '@mui/material';
 
+import Swal from 'sweetalert2';
+
 const Comment = props => {
   const { serverUrlBase } = useContext(CommonContext);
   const user = useSelector(state => state.Auth.user);
@@ -20,21 +22,25 @@ const Comment = props => {
   };
 
   const onClickCommentWriteHandler = e => {
-    Axios.post(serverUrlBase + boardUrl + '/comment/write', {
-      comment_user_nickName: user.user_nickName,
-      article_no: props.no,
-      comment_text: content,
-      comment_user_id: user.user_id,
-    })
-      .then(data => {
-        if (data.status === 200) {
-          setContent('');
-          getCommentList();
-        }
+    if (!user.status) {
+      alert('댓글을 작성하기 위해서는 로그인이 필요합니다');
+    } else {
+      Axios.post(serverUrlBase + boardUrl + '/comment/write', {
+        comment_user_nickName: user.user_nickName,
+        article_no: props.no,
+        comment_text: content,
+        comment_user_id: user.user_id,
       })
-      .catch(e => {
-        console.log('notice comment write error', e);
-      });
+        .then(data => {
+          if (data.status === 200) {
+            setContent('');
+            getCommentList();
+          }
+        })
+        .catch(e => {
+          console.log('notice comment write error', e);
+        });
+    }
   };
 
   const getCommentList = async () => {
@@ -49,18 +55,35 @@ const Comment = props => {
   };
 
   const onDeleteComment = no => {
-    Axios.delete(serverUrlBase + boardUrl + '/comment/delete/' + no)
-      .then(data => {
-        if (data.status === 200) {
-          alert('삭제성공');
-          getCommentList();
-        } else {
-          console.log('삭제실패');
-        }
-      })
-      .catch(e => {
-        console.log('comment delete error', e);
-      });
+    Swal.fire({
+      icon: 'warning',
+      title: '댓글을 삭제하시겠습니까?',
+      text: '삭제하시면 다시 복구시킬 수 없습니다.',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+    }).then(result => {
+      if (result.value) {
+        Axios.delete(serverUrlBase + boardUrl + '/comment/delete/' + no)
+          .then(data => {
+            if (data.status === 200) {
+              getCommentList();
+
+              Swal.fire({
+                icon: 'success',
+                title: '댓글이 삭제되었습니다',
+              });
+            } else {
+              console.log('삭제실패');
+            }
+          })
+          .catch(e => {
+            console.log('comment delete error', e);
+          });
+      }
+    });
   };
 
   const onUpdateComment = comment => {

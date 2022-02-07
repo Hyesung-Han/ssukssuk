@@ -33,9 +33,7 @@ const Wrapper = styled.div`
     font-size: 18px;
 
     margin:0px 5px;
-  }
 
-  .tabs-style:{
     & .MuiTabs-indicator: {
       // display: "none"
       backgroundColor: secondary;

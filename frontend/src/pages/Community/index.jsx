@@ -209,7 +209,7 @@ const Community = () => {
                   />
                   <Tab
                     className="tab-style"
-                    label={'멘토 게시판 (' + mentoLen + ')'}
+                    label={'멘토링 게시판 (' + mentoLen + ')'}
                   />
                 </Tabs>
               </Grid>

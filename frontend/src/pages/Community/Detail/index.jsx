@@ -14,35 +14,35 @@ import Swal from 'sweetalert2';
 
 import { Grid, Button, InputBase, Paper } from '@mui/material';
 
-const NoticeDetail = ({ match }) => {
+const CommunityDetail = ({ match }) => {
   const no = match.params.no;
   let history = useHistory();
 
   const { serverUrlBase } = useContext(CommonContext);
   const user = useSelector(state => state.Auth.user);
-  const [notice, setNotice] = useState();
-  const getNotice = async () => {
+  const [Community, setCommunity] = useState();
+  const getCommunity = async () => {
     try {
-      const res = await Axios.get(serverUrlBase + `/notice/detail/` + no);
-      setNotice(res.data.data);
+      const res = await Axios.get(serverUrlBase + `/community/detail/` + no);
+      setCommunity(res.data.data);
     } catch (e) {
-      console.log('getNotice error!!', e);
+      console.log('getCommunity error!!', e);
     }
   };
 
   useEffect(() => {
-    getNotice();
+    getCommunity();
   }, []);
 
-  const onClickNoticeUpdateHandler = () => {
+  const onClickCommunityUpdateHandler = () => {
     if (!user.status) {
       alert('회원정보 오류! 로그인을 확인해주세요');
       return;
     }
-    history.push('/NoticeUpdate/' + no);
+    history.push('/CommunityUpdate/' + no);
   };
 
-  const onClickNoticeDeleteHandler = () => {
+  const onClickCommunityDeleteHandler = () => {
     if (!user.status) {
       alert('회원정보 오류! 로그인을 확인해주세요');
       return;
@@ -58,20 +58,21 @@ const NoticeDetail = ({ match }) => {
       cancelButtonText: '취소',
     }).then(result => {
       if (result.value) {
-        Axios.delete(serverUrlBase + '/notice/delete/' + no)
+        Axios.delete(serverUrlBase + '/Community/delete/' + no)
           .then(result => {
             console.log(result);
-            history.push('/Notice');
+            history.push('/Community');
           })
           .catch(e => {
-            console.log('notice delete error', e);
+            console.log('Community delete error', e);
           });
       }
-    });
-  };
 
-  const onClickNoticeHandler = () => {
-    history.goBack();
+      Swal.fire({
+        icon: 'success',
+        title: '글이 삭제되었습니다',
+      });
+    });
   };
 
   function parsingDate(date){
@@ -81,12 +82,16 @@ const NoticeDetail = ({ match }) => {
     return day+" "+time;
   }
 
-  if (!notice) return <>loading중..</>;
+  const onClickCommunityHandler = () => {
+    history.goBack();
+  };
+
+  if (!Community) return <>loading중..</>;
   return (
     <Layout>
       <Wrapper>
-        <Grid container>
-          <h2>{notice.notice_code === 'N01' ? '공지사항' : '문의사항'}</h2>
+      <Grid container>
+          <h2>{Community.community_code === 'C01' ? '자유 게시판' : '멘토링 게시판'}</h2>
         </Grid>
         <Grid container className="root-box" direction="column">
           <Grid item className="body-box">
@@ -101,10 +106,10 @@ const NoticeDetail = ({ match }) => {
                 제목
               </Grid>
               <Grid item className="body-content" xs={8}>
-                {notice.notice_title}
+                {Community.community_title}
               </Grid>
               <Grid item className="body-content" xs={2}>
-                {parsingDate(notice.notice_date)}
+                {parsingDate(Community.community_date)}
               </Grid>
             </Grid>
             <Grid
@@ -118,13 +123,13 @@ const NoticeDetail = ({ match }) => {
                 작성자
               </Grid>
               <Grid item className="body-content" xs={7}>
-                <InputBase value={notice.notice_author} />
+                <InputBase value={Community.community_author} />
               </Grid>
               <Grid item className="body-header" xs={2}>
                 조회수
               </Grid>
               <Grid item className="body-content" xs={1}>
-                {notice.notice_hit}
+                {Community.community_hit}
               </Grid>
             </Grid>
             <Grid
@@ -137,9 +142,9 @@ const NoticeDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 내용
               </Grid>
-              <Grid item className="body-content body-content-text" xs={9}>
+                <Grid item className="body-content body-content-text" xs={9}>
                 <Paper elevation={0}>
-                {notice.notice_content}
+                {Community.community_content}
                 </Paper>
                 </Grid>
             </Grid>
@@ -147,30 +152,30 @@ const NoticeDetail = ({ match }) => {
         </Grid>
         {/* 댓글 */}
         <Grid container direction="column" alignItems="center">
-          <Comment listType={'notice'} no={notice.notice_no} />
+          <Comment listType={'community'} no={Community.community_no} />
         </Grid>
         <hr></hr>
         {/* 댓글 */}
         <Grid container direction="column" alignItems="center">
           <Grid item>
-            <Button className="write-button" onClick={onClickNoticeHandler}>
+            <Button className="write-button" onClick={onClickCommunityHandler}>
               목록{' '}
             </Button>
           </Grid>
         </Grid>
-        {user.user_id != '' && user.user_id === notice.notice_user_id && (
+        {user.user_id != '' && user.user_id === Community.community_user_id && (
           <Grid container direction="column" alignItems="flex-end">
             <Grid item>
               <Button
                 className="write-button"
-                onClick={onClickNoticeUpdateHandler}
+                onClick={onClickCommunityUpdateHandler}
               >
                 게시글 수정
               </Button>
               &nbsp;
               <Button
                 className="write-button"
-                onClick={onClickNoticeDeleteHandler}
+                onClick={onClickCommunityDeleteHandler}
               >
                 게시글 삭제
               </Button>
@@ -182,4 +187,4 @@ const NoticeDetail = ({ match }) => {
   );
 };
 
-export default NoticeDetail;
+export default CommunityDetail;

@@ -34,6 +34,13 @@ const BoardList = props => {
     history.push('/' + moveDetail + '/' + no);
   }
 
+  function parsingDate(date){
+    const day=date.substr(0,10)
+    const time=date.substr(11,5)
+
+    return day+" "+time;
+  }
+
   return (
     <Wrapper>
       <Grid container>
@@ -101,7 +108,7 @@ const BoardList = props => {
                             justifyContent="space-between"
                           >
                             <Grid item className="cell-body-buttom-front">
-                              {row.author + ' | ' + row.date}
+                              {row.author + ' | ' + parsingDate(row.date)}
                             </Grid>
                             <Grid item>
                               <div className="cell-body-buttom-back">

@@ -27,8 +27,9 @@ import NoticeUpdate from './pages/Notice/Update/';
 import Community from './pages/Community/';
 import Admin from './pages/Admin/';
 import MyFarm from './pages/MyFarm/';
-import CommunityDetail from './pages/CommunityDetail';
-import CommunityWrite from './pages/CommunityWrite';
+import CommunityDetail from './pages/Community/Detail';
+import CommunityWrite from './pages/Community/Write';
+import CommunityUpdate from './pages/Community/Update';
 
 // css
 // import './index.css';
@@ -154,14 +155,11 @@ const App = () => {
             <Route exact path="/NoticeWrite" component={NoticeWrite} />
             <Route exact path="/NoticeUpdate/:no" component={NoticeUpdate} />
             <Route exact path="/Community" component={Community} />
+            <Route exact path="/CommunityDetail/:no" component={CommunityDetail} />
+            <Route exact path="/CommunityWrite" component={CommunityWrite} />
+            <Route exact path="/CommunityUpdate/:no" component={CommunityUpdate} />
             <Route exact path="/MyFarm" component={MyFarm} />
             <Route exact path="/Admin" component={Admin} />
-            <Route
-              exact
-              path="/CommunityDetail/:no"
-              component={CommunityDetail}
-            />
-            <Route exact path="/CommunityWrite" component={CommunityWrite} />
             <Redirect to="/not-found" />
           </Switch>
         </BrowserRouter>
