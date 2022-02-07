@@ -427,6 +427,7 @@ app.post("/login", async (req, res) => {
 // 회원 로그인 end
 
 //회원가입 시 email 인증 ( 2022.02.07 CSW)
+// 로그인 안에 넣고 redirect해줘야 완성
 app.post("/regi-email", async (req, res) => {
 
   if (!req.body || !req.body.user_email) {
@@ -474,6 +475,7 @@ app.post("/regi-email", async (req, res) => {
           });
         }
         transporter.close();
+
      });
  
 });
