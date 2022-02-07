@@ -72,7 +72,7 @@ paths:
           description: "successful operation"
 
   /community/update:
-    put:
+    patch:
       tags:
         - "community"
       summary: "update community"
@@ -177,7 +177,7 @@ paths:
           description: "successful operation"
 
   /community/comment/update:
-    put:
+    patch:
       tags:
         - "community_comment"
       summary: "Update community_comment"
