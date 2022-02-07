@@ -29,13 +29,14 @@ const theme = createTheme({
   },
 });
 
-function createData(no, hit, title, author, date) {
+function createData(no, hit, title, author, date, commentCnt) {
   return {
     no,
     hit,
     title,
     author,
     date,
+    commentCnt,
   };
 }
 
@@ -130,6 +131,7 @@ const Community = () => {
                 row.community_title,
                 row.community_author,
                 row.community_date,
+                row.comment_cnt,
               ),
             );
           }

@@ -19,7 +19,6 @@ import SearchComponent from '../../components/Search/SearchComponent';
 
 import Layout from '../../layout/';
 
-import { useLocalStorageSetState } from '../../common/CommonHooks';
 import { CommonContext } from '../../context/CommonContext';
 import { ViewContext } from '../../context/ViewContext';
 import Wrapper from './styles';
@@ -39,7 +38,7 @@ const theme = createTheme({
   },
 });
 
-function createData(no, hit, title, author, date, noticeCode) {
+function createData(no, hit, title, author, date, noticeCode, commentCnt) {
   return {
     no,
     hit,
@@ -47,6 +46,7 @@ function createData(no, hit, title, author, date, noticeCode) {
     author,
     date,
     noticeCode,
+    commentCnt,
   };
 }
 
@@ -128,6 +128,7 @@ const Notice = () => {
                 row.notice_author,
                 row.notice_date,
                 row.notice_code,
+                row.comment_cnt,
               ),
             );
           }

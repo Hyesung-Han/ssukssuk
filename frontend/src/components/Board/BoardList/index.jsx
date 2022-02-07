@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import CommentIcon from '@material-ui/icons/Comment';
 import Wrapper from './styles';
 
 import {
@@ -109,8 +110,8 @@ const BoardList = props => {
                                   &nbsp;&nbsp;{row.hit}
                                 </div>
                                 <div className="item">
-                                  <VisibilityOutlinedIcon />
-                                  &nbsp;&nbsp;{row.hit}
+                                  <CommentIcon />
+                                  &nbsp;&nbsp;{row.commentCnt}
                                 </div>
                               </div>
                             </Grid>
