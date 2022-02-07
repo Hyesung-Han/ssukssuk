@@ -12,6 +12,8 @@ const mybatisMapper = require("mybatis-mapper");
 // const version = process.env.VERSION ? process.env.VERSION : "base";
 const sqlPath = path.join(__dirname, "..", ".", `/sql/`);
 
+var imgPath = "/home/ubuntu/myfarmIMG";
+
 // mapper 설정
 mybatisMapper.createMapper([`${sqlPath}/myfarm.xml`]);
 
@@ -202,10 +204,10 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
   }
 
   if (imgChk.length != 0) {
-    if (fs.existsSync("\\home\\ubuntu\\myfarmIMG" + imgChk[0].file_name)) {
+    if (fs.existsSync(imgPath + imgChk[0].file_name)) {
       // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
       try {
-        fs.unlinkSync("\\home\\ubuntu\\myfarmIMG" + imgChk[0].file_name);
+        fs.unlinkSync(imgPath + imgChk[0].file_name);
         console.log("myfarm image delete");
       } catch (error) {
         console.log(error);
@@ -305,10 +307,10 @@ app.delete("/upload", async (req, res) => {
   }
 
   if (imgChk.length != 0) {
-    if (fs.existsSync("\\home\\ubuntu\\myfarmIMG" + imgChk[0].file_name)) {
+    if (fs.existsSync(imgPath + imgChk[0].file_name)) {
       // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
       try {
-        fs.unlinkSync("\\home\\ubuntu\\myfarmIMG" + imgChk[0].file_name);
+        fs.unlinkSync(imgPath + imgChk[0].file_name);
         console.log("myfarm image delete");
       } catch (error) {
         console.log(error);
