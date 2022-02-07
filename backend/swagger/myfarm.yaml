@@ -41,7 +41,7 @@ paths:
         default:
           description: "successful operation"
 
-  /myfarm/detail/{no}:
+  /myfarm/detail:
     get:
       tags:
         - "myfarm"
@@ -52,10 +52,16 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
-        - in: path
-          name: "no"
-          description: "myfarm no"
+        - name: "id"
+          in: "query"
+          description: "user ID"
           required: true
+          type: "string"
+        - name: "no"
+          in: "query"
+          description: "myfarm Number"
+          required: false
+          type: "integer"
       responses:
         default:
           description: "successful operation"
@@ -71,6 +77,11 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
+        - name: "id"
+          in: "query"
+          description: "user ID"
+          required: true
+          type: "string"
         - name: "keyword"
           in: "query"
           description: "검색어"
@@ -100,6 +111,52 @@ paths:
       responses:
         default:
           description: "successful operation"
+
+  /myfarm/upload:
+    post:
+      tags:
+        - "myfarm"
+      summary: "Upload myfarm image"
+      description: "Upload myfarm image"
+      operationId: "myfarm upload image"
+      consumes:
+        - multipart/form-data
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "farm_no"
+          in: "formData"
+          description: "farm_no"
+          required: true
+          type: "string"
+        - in: formData
+          name: farm
+          type: file
+          description: The file to upload.
+          required: true
+      responses:
+        default:
+          description: "successful operation"
+
+    delete:
+      tags:
+        - "myfarm"
+      summary: "Delete by farm_image"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "myfarm image delete"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "farm_no"
+          in: "formData"
+          description: "farm_no"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "successful delete"
 
 securityDefinitions:
   jwt:
