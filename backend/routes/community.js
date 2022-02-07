@@ -102,6 +102,7 @@ app.post("/regi", async function (req, res) {
 
 // 글 수정 (add 01.24 OYT)
 app.patch("/update", async function (req, res) {
+
   var updateParams = {
     title: req.body.community_title,
     content: req.body.community_content,
@@ -266,7 +267,7 @@ app.get("/listcount", async function (req, res) {
 app.post("/comment/write", async (req, res) => {
   var insertParams = {
     user_nickName: req.body.comment_user_nickName,
-    community_no: req.body.community_no,
+    community_no: req.body.article_no,
     text: req.body.comment_text,
     user_id: req.body.comment_user_id,
   };
@@ -369,7 +370,7 @@ app.delete("/comment/delete/:no", async (req, res) => {
 // 커뮤니티 댓글 전체 목록 fix (01.28 OYT)
 app.get("/comment/list", async function (req, res) {
   var selectParams = {
-    no: req.query.community_no,
+    no: req.query.article_no,
   };
   var selectQuery = mybatisMapper.getStatement(
     "COMMUNITY",

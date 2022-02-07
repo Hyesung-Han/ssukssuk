@@ -48,7 +48,9 @@ app.get("/detail/:no", async (req, res) => {
     });
     console.log("TCL: data", data);
   } catch (error) {
-    res.status(403).send({ msg: "조회수 업데이트에 실패하였습니다.", error: error });
+    res
+      .status(403)
+      .send({ msg: "조회수 업데이트에 실패하였습니다.", error: error });
     return;
   }
 
@@ -69,7 +71,7 @@ app.get("/detail/:no", async (req, res) => {
 
   res.json({
     result: "success",
-    data: data[0]
+    data: data[0],
   });
 }); // 공지사항 글 상세보기 end
 
@@ -269,7 +271,7 @@ app.delete("/delete/:no", async (req, res) => {
 app.post("/comment/write", async (req, res) => {
   var insertParams = {
     user_nickName: req.body.comment_user_nickName,
-    notice_no: req.body.notice_no,
+    notice_no: req.body.article_no,
     text: req.body.comment_text,
     user_id: req.body.comment_user_id,
   };
@@ -373,7 +375,7 @@ app.delete("/comment/delete/:no", async (req, res) => {
 // 공지사항 댓글 전체 목록 fix (01.28 OYT)
 app.get("/comment/list", async function (req, res) {
   var selectParams = {
-    no: req.query.notice_no,
+    no: req.query.article_no,
   };
   var selectQuery = mybatisMapper.getStatement(
     "NOTICE",
