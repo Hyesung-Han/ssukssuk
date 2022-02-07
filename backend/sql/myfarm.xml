@@ -23,7 +23,8 @@
         farm_no,
         user_id,
         farm_name,
-        farm_text
+        farm_text,
+        farm_regidate
     FROM my_farm_t
     <where>
       user_id = #{id}
