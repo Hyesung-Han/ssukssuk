@@ -13,6 +13,13 @@
     LIMIT 1
   </select>
 
+  <update id = "NOTICE.UPDATE.hitcount">
+    /* 조회수 추가 */
+      UPDATE notice_t SET
+      notice_hit = notice_hit + 1
+      where notice_no = #{no}
+  </update>
+
   <select id="NOTICE.SELECT.noticelist">
     /* 공지사항 글 전체 목록 */ 
     SELECT  
@@ -29,8 +36,8 @@
     outer join n_comment_t on notice_t.notice_no = n_comment_t.notice_no
     <where>
     <if test="type != undefined"> and notice_code = #{type}</if>
-    <if test="keyword != undefined"> and notice_title like concat('%',#{keyword}, '%')
-    or notice_content like concat('%',#{keyword}, '%')</if>
+    <if test="keyword != undefined"> and (notice_title like concat('%',#{keyword}, '%')
+    or notice_content like concat('%',#{keyword}, '%'))</if>
     </where>
     group by notice_t.notice_no
     order by notice_code, notice_no desc
@@ -45,10 +52,10 @@
     FROM notice_t
     <Where>
       <if test="type != undefined"> and notice_code = #{type}</if>
-      <if test="keyword != undefined"> and notice_title like CONCAT('%',#{keyword},'%') 
-      OR notice_content like CONCAT('%',#{keyword},'%')</if>
+      <if test="keyword != undefined"> and (notice_title like CONCAT('%',#{keyword},'%') 
+      OR notice_content like CONCAT('%',#{keyword},'%'))</if>
     </Where>
-    group by notice_t.notice_no;
+    group by notice_t.notice_code;
   </select>
 
   <insert id="NOTICE.INSERT.noticewrite">

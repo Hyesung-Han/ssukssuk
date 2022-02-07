@@ -18,8 +18,8 @@
     FROM community_t c LEFT JOIN c_comment_t cc ON c.community_no = cc.community_no
     <Where>
       <if test="type != undefined"> and c.community_code = #{type}</if>
-      <if test="keyword != undefined"> and c.community_title like CONCAT('%',#{keyword},'%') 
-      OR c.community_content like CONCAT('%',#{keyword},'%')</if>
+      <if test="keyword != undefined"> and (c.community_title like CONCAT('%',#{keyword},'%') 
+      OR c.community_content like CONCAT('%',#{keyword},'%'))</if>
     </Where>
     group by c.community_no
     order by c.community_no desc
@@ -71,6 +71,13 @@
     where community_no = #{no};
   </select>
 
+  <update id = "COMMUNITY.UPDATE.hitcount">
+    /* 조회수 추가 */
+      UPDATE community_t SET
+      community_hit = community_hit + 1
+      where community_no = #{no}
+  </update>
+
   <delete id="COMMUNITY.DELETE.article">
     /* 글정보 삭제 */
     Delete
@@ -86,8 +93,8 @@
     FROM community_t
     <Where>
       <if test="type != undefined"> and community_code = #{type}</if>
-      <if test="keyword != undefined"> and community_title like CONCAT('%',#{keyword},'%') 
-      OR community_content like CONCAT('%',#{keyword},'%')</if>
+      <if test="keyword != undefined"> and (community_title like CONCAT('%',#{keyword},'%') 
+      OR community_content like CONCAT('%',#{keyword},'%'))</if>
     </Where>
     group by community_code
   </select>
