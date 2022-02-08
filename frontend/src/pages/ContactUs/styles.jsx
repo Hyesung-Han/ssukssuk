@@ -30,6 +30,9 @@ const Wrapper = styled.div`
         color: #242424;
       }
     }
+    & .mouse-cursor {
+      cursor: pointer;
+    }
   }
   @media (max-width: 960px) {
     & .subject {

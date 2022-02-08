@@ -5,8 +5,8 @@ const Wrapper = styled.div`
   height: 227px;
   background: #f2f3f4;
   & .footer {
+    text-align: center;
     overflow: hidden;
-    max-width: 1280px;
     width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
@@ -35,6 +35,7 @@ const Wrapper = styled.div`
         & li {
           margin-bottom: 5px;
           color: #242424;
+          list-style: none;
         }
       }
       & p {
@@ -46,7 +47,6 @@ const Wrapper = styled.div`
     }
     & .right-box {
       overflow: hidden;
-      float: right;
       & .text-box {
         float: left;
         width: 260px;
