@@ -344,4 +344,46 @@ app.delete("/upload", async (req, res) => {
   }
 }); // 내 농장 이미지 삭제 end
 
+// // 내 이미지 가져오기 add (02.08 hhs)
+// app.get("/upload", async (req, res) => {
+//   if (!req.query || !req.query.farm_no) {
+//     res.status(403).send({ msg: "잘못된 파라미터입니다." });
+//     return;
+//   }
+
+//   var selectParams = {
+//     farm_no: req.query.farm_no,
+//   };
+
+//   var selectQuery = mybatisMapper.getStatement(
+//     "MYFARM",
+//     "MYFARM.SELECT.image",
+//     selectParams,
+//     { language: "sql", indent: "  " }
+//   );
+
+//   let data = [];
+//   try {
+//     data = await req.sequelize.query(selectQuery, {
+//       type: req.sequelize.QueryTypes.SELECT,
+//     });
+//     console.log("TCL: data", data);
+//   } catch (error) {
+//     res.status(403).send({ result: "fail", error: error });
+//     return;
+//   }
+
+//   if (data.length == 0) {
+//     res.status(403).send({ result: "fail" });
+//     return;
+//   }
+
+//   res.json({
+//     result: "success",
+//     data: data.map((x) => {
+//       return x;
+//     }),
+//   });
+// }); // 내 image 보기 end
+
 module.exports = app;
