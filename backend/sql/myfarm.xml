@@ -4,33 +4,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MYFARM">  
 
-  <select id="MYFARM.SELECT.myfarmdetail">
-  	/* 내 농장 상세보기 */
+<select id="MYFARM.SELECT.myfarmdetail">
+      /* 내 농장 상세보기 */
     SELECT  
-        *
-    FROM my_farm_t
+        my_farm_t.farm_no,
+        user_id,
+        serial_no,
+        farm_name,
+        farm_regidate,
+        farm_text,
+        file_path
+    FROM my_farm_t left outer join myfarm_image_t on my_farm_t.farm_no = myfarm_image_t.farm_no 
     <WHERE>
-      <if test="no != undefined">farm_no = #{no} and</if> 
+      <if test="no != undefined">my_farm_t.farm_no = #{no} and</if> 
       user_id = #{id}
     </WHERE>
-    order by farm_no asc
+    order by my_farm_t.farm_no asc
     LIMIT 1
   </select>
 
   <select id="MYFARM.SELECT.myfarmlist">
     /* 내 농장 전체 목록 */ 
     SELECT  
-        farm_no,
+        my_farm_t.farm_no,
         user_id,
+        serial_no,
         farm_name,
-        farm_text
-    FROM my_farm_t
-    <where>
+        farm_regidate,
+        farm_text,
+        file_path
+    FROM my_farm_t left outer join myfarm_image_t on my_farm_t.farm_no = myfarm_image_t.farm_no 
+    <WHERE>
       user_id = #{id}
-    <if test="keyword != undefined"> and (farm_name like concat('%',#{keyword}, '%')
-    or farm_text like concat('%',#{keyword}, '%'))</if>
-    </where>
-    order by farm_no asc;
+      <if test="keyword != undefined"> and (my_farm_t.farm_name like concat('%',#{keyword}, '%')
+        or my_farm_t.farm_text like concat('%',#{keyword}, '%'))</if>
+    </WHERE>
+    order by my_farm_t.farm_no asc
   </select>
 
   <update id = "MYFARM.UPDATE.myfarmupdate">

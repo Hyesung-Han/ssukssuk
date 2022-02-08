@@ -4,13 +4,23 @@ var { hashPassword, comparePassword } = require("../utils/bcrypt");
 const jwt = require("jsonwebtoken");
 const envJson = require(`${__dirname}/../env/env.json`);
 const { verifyToken } = require("../utils/jwt");
-const { upload } = require("../utils/multer");
+const { upload} = require("../utils/multer");
+const aws = require("aws-sdk");
+const s3 = new aws.S3({
+  accessKeyId: envJson.accessKeyId,   // user 만들면서 지급받은 키값
+  secretAccessKey: envJson.secretAccessKey,
+  region: 'ap-northeast-2'
+})
+
+const uploadFilePath = envJson.uploadFilePath;
 
 // DB 연동
 const path = require("path");
 const mybatisMapper = require("mybatis-mapper");
 // const version = process.env.VERSION ? process.env.VERSION : "base";
 const sqlPath = path.join(__dirname, "..", ".", `/sql/`);
+
+var imgPath = "https://ssukimg.s3.ap-northeast-2.amazonaws.com/img/";
 
 // mapper 설정
 mybatisMapper.createMapper([`${sqlPath}/myfarm.xml`]);
@@ -202,15 +212,13 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
   }
 
   if (imgChk.length != 0) {
-    if (fs.existsSync("./uploads/" + imgChk[0].file_name)) {
-      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-      try {
-        fs.unlinkSync("./uploads/" + imgChk[0].file_name);
-        console.log("myfarm image delete");
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    s3.deleteObject({
+      Bucket : 'ssukimg',
+      Key: imgChk[0].file_name,
+    }, function(err, data){
+      if(err) console.log(err);
+      else console.log(data);
+    });
 
     var deleteParams = {
       farm_no: req.body.farm_no,
@@ -239,8 +247,8 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
 
   var insertParams = {
     farm_no: req.body.farm_no,
-    file_name: imgfile.filename,
-    file_path: imgfile.path.replace("\\", "\\\\"),
+    file_name: imgfile.key,
+    file_path: (uploadFilePath + imgfile.key),
     file_type: imgfile.mimetype,
     file_size: imgfile.size,
   };
@@ -305,15 +313,13 @@ app.delete("/upload", async (req, res) => {
   }
 
   if (imgChk.length != 0) {
-    if (fs.existsSync("./uploads/" + imgChk[0].file_name)) {
-      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-      try {
-        fs.unlinkSync("./uploads/" + imgChk[0].file_name);
-        console.log("myfarm image delete");
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    s3.deleteObject({
+      Bucket : 'ssukimg',
+      Key: imgChk[0].file_name,
+    }, function(err, data){
+      if(err) console.log(err);
+      else console.log(data);
+    });
 
     var deleteParams = {
       farm_no: req.body.farm_no,

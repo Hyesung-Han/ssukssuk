@@ -101,7 +101,8 @@ app.post("/regi", async function (req, res) {
 }); // 글 작성 end
 
 // 글 수정 (add 01.24 OYT)
-app.put("/update", async function (req, res) {
+app.patch("/update", async function (req, res) {
+
   var updateParams = {
     title: req.body.community_title,
     content: req.body.community_content,
@@ -301,7 +302,7 @@ app.post("/comment/write", async (req, res) => {
 }); // 커뮤니티 댓글 작성 end
 
 // 커뮤니티 댓글 수정 add (01.25 OYT)
-app.put("/comment/update", async (req, res) => {
+app.patch("/comment/update", async (req, res) => {
   if (!req.body) {
     res.status(403).send({ result: "fail" });
     return;

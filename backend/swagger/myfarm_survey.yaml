@@ -44,11 +44,6 @@ paths:
           required: false
           type: "integer"
 
-        - name: "page_no"
-          in: "query"
-          description: "페이지 수"
-          required: true
-          type: "integer"
       responses:
         default:
           description: "successful operation"
