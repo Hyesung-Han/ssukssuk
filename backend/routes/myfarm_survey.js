@@ -54,12 +54,9 @@ app.get("/detail/", async (req, res) => {
 
 // 내 설문 전체 목록 add (02.03 hhs)
 app.get("/list", async function (req, res) {
-  const page_no = (req.query.page_no - 1) * 5;
   var selectParams = {
     id: req.query.user_id,
     no: req.query.farm_no,
-    length: 5,
-    start: page_no,
   };
   var selectQuery = mybatisMapper.getStatement(
     "MYFARM_SURVEY",

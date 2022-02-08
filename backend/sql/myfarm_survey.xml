@@ -19,8 +19,7 @@
     survey_t join my_farm_t on survey_t.farm_no = my_farm_t.farm_no
     join user_t on user_t.user_id = my_farm_t.user_id
     WHERE user_t.user_id = #{id} and my_farm_t.farm_no = #{no} 
-    order by survey_no desc
-    LIMIT ${length} OFFSET ${start} ;
+    order by survey_no desc;
   </select>
 
   <select id="MYFARM_SURVEY.SELECT.myfarm_surveydetail">
