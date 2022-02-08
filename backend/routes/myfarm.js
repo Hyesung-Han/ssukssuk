@@ -4,7 +4,15 @@ var { hashPassword, comparePassword } = require("../utils/bcrypt");
 const jwt = require("jsonwebtoken");
 const envJson = require(`${__dirname}/../env/env.json`);
 const { verifyToken } = require("../utils/jwt");
-const { upload } = require("../utils/multer");
+const { upload} = require("../utils/multer");
+const aws = require("aws-sdk");
+const s3 = new aws.S3({
+  accessKeyId: envJson.accessKeyId,   // user 만들면서 지급받은 키값
+  secretAccessKey: envJson.secretAccessKey,
+  region: 'ap-northeast-2'
+})
+
+const uploadFilePath = envJson.uploadFilePath;
 
 // DB 연동
 const path = require("path");
@@ -204,15 +212,13 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
   }
 
   if (imgChk.length != 0) {
-    if (fs.existsSync(imgPath + imgChk[0].file_name)) {
-      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-      try {
-        fs.unlinkSync(imgPath + imgChk[0].file_name);
-        console.log("myfarm image delete");
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    s3.deleteObject({
+      Bucket : 'ssukimg',
+      Key: imgChk[0].file_name,
+    }, function(err, data){
+      if(err) console.log(err);
+      else console.log(data);
+    });
 
     var deleteParams = {
       farm_no: req.body.farm_no,
@@ -242,7 +248,7 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
   var insertParams = {
     farm_no: req.body.farm_no,
     file_name: imgfile.key,
-    file_path: imgfile.key,
+    file_path: (uploadFilePath + imgfile.key),
     file_type: imgfile.mimetype,
     file_size: imgfile.size,
   };
@@ -307,15 +313,13 @@ app.delete("/upload", async (req, res) => {
   }
 
   if (imgChk.length != 0) {
-    if (fs.existsSync(imgPath + imgChk[0].file_name)) {
-      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-      try {
-        fs.unlinkSync(imgPath + imgChk[0].file_name);
-        console.log("myfarm image delete");
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    s3.deleteObject({
+      Bucket : 'ssukimg',
+      Key: imgChk[0].file_name,
+    }, function(err, data){
+      if(err) console.log(err);
+      else console.log(data);
+    });
 
     var deleteParams = {
       farm_no: req.body.farm_no,
@@ -343,47 +347,5 @@ app.delete("/upload", async (req, res) => {
     });
   }
 }); // 내 농장 이미지 삭제 end
-
-// // 내 이미지 가져오기 add (02.08 hhs)
-// app.get("/upload", async (req, res) => {
-//   if (!req.query || !req.query.farm_no) {
-//     res.status(403).send({ msg: "잘못된 파라미터입니다." });
-//     return;
-//   }
-
-//   var selectParams = {
-//     farm_no: req.query.farm_no,
-//   };
-
-//   var selectQuery = mybatisMapper.getStatement(
-//     "MYFARM",
-//     "MYFARM.SELECT.image",
-//     selectParams,
-//     { language: "sql", indent: "  " }
-//   );
-
-//   let data = [];
-//   try {
-//     data = await req.sequelize.query(selectQuery, {
-//       type: req.sequelize.QueryTypes.SELECT,
-//     });
-//     console.log("TCL: data", data);
-//   } catch (error) {
-//     res.status(403).send({ result: "fail", error: error });
-//     return;
-//   }
-
-//   if (data.length == 0) {
-//     res.status(403).send({ result: "fail" });
-//     return;
-//   }
-
-//   res.json({
-//     result: "success",
-//     data: data.map((x) => {
-//       return x;
-//     }),
-//   });
-// }); // 내 image 보기 end
 
 module.exports = app;
