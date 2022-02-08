@@ -1,0 +1,75 @@
+<!-- /server/sql/base/base.xml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MYFARM_SURVEY">  
+
+  <select id="MYFARM_SURVEY.SELECT.myfarm_surveylist">
+    /* 내 농장 설문 전체 리스트, 상세보기 */ 
+    SELECT
+        user_t.user_id,
+        my_farm_t.farm_no,
+        survey_t.survey_no,
+        survey_t.temperature,
+        survey_t.humidity,
+        survey_t.survey_result,
+        survey_t.survey_etc,
+        survey_t.survey_date
+    FROM 
+    survey_t join my_farm_t on survey_t.farm_no = my_farm_t.farm_no
+    join user_t on user_t.user_id = my_farm_t.user_id
+    WHERE user_t.user_id = #{id} and my_farm_t.farm_no = #{no} 
+    order by survey_no desc;
+  </select>
+
+  <select id="MYFARM_SURVEY.SELECT.myfarm_surveydetail">
+  	/* 내 설문 상세보기 (모달 창 띄울 시 사용)*/
+    SELECT
+        user_t.user_id,
+        my_farm_t.farm_no,
+        survey_t.survey_no,
+        survey_t.temperature,
+        survey_t.humidity,
+        survey_t.survey_result,
+        survey_t.survey_etc,
+        survey_t.survey_date
+    FROM 
+    survey_t join my_farm_t on survey_t.farm_no = my_farm_t.farm_no
+    join user_t on user_t.user_id = my_farm_t.user_id
+    WHERE user_t.user_id = #{id} 
+    and my_farm_t.farm_no = #{farm_no} 
+    and survey_t.survey_no = #{survey_no}
+    LIMIT 1;
+  </select>
+
+<select id="MYFARM_SURVEY.SELECT.myfarm_surveygraph">
+    /* 설문 온습도 및 상태값 리스트 출력(그래프) */ 
+    SELECT
+        survey_t.temperature,
+        survey_t.humidity,
+        survey_t.survey_result
+    FROM 
+    survey_t join my_farm_t on survey_t.farm_no = my_farm_t.farm_no
+    join user_t on user_t.user_id = my_farm_t.user_id
+    WHERE user_t.user_id = #{id} and my_farm_t.farm_no = #{no} 
+    order by survey_no desc
+    LIMIT 50;
+  </select>
+
+  <select id="MYFARM_SURVEY.SELECT.myfarm_sensor">
+    /* 현재 농장 상태 가져오기 (센서테이블)*/ 
+    SELECT
+      user_id,
+      farm_no,
+      temperature,
+      humidity,
+      sensor_date
+    FROM
+      sensor_data_t
+    WHERE 
+      user_id = #{id} and farm_no = #{no}
+    order by sensor_data_no desc
+    LIMIT 1;
+  </select>
+
+</mapper>

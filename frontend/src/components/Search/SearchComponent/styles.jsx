@@ -25,19 +25,41 @@ const Wrapper = styled.div`
     color: #383836;
   }
   .input1 {
-    height: 50px;
+    width:200px;
+    height:40px;
   }
   .input2 {
-    height: 40px;
+    height: 28px;
     font-size: 2em;
   }
   .cover-grid {
   }
   .search-component-grid {
-    padding: 32px 0 12px 0;
+    padding: 10px 0 10px 0;
   }
   .search-component-grid-item-se-icon {
     color: #ccc;
+  }
+  & .write-button{
+    font-weight: 600;
+    font-size: 16px;
+    padding:5px 13px;
+    color:#ffffff;
+    background-color: #9aba11;
+
+    &:hover {
+      color:#ffffff;
+      background-color: #9aba11;
+    }
+  }
+  .select-box{
+    width:100px;
+    height:40px;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #212121;
+    }
   }
 `;
 export default Wrapper;

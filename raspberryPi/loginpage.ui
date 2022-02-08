@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>625</width>
+    <height>306</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:white;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="pw_line">
+    <property name="geometry">
+     <rect>
+      <x>302</x>
+      <y>110</y>
+      <width>131</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="id_line">
+    <property name="geometry">
+     <rect>
+      <x>302</x>
+      <y>70</y>
+      <width>131</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Normal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="login_btn">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>170</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #9aba11;
+background-color: white;
+border: 2px solid 9aba11;
+border-radius:  20px;</string>
+    </property>
+    <property name="text">
+     <string>login</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="id_label">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>80</y>
+      <width>68</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ID</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pw_label">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>110</y>
+      <width>71</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Password</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>login_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>check()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>346</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>238</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>check()</slot>
+ </slots>
+</ui>

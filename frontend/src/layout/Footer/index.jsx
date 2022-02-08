@@ -19,17 +19,17 @@ const Footer = () => {
                   window.scrollTo(0, 0);
                 }}
               >
-                Privacy Policy
+                개인정보처리방침
               </span>
             </li>
             <li>
               <span
                 onClick={() => {
-                  history.push('/AboutMe');
+                  history.push('/AboutTeam');
                   window.scrollTo(0, 0);
                 }}
               >
-                Developer Introduction
+                👖청바지
               </span>
             </li>
             <li>
@@ -39,16 +39,13 @@ const Footer = () => {
                   window.scrollTo(0, 0);
                 }}
               >
-                Contact Us
+                회사소개
               </span>
             </li>
           </ul>
           <ul className="info">
-            <li>Samsung Multi Campus | CEO : Young Sang Kim</li>
-            <li>
-              212 Tehran-Ro, Gangnam-Gu, Seoul (Yeoksam-Dong 718-5 Address)
-            </li>
-            <li>Tel 02-2222-5566 | Fax 02-2233-6655</li>
+            <li>쑥쑥</li>
+            <li>powered by TEAM 청바지</li>
           </ul>
           <p>Copyright by Multicampus Co., Ltd. All rights reserved.</p>
         </Grid>

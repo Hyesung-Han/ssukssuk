@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   .bigIndicator {
-    background: #3f51b5;
+    background: #9aba11;
   }
   .root {
     overflow: hidden;
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
     }
   }
   .big-indicator {
-    background: #1890ff;
+    background: #9aba11;
   }
   .sign-out-btn {
     width: 90%;

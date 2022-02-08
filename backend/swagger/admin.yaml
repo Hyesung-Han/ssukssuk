@@ -1,0 +1,144 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+  - name: "admin"
+    description: "Operations about admin"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://swagger.io"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /admin/list:
+    get:
+      tags:
+        - "admin"
+      summary: "list"
+      description: "회원목록 보기"
+      operationId: "user list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "접속 유저 ID"
+          required: true
+          type: "string"
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
+        # - name: "length"
+        #   in: "query"
+        #   description: "list length"
+        #   required: true
+        #   type: "integer"
+        # - name: "page_no"
+        #   in: "query"
+        #   description: "page Number"
+        #   required: true
+        #   type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /admin/userCodeList:
+    get:
+      tags:
+        - "admin"
+      summary: "CodeList"
+      description: "회원 권한 목록"
+      operationId: "user code list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+
+  /admin/update:
+    put:
+      tags:
+        - "admin"
+      summary: "update admin"
+      description: "글 정보 업데이트"
+      operationId: "update code"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_id"
+          in: "formData"
+          description: "ID"
+          required: true
+          type: "string"
+        - name: "user_code"
+          in: "formData"
+          description: "Code"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
+  /admin/delete/{user_id}:
+    delete:
+      tags:
+        - "admin"
+      summary: "delete"
+      description: "선택된 유저 강퇴"
+      operationId: "delete"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: "user_id"
+          description: "view object"
+          required: true
+      responses:
+        default:
+          description: "successful operation"
+
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: "Authorization"
+    in: "header"
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      user_id:
+        type: "string"
+      user_pw:
+        type: "string"
+      user_name:
+        type: "string"
+      user_nickName:
+        type: "string"
+      user_email:
+        type: "string"
+      user_code:
+        type: "string"
+    xml:
+      name: "User"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

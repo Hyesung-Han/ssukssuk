@@ -5,6 +5,9 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setInit } from '../../../redux/reducers/AuthReducer';
+import store from 'store';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import { useDropzone } from 'react-dropzone';
@@ -20,70 +23,7 @@ import {
   Fab,
 } from '@material-ui/core';
 import Wrapper from './styles';
-
-const MyInfoUploadImageComponent = () => {
-  const { user, serverImgUrl } = useContext(CommonContext);
-  const { thumbnailImageData, setThumbnailImageData } = useContext(ViewContext);
-
-  const onDrop = useCallback(acceptedFiles => {
-    console.log('Basic -> acceptedFiles', acceptedFiles);
-  }, []);
-
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone(onDrop);
-
-  useEffect(() => {
-    for (const file of acceptedFiles) {
-      setThumbnailImageData({
-        img: URL.createObjectURL(file),
-        file: file,
-      });
-    }
-  }, [acceptedFiles]);
-
-  return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      spacing={2}
-    >
-      <Grid item xs={12}>
-        <section className="container">
-          <div {...getRootProps({ className: 'dropzone' })}>
-            <Avatar
-              variant="circle"
-              src={
-                thumbnailImageData.img
-                  ? thumbnailImageData.img
-                  : `${serverImgUrl}${user.user_img_url}`
-              }
-              className="cover-avatar"
-            />
-            <input {...getInputProps()} />
-          </div>
-        </section>
-      </Grid>
-      <Grid item xs={12}>
-        <Fragment>
-          <Typography> {user.nick_name} </Typography>
-          <section className="container">
-            <div {...getRootProps({ className: 'dropzone' })}>
-              <Button
-                size={'small'}
-                className="my-info-upload-image-component-button"
-              >
-                EDIT PROFILE
-              </Button>
-              <input {...getInputProps()} />
-            </div>
-          </section>
-        </Fragment>
-      </Grid>
-      <Grid item xs={2}></Grid>
-    </Grid>
-  );
-};
+import { setNickname } from '../../../redux/reducers/AuthReducer';
 
 const MyInfoInputComponent = props => {
   let { keyValue, title, rows } = props;
@@ -103,7 +43,7 @@ const MyInfoInputComponent = props => {
       }
       RightComponet={
         <TextField
-          disabled={keyValue === 'user_id' ? true : false}
+          disabled={keyValue === 'user_nickName' ? false : true}
           id={`outlined-basic-${keyValue}`}
           defaultValue={inputValue[keyValue]}
           variant="outlined"
@@ -120,10 +60,12 @@ const MyInfoInputComponent = props => {
 
 const MyInfoButtonGroupComponent = props => {
   let history = useHistory();
-  const { setUserDetailDialogOpen, user, serverUrl, setUser } = useContext(
-    CommonContext,
-  );
-  const { inputValue, thumbnailImageData } = useContext(ViewContext);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.Auth.user);
+
+  const { setUserDetailDialogOpen, serverUrlBase } = useContext(CommonContext);
+
+  const { inputValue } = useContext(ViewContext);
 
   const [isReadyToUpload, setIsReadyToUpload] = useState(false);
 
@@ -133,57 +75,48 @@ const MyInfoButtonGroupComponent = props => {
   };
 
   const onMyInfoSaveHandelr = async props => {
-    let respone = [];
-    let data = {};
-    const formData = new FormData();
-    formData.append('files', thumbnailImageData.file);
-
     let body = {
-      ...inputValue,
-      ...thumbnailImageData,
+      user_id: inputValue.user_id,
+      user_nickName: inputValue.user_nickName,
     };
 
-    formData.append('optionData', JSON.stringify(body));
-
-    alert('Not implemented yet.');
-
-    setUser({ ...data, status: 'login' });
+    Axios.defaults.headers.common['authorization'] = user.token;
+    Axios.patch(serverUrlBase + `/user/updateinfo`, body)
+      .then(data => {
+        if (data.status === 200) {
+          dispatch(setNickname(body.user_nickName));
+          alert('변경 완료');
+        } else {
+          console.log('회원정보 수정 실패 : ' + data.status);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
+  const regNnm = /^[ㄱ-ㅎ|가-힣]+.{1,}$/;
   useEffect(() => {
-    if (inputValue.user_id !== user.user_id) {
-      setIsReadyToUpload(true);
+    console.log('수정테스트 : ' + inputValue.user_nickName, user.name);
+    if (
+      inputValue.user_nickName !== user.name &&
+      regNnm.test(inputValue.user_nickName)
+    ) {
+      Axios.get(
+        serverUrlBase + `/user/checknick/` + inputValue.user_nickName,
+      ).then(data => {
+        if (data.data.nickchk === false) {
+          setIsReadyToUpload(false);
+        } else {
+          setIsReadyToUpload(true);
+        }
+      });
+      return;
+    } else {
+      setIsReadyToUpload(false);
       return;
     }
-
-    if (inputValue.user_nm !== user.user_nm) {
-      setIsReadyToUpload(true);
-      return;
-    }
-
-    if (inputValue.user_data !== '') {
-      setIsReadyToUpload(true);
-      return;
-    }
-
-    if (thumbnailImageData.img !== user.user_img_url) {
-      setIsReadyToUpload(true);
-      return;
-    }
-
-    if (thumbnailImageData.file !== '') {
-      setIsReadyToUpload(true);
-      return;
-    }
-
-    setIsReadyToUpload(false);
-  }, [
-    inputValue.user_id,
-    inputValue.user_nm,
-    inputValue.user_data,
-    thumbnailImageData.img,
-    thumbnailImageData.file,
-  ]);
+  }, [inputValue.user_nickName]);
 
   return (
     <Grid
@@ -213,7 +146,7 @@ const MyInfoButtonGroupComponent = props => {
         }}
         className="upload-fab"
         style={{
-          backgroundColor: isReadyToUpload ? '#4248b5' : '#E0E0E0',
+          backgroundColor: isReadyToUpload ? '#9aba11' : '#E0E0E0',
         }}
       >
         UPLOAD
@@ -243,7 +176,7 @@ const MyInfoContentDefaultComponent = props => {
   );
 };
 
-const MyInfoContentComponent = () => {
+const MyInfoContentComponent = props => {
   return (
     <form noValidate autoComplete="off">
       <Grid
@@ -253,49 +186,66 @@ const MyInfoContentComponent = () => {
         alignItems="center"
         spacing={2}
       >
+        <h2 className="section-title">회원정보</h2>
+
         <Grid item xs={12}>
-          <MyInfoUploadImageComponent />
+          <MyInfoInputComponent title="아이디" keyValue="user_id" />
+        </Grid>
+        <Grid item xs={12}>
+          <MyInfoInputComponent title="이름" keyValue="user_name" />
         </Grid>
 
         <Grid item xs={12}>
-          <MyInfoInputComponent title="ID" keyValue="user_id" />
-        </Grid>
-        <Grid item xs={12}>
-          <MyInfoInputComponent title="Name" keyValue="user_nm" />
+          <MyInfoInputComponent title="별명" keyValue="user_nickName" />
         </Grid>
 
         <Grid item xs={12}>
-          <MyInfoInputComponent title="Web Site" keyValue="web_site" />
+          <MyInfoInputComponent title="이메일" keyValue="user_email" />
+        </Grid>
+        <Grid item xs={12}>
+          <MyInfoInputComponent title="등급" keyValue="user_code" />
         </Grid>
 
-        <Grid item xs={12}>
-          <MyInfoButtonGroupComponent />
-        </Grid>
+        <Grid item xs={12}></Grid>
+        <MyInfoButtonGroupComponent />
       </Grid>
     </form>
   );
 };
 
 const MyInfo = () => {
-  const { user } = useContext(CommonContext);
-
-  const [thumbnailImageData, setThumbnailImageData] = useState({
-    img: '',
-    file: '',
-  });
-
+  const user = useSelector(state => state.Auth.user);
+  const { serverUrlBase } = useContext(CommonContext);
   const [inputValue, setInputValue] = useState({
-    user_nm: user.user_nm,
-    user_id: user.user_id,
-    web_site: user.web_site,
+    user_id: '',
+    user_name: '',
+    user_nickName: '',
+    user_email: '',
+    user_code: '',
   });
+  let err = false;
+  let errMsg = '';
+  useEffect(() => {
+    Axios.get(serverUrlBase + '/user/myInfo/' + user.user_id)
+      .then(data => {
+        const info_result = data.data.result;
+        if (info_result === 'success') {
+          const info_user = data.data.user[0];
+          setInputValue(info_user);
+        } else {
+          alert('내 정보 불러오기 실패');
+        }
+      })
+      .catch(error => {
+        console.log('내정보 ' + error);
+      });
+  }, []);
+
   return (
     <ViewContext.Provider
       value={{
         inputValue,
         setInputValue,
-        thumbnailImageData,
-        setThumbnailImageData,
       }}
     >
       <Wrapper>
