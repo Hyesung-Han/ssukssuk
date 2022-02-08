@@ -1,5 +1,9 @@
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const aws = require("aws-sdk");
 const path = require("path");
+aws.config.loadFromPath(`${__dirname}/../env/env.json`);
+const s3 = new aws.S3();
 
 const fileFilter = (req, file, cb) => {
   // 확장자 필터링
@@ -17,20 +21,23 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage: multer.diskStorage({
+  storage: multerS3({
     //폴더위치 지정
-    destination: (req, file, done) => {
-      done(null, "./uploads/");
-    },
-    filename: (req, file, done) => {
-      const ext = path.extname(file.originalname);
-      // aaa.txt => aaa+&&+129371271654.txt
-      const fileName = path.basename(file.originalname, ext) + Date.now() + ext;
-      done(null, fileName);
+    s3: s3,
+    bucket: "ssukimg",
+    acl: "public-read",
+    key: function (req, file, cb) {
+      cb(
+        null,
+        Math.floor(Math.random() * 1000).toString() +
+          Date.now() +
+          "." +
+          file.originalname.split(".").pop()
+      );
     },
   }),
   // fileFilter : fileFilter,
-  limits: { fileSize: 30 * 1024 * 1024 },
+  limits: { fileSize: 10 * 1024 * 1024 },
 });
 
 module.exports = { upload };
