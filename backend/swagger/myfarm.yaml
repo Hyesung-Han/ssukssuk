@@ -1,0 +1,182 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+  - name: "myfarm"
+    description: "Operations about myfarm"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://swagger.io"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /myfarm/delete/{no}:
+    delete:
+      tags:
+        - "myfarm"
+      summary: "Delete by farm_no"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "myfarm delete"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "no"
+          description: "no of the myfarm that needs to be deleted"
+          required: true
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm/detail:
+    get:
+      tags:
+        - "myfarm"
+      summary: "get myfarm detail"
+      description: "get myfarm detail"
+      operationId: "myfarm detail no"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "user ID"
+          required: true
+          type: "string"
+        - name: "no"
+          in: "query"
+          description: "myfarm Number"
+          required: false
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm/list:
+    get:
+      tags:
+        - "myfarm"
+      summary: "list"
+      description: "내 농장 목록 보기"
+      operationId: "myfarm list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "user ID"
+          required: true
+          type: "string"
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm/update:
+    patch:
+      tags:
+        - "myfarm"
+      summary: "Update myfarm"
+      description: "Update myfarm"
+      operationId: "myfarm update"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update myfarm"
+          required: true
+          schema:
+            $ref: "#/definitions/myfarm_update"
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm/upload:
+    post:
+      tags:
+        - "myfarm"
+      summary: "Upload myfarm image"
+      description: "Upload myfarm image"
+      operationId: "myfarm upload image"
+      consumes:
+        - multipart/form-data
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "farm_no"
+          in: "formData"
+          description: "farm_no"
+          required: true
+          type: "string"
+        - in: formData
+          name: farm
+          type: file
+          description: The file to upload.
+          required: true
+      responses:
+        default:
+          description: "successful operation"
+
+    delete:
+      tags:
+        - "myfarm"
+      summary: "Delete by farm_image"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "myfarm image delete"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "farm_no"
+          in: "formData"
+          description: "farm_no"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "successful delete"
+
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: "Authorization"
+    in: "header"
+
+definitions:
+  myfarm_update:
+    type: "object"
+    properties:
+      farm_no:
+        type: "integer"
+      farm_name:
+        type: "string"
+      farm_text:
+        type: "string"
+    xml:
+      name: "myfarm_update"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

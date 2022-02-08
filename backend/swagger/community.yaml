@@ -72,7 +72,7 @@ paths:
           description: "successful operation"
 
   /community/update:
-    put:
+    patch:
       tags:
         - "community"
       summary: "update community"
@@ -177,7 +177,7 @@ paths:
           description: "successful operation"
 
   /community/comment/update:
-    put:
+    patch:
       tags:
         - "community_comment"
       summary: "Update community_comment"
@@ -228,7 +228,7 @@ paths:
         - "application/xml"
         - "application/json"
       parameters:
-        - name: "community_no"
+        - name: "article_no"
           in: "query"
           description: "community comment list"
           required: false
@@ -286,7 +286,7 @@ definitions:
     properties:
       comment_user_nickName:
         type: "string"
-      community_no:
+      article_no:
         type: "integer"
       comment_text:
         type: "string"
