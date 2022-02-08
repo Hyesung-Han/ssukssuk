@@ -1,0 +1,146 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+  - name: "myfarm_survey"
+    description: "Operations about myfarm_survey"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://swagger.io"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /myfarm_survey/list:
+    get:
+      tags:
+        - "myfarm_survey"
+      summary: "list"
+      description: "농장 설문 목록 보기"
+      operationId: "farm survey list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_id"
+          in: "query"
+          description: "사용자 아이디"
+          required: false
+          type: "string"
+
+        - name: "farm_no"
+          in: "query"
+          description: "농장번호"
+          required: false
+          type: "integer"
+
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm_survey/detail:
+    get:
+      tags:
+        - "myfarm_survey"
+      summary: "list"
+      description: "survey 상세 보기"
+      operationId: "myfarm_survey list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_id"
+          in: "query"
+          description: "사용자 "
+          required: false
+          type: "string"
+
+        - name: "farm_no"
+          in: "query"
+          description: "농장 번호"
+          required: false
+          type: "integer"
+
+        - name: "survey_no"
+          in: "query"
+          description: "설문 번호"
+          required: false
+          type: "integer"
+
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm_survey/graph:
+    get:
+      tags:
+        - "myfarm_survey"
+      summary: "graph"
+      description: "농장 설문 그래프화"
+      operationId: "farm survey graph"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_id"
+          in: "query"
+          description: "사용자 아이디"
+          required: false
+          type: "string"
+
+        - name: "farm_no"
+          in: "query"
+          description: "농장번호"
+          required: false
+          type: "integer"
+
+      responses:
+        default:
+          description: "successful operation"
+
+  /myfarm_survey/status:
+    get:
+      tags:
+        - "myfarm_survey"
+      summary: "현재 농장 상태를 나타내기 위한 가장 최근 센서값"
+      description: "농장 최신 센서 값"
+      operationId: "farm status"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_id"
+          in: "query"
+          description: "사용자 아이디"
+          required: false
+          type: "string"
+
+        - name: "farm_no"
+          in: "query"
+          description: "농장번호"
+          required: false
+          type: "integer"
+
+      responses:
+        default:
+          description: "successful operation"
+
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: "Authorization"
+    in: "header"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

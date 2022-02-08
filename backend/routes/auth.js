@@ -3,6 +3,9 @@ var { hashPassword, comparePassword } = require("../utils/bcrypt");
 const jwt = require("jsonwebtoken");
 const envJson = require(`${__dirname}/../env/env.json`);
 const { verifyToken } = require("../utils/jwt");
+const nodemailer = require("nodemailer"); 
+const ejs = require('ejs');
+
 
 // DB 연동
 const path = require("path");
@@ -422,5 +425,63 @@ app.post("/login", async (req, res) => {
 
 //비밀번호 비교 end
 // 회원 로그인 end
+
+//회원가입 시 email 인증 ( 2022.02.07 CSW)
+// 로그인 안에 넣고 redirect해줘야 완성
+app.post("/regi-email", async (req, res) => {
+
+  if (!req.body || !req.body.user_email) {
+    res.status(403).send({ msg: "잘못된 파라미터입니다." });
+    return;
+  }
+  //console.log(req.body.user_email);
+  let emailto = req.body.user_email;
+  let authNum = Math.random().toString().substr(2,6);
+
+
+     //console.log(emailTemplete);
+
+     let transporter = nodemailer.createTransport({
+         service: 'gmail',
+         //host: 'smtp.gmail.com',
+         port:465,
+         secure: true,
+         auth: {
+            user: envJson.NODEMAILER_USER,
+            pass: envJson.NODEMAILER_PASS,
+         },
+     });
+  
+     const mailOptions = {
+         from: envJson.NODEMAILER_USER,
+         to: emailto,
+         subject: "회원가입을 위한 인증번호를 입력해주세요.",
+         html: `<div style="text-align: center;">
+         <h3>인증번호 입니다.</h3><br/>
+         <p>${authNum}</p></div>`
+          ,
+     };
+  
+     console.log(mailOptions);
+    transporter.sendMail(mailOptions, function (error, info) {
+        if(error){
+          console. log("nodemailer error: "+ error);
+        }else{
+          return res.status(200).json({
+            code: 200,
+            msg: "회원가입 이메일 인증번호 전송 성공",
+            status: "regi-email",
+            content: info.response
+          });
+        }
+        transporter.close();
+
+     });
+ 
+});
+// 회원가입 시 email 인증 end
+
+
+
 
 module.exports = app;
