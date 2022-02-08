@@ -1,8 +1,17 @@
 // import { Grid, Button } from '@material-ui/core';
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 
-import { Grid, Button, Pagination, Tabs, Tab } from '@mui/material';
+import {
+  Grid,
+  Button,
+  Pagination,
+  Box,
+  Typography,
+  Tabs,
+  Tab,
+} from '@mui/material';
 
 import BoardList from '../../components/Board/BoardList/';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +23,7 @@ import { CommonContext } from '../../context/CommonContext';
 import { ViewContext } from '../../context/ViewContext';
 import Wrapper from './styles';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -29,26 +38,26 @@ const theme = createTheme({
   },
 });
 
-function createData(no, hit, title, author, date, commentCnt) {
+function createData(no, hit, title, author, date, noticeCode, commentCnt) {
   return {
     no,
     hit,
     title,
     author,
     date,
+    noticeCode,
     commentCnt,
   };
 }
 
-const Community = () => {
+const Notice = () => {
   const user = useSelector(state => state.Auth.user);
-  const { serverUrlBase } = useContext(CommonContext);
+  const { setIsSignUp, serverUrlBase } = useContext(CommonContext);
 
   let history = useHistory();
 
   const [listData, setListData] = useState([]);
-  const [freeLen, setFreeLen] = useState(0);
-  const [mentoLen, setMentoLen] = useState(0);
+  const [noticeLen, setnoticeLen] = useState(0);
   const [category, setCategory] = React.useState(0);
   const [searchValue, setSearchValue] = useState(null);
   const [searchCategory, setSearchCategory] = useState(0);
@@ -62,60 +71,47 @@ const Community = () => {
     setPage(value);
   };
 
-  const onClickCommunityWriteHandler = () => {
+  const onClickNoticeWriteHandler = () => {
     if (!user.status) {
       alert('로그인이 필요합니다');
       // setIsSignUp('SignIn');
       // history.push('/Auth');
     } else {
-      history.push('/CommunityWrite');
+      history.push('/NoticeWrite');
     }
   };
 
   const pageLen = [];
   const setPageLen = () => {
     pageLen.splice(0, pageLen.length);
-
-    pageLen.push(
-      freeLen + mentoLen === 1 ? 0 : parseInt((freeLen + mentoLen) / 10) + 1,
-    );
-    pageLen.push(freeLen === 1 ? 0 : parseInt(freeLen / 10) + 1);
-    pageLen.push(mentoLen === 1 ? 0 : parseInt(mentoLen / 10) + 1);
+    pageLen.push(noticeLen === 1 ? 0 : parseInt(noticeLen / 10) + 1);
   };
 
-  const getCommunityListCnt = () => {
-    Axios.get(serverUrlBase + `/community/listcount`, {
+  const getNoticeListCnt = () => {
+    Axios.get(serverUrlBase + `/notice/listcount`, {
       params: {
         keyword: searchValue,
       },
     })
       .then(data => {
-        let tf, tm;
-        tf = tm = 0;
-
+        let total = 0;
         const cnt_data = data.data.data;
         cnt_data.map(cur => {
-          if (cur.community_code === 'C01') tf = cur.list_cnt;
-          else if (cur.community_code === 'C02') tm = cur.list_cnt;
+          if (cur.notice_code === 'N01') total += cur.list_cnt;
+          else if (cur.notice_code === 'N02') total += cur.list_cnt;
         });
-        setFreeLen(tf);
-        setMentoLen(tm);
+        setnoticeLen(total);
       })
       .catch(function(error) {
-        console.log('community list count error: ' + error);
+        console.log('notice list count error: ' + error);
       });
   };
 
-  const readCommunityList = () => {
+  const readNoticeList = () => {
     const keyword = searchValue ? searchValue : null;
-    let communityCode;
-    if (category === 0) communityCode = null;
-    else if (category === 1) communityCode = 'c01';
-    else if (category === 2) communityCode = 'c02';
 
-    Axios.get(serverUrlBase + `/community/list`, {
+    Axios.get(serverUrlBase + `/notice/list`, {
       params: {
-        community_code: communityCode,
         keyword: keyword,
         page_no: page,
       },
@@ -123,14 +119,15 @@ const Community = () => {
       .then(data => {
         const tempList = [];
         data.data.data.map(row => {
-          if (row.community_author) {
+          if (row.notice_author) {
             tempList.push(
               createData(
-                row.community_no,
-                row.community_hit,
-                row.community_title,
-                row.community_author,
-                row.community_date,
+                row.notice_no,
+                row.notice_hit,
+                row.notice_title,
+                row.notice_author,
+                row.notice_date,
+                row.notice_code,
                 row.comment_cnt,
               ),
             );
@@ -139,17 +136,17 @@ const Community = () => {
         setListData(tempList);
       })
       .catch(function(error) {
-        console.log('community list error: ' + error);
+        console.log('notice list error: ' + error);
       });
   };
 
   // useEffect를 3개로 나눠놓으니까 처음 실행할 때 서버에 3번 연결하네;;;;;
   useEffect(() => {
-    getCommunityListCnt();
+    getNoticeListCnt();
     setPageLen();
 
     if (page === 1) {
-      readCommunityList();
+      readNoticeList();
       window.scrollTo(0, 0);
     } else {
       setPage(1);
@@ -158,7 +155,7 @@ const Community = () => {
 
   useEffect(() => {
     if (page === 1) {
-      readCommunityList();
+      readNoticeList();
       window.scrollTo(0, 0);
     } else {
       setPage(1);
@@ -166,7 +163,7 @@ const Community = () => {
   }, [category]);
 
   useEffect(() => {
-    readCommunityList();
+    readNoticeList();
     window.scrollTo(0, 0); // 스크롤 맨 위로 이동
   }, [page]);
 
@@ -201,15 +198,7 @@ const Community = () => {
                 >
                   <Tab
                     className="tab-style"
-                    label={'전체 게시판 (' + (freeLen + mentoLen) + ')'}
-                  />
-                  <Tab
-                    className="tab-style"
-                    label={'자유 게시판 (' + freeLen + ')'}
-                  />
-                  <Tab
-                    className="tab-style"
-                    label={'멘토링 게시판 (' + mentoLen + ')'}
+                    label={'전체 게시판 (' + noticeLen + ')'}
                   />
                 </Tabs>
               </Grid>
@@ -217,14 +206,14 @@ const Community = () => {
             <Grid item>
               <Button
                 className="write-button"
-                onClick={onClickCommunityWriteHandler}
+                onClick={onClickNoticeWriteHandler}
               >
                 글쓰기
               </Button>
             </Grid>
           </Grid>
           {/* {searchValue && <div className="result">{searchValue} 검색 결과</div>} */}
-          <BoardList listType={'Community'} listData={listData} />
+          <BoardList listType={'Notice'} listData={listData} />
 
           <Grid
             className="bottom-box"
@@ -246,4 +235,4 @@ const Community = () => {
   );
 };
 
-export default Community;
+export default Notice;

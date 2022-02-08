@@ -2,7 +2,7 @@ import { persistReducer } from 'redux-persist';
 import { createStore, combineReducers } from 'redux';
 import { AuthReducer } from './reducers/AuthReducer';
 // sessionStorage 사용
-import sessionStorage from 'redux-persist/es/storage/session';
+import sessionStorage from 'redux-persist/lib/storage/session';
 
 const persistConfig = {
   key: 'root',

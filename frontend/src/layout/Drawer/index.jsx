@@ -118,8 +118,8 @@ const DrawerListGroup = () => {
         </ListItem>
         <ListItem
           button
-          key={'Ask'}
-          onClick={onClickRedirectPathHandler('/Ask')}
+          key={'Notice'}
+          onClick={onClickRedirectPathHandler('/Notice')}
         >
           <ListItemText primary={'문의 사항'} disableTypography />
         </ListItem>
@@ -139,7 +139,7 @@ const DrawerListGroup = () => {
         >
           <ListItemText primary={'우리 팀 소개'} disableTypography />
         </ListItem>
-        {user.user_type === 'A' && (
+        {(user.user_code === 'U03' || user.user_code === 'U04') && (
           <ListItem
             button
             key={'Admin'}

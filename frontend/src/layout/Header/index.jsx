@@ -38,12 +38,9 @@ const Header = props => {
     // Need props function
     // 나중에 여기서 컴포넌트 바꾸는거 context쓰면 관련된거 다시 렌더링되니까 auth에서 바꾸도록 props줘서 변경하는 방법으로 가고싶다ㅎㅎ
     // 다른 사람들이랑 충돌 안나도록 일단은 이렇게 하고 나중에 다 만들고 나서 바꿀 수 있으면 바꾸자
-    if(name==='SignIn')
-    {
-      setIsSignUp('SignIn')
-    }
-    else if(name==="SignUp")
-    {
+    if (name === 'SignIn') {
+      setIsSignUp('SignIn');
+    } else if (name === 'SignUp') {
       setIsSignUp('SignUp');
     }
     history.push('/Auth');
@@ -118,7 +115,11 @@ const Header = props => {
               >
                 <img
                   className="logo_img"
-                  src={history.location.pathname.indexOf("/CommunityDetail")==-1?"images/ssug_green.png":"../images/ssug_green.png"}
+                  src={
+                    history.location.pathname.indexOf('/CommunityDetail') == -1
+                      ? 'images/ssug_green.png'
+                      : '../images/ssug_green.png'
+                  }
                   alt="logo"
                 />
               </Typography>
@@ -140,7 +141,7 @@ const Header = props => {
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={onClickRedirectPathHandler('/Ask')}
+                    onClick={onClickRedirectPathHandler('/Notice')}
                     className="display-none header-button"
                   >
                     문의사항
@@ -151,7 +152,7 @@ const Header = props => {
                     <Button
                       color="primary"
                       variant="contained"
-                      onClick={onClickRedirectPathHandler('/Ask')}
+                      onClick={onClickRedirectPathHandler('/Notice')}
                       className="display-none header-button"
                     >
                       내 농장
@@ -163,7 +164,7 @@ const Header = props => {
 
             <Grid item>
               <Grid container alignItems="center">
-                {(user.type === 'U02' || user.type === 'U03') && (
+                {(user.user_code === 'U03' || user.user_code === 'U04') && (
                   <Grid item>
                     <Button
                       color="primary"
