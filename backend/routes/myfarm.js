@@ -12,7 +12,7 @@ const mybatisMapper = require("mybatis-mapper");
 // const version = process.env.VERSION ? process.env.VERSION : "base";
 const sqlPath = path.join(__dirname, "..", ".", `/sql/`);
 
-var imgPath = "/home/ubuntu/myfarmIMG/";
+var imgPath = "./upload/";
 
 // mapper 설정
 mybatisMapper.createMapper([`${sqlPath}/myfarm.xml`]);
