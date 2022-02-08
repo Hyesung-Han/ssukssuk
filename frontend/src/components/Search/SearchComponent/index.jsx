@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Grid, TextField, Button } from '@material-ui/core';
 import { FormControl, Select, MenuItem } from '@mui/material';
@@ -14,7 +14,7 @@ const SearchComponent = () => {
     setSearchValue,
     searchCategory,
     setSearchCategory,
-    setIsSearch,
+    // setIsSearch,
   } = useContext(ViewContext);
 
   const handleChange = event => {
@@ -28,11 +28,12 @@ const SearchComponent = () => {
   };
 
   const SearchHandler = () => {
-    setIsSearch(true);
+    setSearchValue(value);
   };
 
+  const [value, setValue]=useState('');
   const onChangeSearchValueHandler = e => {
-    setSearchValue(e.target.value);
+    setValue(e.target.value);
   };
 
   return (
@@ -60,7 +61,7 @@ const SearchComponent = () => {
             </Grid>
             <Grid item>
               <TextField
-                value={searchValue}
+                value={value}
                 // placeholder="찾고싶은 내용을 입력하세요"
                 // autoFocus={true}
                 variant="outlined"

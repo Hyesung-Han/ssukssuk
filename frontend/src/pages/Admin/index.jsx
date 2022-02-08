@@ -1,50 +1,29 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-
+// import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@mui/material';
+// import BoardList from '../../components/Board/BoardList/';
+import AdminBoardList from '../../components/Board/AdminBoardList/';
 import Layout from '../../layout/';
+import { ViewContext } from '../../context/ViewContext';
+import Wrapper from './styles';
 
 const Admin = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
-    <Layout>
-        <h2> 관리자 페이지 </h2>
-
-        <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        Dashboard
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
-    </div>
-
-    </Layout>);
+    <ViewContext.Provider>
+      <Layout>
+        <Wrapper>
+          <Grid
+            container
+            direction="row"
+            className="top-box"
+            justifyContent="space-between"
+            alignItems="end"
+          ></Grid>
+          {/* {searchValue && <div className="result">{searchValue} 검색 결과</div>} */}
+          <AdminBoardList />
+        </Wrapper>
+      </Layout>
+    </ViewContext.Provider>
+  );
 };
 
 export default Admin;
