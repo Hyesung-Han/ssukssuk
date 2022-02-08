@@ -4,7 +4,6 @@ const aws = require("aws-sdk");
 const path = require("path");
 aws.config.loadFromPath(`${__dirname}/../env/env.json`);
 const s3 = new aws.S3();
-
 const fileFilter = (req, file, cb) => {
   // 확장자 필터링
   if (
@@ -30,13 +29,16 @@ const upload = multer({
       cb(
         null,
         Math.floor(Math.random() * 1000).toString() +
-          Date.now() +
-          "." +
-          file.originalname.split(".").pop()
-      );
+        Date.now() +
+        "." +
+        file.originalname.split(".").pop()
+        );
+    },
+    contentType: function (req, file, cb) {
+      cb(null,file.mimetype);
     },
   }),
-  // fileFilter : fileFilter,
+  fileFilter : fileFilter,
   limits: { fileSize: 10 * 1024 * 1024 },
 });
 

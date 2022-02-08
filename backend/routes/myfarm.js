@@ -241,8 +241,8 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
 
   var insertParams = {
     farm_no: req.body.farm_no,
-    file_name: imgfile.filename,
-    file_path: imgfile.path.replace("\\", "\\\\"),
+    file_name: imgfile.key,
+    file_path: imgfile.key,
     file_type: imgfile.mimetype,
     file_size: imgfile.size,
   };
