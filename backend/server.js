@@ -8,6 +8,7 @@ const cors = require("cors");
 // const multer = require("multer"); // form-data 파싱을 위한..
 // const form_data = multer(); // form-data 파싱을 위한..
 const { swaggerUi, specs } = require("./swagger");
+const nodemailer = require('nodemailer');
 
 // --------------------------------------------
 // env
