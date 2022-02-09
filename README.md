@@ -1,4 +1,4 @@
-#  💻 SSAFY 공통 PJT [Web-IoT] 📡
+#  SSAFY 공통 PJT [Web-IoT]
 
 [[_TOC_]]
 
@@ -6,14 +6,14 @@
 
 ## ✅ PJT 소개
 
-### 📆 일정/진행사항
+### 일정/진행사항
 
 ---
 
 - **시작 날짜** : 2022년 1월 10일 (월) 09:00
 - **완료 날짜** : 2022년 2월 17일 (목) 24:00 [총 **6주**]
 
-- **🏃‍♀️ 진행사항**
+- **진행사항**
 
 |               |                             완료                             |         예정 [2월 10일 (목) ~ ]         |
 | :-----------: | :----------------------------------------------------------: | :-------------------------------------: |
@@ -26,7 +26,7 @@
 
 
 
-### 🔍 목표
+### 목표
 
 ---
 
@@ -46,48 +46,75 @@
 
 
 
-### 🥕 내 농장 속 IoT 쑥쑥
+### 내 농장 속 IoT 쑥쑥
 
 ---
 
-- **프로젝트명** : **농사를 짓는 모든 사람들을 위한 커뮤니티, 내 농장 속 IoT 쑥쑥**
-- **💡 컨셉**
+- **컨셉** : **농사를 짓는 모든 사람들을 위한 커뮤니티, 내 농장 속 IoT 쑥쑥**
 
-```python
-# 그린하비(green-hobby)
-  코로나 시국이 장기화 됨에 따라 도시 속에서 친환경적인 취미에 관심을 가지는 사람들이 늘어나고 있다. 그 중에서도 도시농업과 주말농장에 대한 수요가 늘어나고 있으며 특히, 1인가구에서는 옥상에 작은 텃밭을 가꾸어 자급자족하기도하며 가족 단위로는 주말농장에 텃밭을 신청해서 농작물을 키우기도 한다.
-  위와 같은 취미를 가지는 고객들이 좀 더 나은 환경에서 농작물을 키울 수 있도록 하기 위해 농작물의 기록과 관리를 수월하게 해주고, 커뮤니티를 통해 같은 관심사를 가진 사람들끼리 소통을 할 수 있는 장을 마련해주고자 한다.  
-```
+> # 그린하비(green-hobby)
+>   코로나 시국이 장기화 됨에 따라 도시 속에서 친환경적인 취미에 관심을 가지는 사람들이 늘어나고 있다. 그 중에서도 도시농업과 주말농장에 대한 수요가 늘어나고 있으며 특히, 1인가구에서는 옥상에 작은 텃밭을 가꾸어 자급자족하기도하며 가족 단위로는 주말농장에 텃밭을 신청해서 농작물을 키우기도 한다.
+>   위와 같은 취미를 가지는 고객들이 좀 더 나은 환경에서 농작물을 키울 수 있도록 하기 위해 농작물의 기록과 관리를 수월하게 해주고, 커뮤니티를 통해 같은 관심사를 가진 사람들끼리 소통을 할 수 있는 장을 마련해주고자 한다.
 
 
 
 - **주요기능**
 
-- [👩‍🌾 **내농장 페이지**]
+  - [**내농장 페이지**]
 
-  ✏ IoT 기기를 통한 **자동 온/습도 기록**
+    IoT 기기를 통한 **자동 온/습도 기록**
 
-  ⌚ **실시간**으로 농장 상태 확인 가능
+    **실시간**으로 농장 상태 확인 가능
 
-  📃 IoT 기기를 통해서 완료된 **내 농작물 상태 설문** 기록을 웹 페이지에서 확인
+    IoT 기기를 통해서 완료된 **내 농작물 상태 설문** 기록을 웹 페이지에서 확인
 
-  🌱 **농장 별로 상태를 관리**할 수 있으며, 기온 이상이 생기면 알림 발생
+    **농장 별로 상태를 관리**할 수 있으며, 기온 이상이 생기면 알림 발생
 
-​		
+  <br>
 
-- **[👨‍👩‍👧‍👧 커뮤니티 페이지]**
+  - **[커뮤니티 페이지]**
 
-  💬 농작물에 관한 고민, 자신의 농작물 자랑, 농작물을 잘 키우는 팁 등의 이야기들을 유저들과 자유롭게 소통할 수 있는 **자유 게시판**
+    농작물에 관한 고민, 자신의 농작물 자랑, 농작물을 잘 키우는 팁 등의 이야기들을 유저들과 자유롭게 소통할 수 있는 **자유 게시판**
 
-  👩‍🎓 자신의 농작물을 어떻게 키울지 고민될 때, 실력을 인정받은 멘토에게 자문을 구할 수 있는 **멘토 게시판**
+    자신의 농작물을 어떻게 키울지 고민될 때, 실력을 인정받은 멘토에게 자문을 구할 수 있는 **멘토 게시판**
 
-  ❓ 관리자에게 요청하고 싶은 문의사항을 게시하거나 공지사항을 확인할 수 있는 **문의사항 게시판**
-
-
+    관리자에게 요청하고 싶은 문의사항을 게시하거나 공지사항을 확인할 수 있는 **문의사항 게시판**
 
 
 
-### 👖 팀원/역할
+
+
+
+### Tech-Stack / Version
+
+---
+
+- **Tech-Stack / Tools**
+
+|   영역    |                             스택                             |
+| :-------: | :----------------------------------------------------------: |
+| Front-End | <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/> <img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/> |
+| Back-End  | <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/> <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/>  **MYBATIS** |
+|   Kiosk   | <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Qt_logo_2016.svg" alt="qt" width="50" height="28"/> <img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=Raspberry%20Pi&logoColor=white"/> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/> <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> |
+|  DevOps   | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="50" height="28"/> <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/> |
+
+
+
+- **Version**
+
+<img src="https://img.shields.io/badge/REACT-17.0.0-76B900?style=for-the-badge&logo=react&logoColor=white"/><img src="https://img.shields.io/badge/REDUX-4.1.2-76B900?style=for-the-badge&logo=redux&logoColor=white"/><img src="https://img.shields.io/badge/MATERIAL UI-5.2.8-76B900?style=for-the-badge&logo=mui&logoColor=white"/><img src="https://img.shields.io/badge/STYLED COMPONENTS-5.3.3-76B900?style=for-the-badge&logo=styledcomponents&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/NODE.JS-16.13.2-93b023?&style=for-the-badge&logo=node.js&logoColor=white"/><img src="https://img.shields.io/badge/SWAGGER-6.1.0-93b023?&style=for-the-badge&logo=swagger&logoColor=white"/><img src="https://img.shields.io/badge/EXPRESS.JS-4.17.1-93b023?&style=for-the-badge&logo=express&logoColor=white"/><img src="https://img.shields.io/badge/jwt-8.5.1-93b023?&style=for-the-badge&logo=&logoColor=white"/><img src="https://img.shields.io/badge/multer-1.4.4-93b023?&style=for-the-badge&logo=&logoColor=white"/><img src="https://img.shields.io/badge/mybatis-0.6.5-93b023?&style=for-the-badge&logo=&logoColor=white"/><img src="https://img.shields.io/badge/cors-2.8.5-93b023?&style=for-the-badge&logo=&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/docker-20.10.12-93b023?&style=for-the-badge&logo=docker&logoColor=white"/><img src="https://img.shields.io/badge/jenkins-2.319.2-93b023?&style=for-the-badge&logo=jenkins&logoColor=white"/><img src="https://img.shields.io/badge/MYSQL-8.0.28-93b023?&style=for-the-badge&logo=mysql&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/linux-11.0.0-93b023?&style=for-the-badge&logo=linux&logoColor=white"/><img src="https://img.shields.io/badge/qt-5.0.0-93b023?&style=for-the-badge&logo=qt&logoColor=white"/><img src="https://img.shields.io/badge/raspberry pi-4.0.0-93b023?&style=for-the-badge&logo=raspberrypi&logoColor=white"/>
+
+
+
+
+
+### 팀원/역할
 
 ---
 
@@ -104,7 +131,7 @@
 
 
 
-- **🤝 협업 링크**
+- **협업 링크**
 
 | <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"/> | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> | <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> | <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white"/> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -114,41 +141,9 @@
 
 
 
-### 🛠 Tech-Stack / Tools / Version
-
----
-
-- **Tech-Stack / Tools**
-
-|   영역    |                             스택                             |
-| :-------: | :----------------------------------------------------------: |
-| Front-End | <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white"/><img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"/><img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/><img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/><img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white"/><img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/> |
-| Back-End  | <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/><img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/><img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"/><img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/><img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/><img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/><img src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white"/> **MYBATIS** |
-|    DB     | <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/> |
-|   Infra   | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="50" height="28"/><img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"/> |
-|   Kiosk   | <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Qt_logo_2016.svg" alt="qt" width="50" height="28"/><img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=Raspberry%20Pi&logoColor=white"/><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/><img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> |
-|   환경    | <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white"/><img src="https://img.shields.io/badge/Google_chrome-4285F4?style=for-the-badge&logo=Google-chrome&logoColor=white"/><img src="https://img.shields.io/badge/GitLab-330F63?style=for-the-badge&logo=gitlab&logoColor=white"/><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/><img src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white"/> |
-|  협업툴   | <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/><img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"/><img src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white"/><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white"/><img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"/> |
-
-
-
-- **Version**
-
-<img src="https://img.shields.io/badge/REACT-17.0.0-76B900?style=for-the-badge&logo=react&logoColor=white"/><img src="https://img.shields.io/badge/REDUX-4.1.2-76B900?style=for-the-badge&logo=redux&logoColor=white"/><img src="https://img.shields.io/badge/REACT ROUTER-5.1.2-76B900?style=for-the-badge&logo=reactrouter&logoColor=white"/><img src="https://img.shields.io/badge/NPM-8.1.2-76B900?style=for-the-badge&logo=npm&logoColor=white"/><img src="https://img.shields.io/badge/MATERIAL UI-5.2.8-76B900?style=for-the-badge&logo=mui&logoColor=white"/><img src="https://img.shields.io/badge/STYLED COMPONENTS-5.3.3-76B900?style=for-the-badge&logo=styledcomponents&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/NODE.JS-16.13.2-93b023?&style=for-the-badge&logo=node.js&logoColor=white"/><img src="https://img.shields.io/badge/SWAGGER-6.1.0-93b023?&style=for-the-badge&logo=swagger&logoColor=white"/><img src="https://img.shields.io/badge/EXPRESS.JS-4.17.1-93b023?&style=for-the-badge&logo=express&logoColor=white"/><img src="https://img.shields.io/badge/jwt-8.5.1-93b023?&style=for-the-badge&logo=&logoColor=white"/><img src="https://img.shields.io/badge/multer-1.4.4-93b023?&style=for-the-badge&logo=&logoColor=white"/><img src="https://img.shields.io/badge/mybatis-0.6.5-93b023?&style=for-the-badge&logo=&logoColor=white"/><img src="https://img.shields.io/badge/cors-2.8.5-93b023?&style=for-the-badge&logo=&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/docker-20.10.12-93b023?&style=for-the-badge&logo=docker&logoColor=white"/><img src="https://img.shields.io/badge/jenkins-2.319.2-93b023?&style=for-the-badge&logo=jenkins&logoColor=white"/><img src="https://img.shields.io/badge/MYSQL-8.0.28-93b023?&style=for-the-badge&logo=mysql&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/linux-11.0.0-93b023?&style=for-the-badge&logo=linux&logoColor=white"/><img src="https://img.shields.io/badge/qt-5.0.0-93b023?&style=for-the-badge&logo=qt&logoColor=white"/><img src="https://img.shields.io/badge/raspberry pi-4.0.0-93b023?&style=for-the-badge&logo=raspberrypi&logoColor=white"/>
-
-
-
-
-
 ## ✅ PJT 산출물
 
-### 🖥 화면 정의서
+### 화면 정의서
 
 ---
 
@@ -158,7 +153,7 @@
 
 
 
-### 🖼 WireFrame
+### WireFrame
 
 ---
 
@@ -168,11 +163,11 @@
 
 
 
-### ⛓ Sequence Diagram
+### Sequence Diagram
 
 ---
 
-- **내 농장 IoT**
+- **내 농장 IoT** 
 
 ![Sequence_Diagram1](/uploads/5cb94584c2f690b96e4df666bff83ea0/Sequence_Diagram1.png)
 
@@ -186,7 +181,7 @@
 
 
 
-### 🗜 DB Modeling [ERD]
+### DB Modeling [ERD]
 
 ---
 
@@ -196,7 +191,7 @@
 
 
 
-### 🔗 React Component
+### React Component
 
 ---
 
@@ -206,7 +201,7 @@
 
 
 
-### 🧾 시스템 구성도
+### 시스템 구성도
 
 ---
 
@@ -216,15 +211,9 @@
 
 
 
-- **시스템 기술 (System Technology)**
-
-![System_Architecture](/uploads/8b507abe6ee0b0f9e33bf6bfee39f448/System_Architecture.png)
 
 
-
-
-
-### 📌 Rest API URL (Node.js with Express)
+### Rest API URL (Node.js with Express)
 
 ---
 
