@@ -15,7 +15,7 @@
 
 - **진행사항**
 
-|               |                            <center> 완료 </center>                             |         예정 [2월 10일 (목) ~ ]         |
+|               |                            완료                              |         예정 [2월 10일 (목) ~ ]         |
 | :-----------: | :----------------------------------------------------------: | :-------------------------------------: |
 | **Front-End** | Layout/Auth/User/Search/Board/Community/Notice/Comment/Admin 구현 및 Redux 적용 | Main/MyFarm 구현 후, 추가 기능 구현, QA |
 | **Back-End**  | DB생성 및 Server 설치, REST API 구축 및 Swagger 적용,  CI/CD 자동배포 |           추가 기능 구현, QA            |
