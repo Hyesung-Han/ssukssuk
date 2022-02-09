@@ -15,7 +15,7 @@
 
 - **진행사항**
 
-    |               |  　　　　　　　　　　　　　　　　　완료       |      　　　  예정 [2월 10일 (목) ~ ]         |
+    |               |  　　　　　　　　　　　　　　　　　완료       |      　　  예정 [2월 10일 (목) ~ ]         |
     | :-----------: | :----------------------------------------------------------: | :-------------------------------------: |
     | **Front-End** | Layout/Auth/User/Search/Board/Community/Notice/Comment/Admin 구현 및 Redux 적용 | Main/MyFarm 구현 후, 추가 기능 구현, QA |
     | **Back-End**  | DB생성 및 Server 설치, REST API 구축 및 Swagger 적용,  CI/CD 자동배포 |           추가 기능 구현, QA            |
@@ -106,7 +106,7 @@
 
 - **Version**
 
-    |　영역    | 　　　　　　　　　　　　　　　　　　　　　　　　　　　　스택     |
+    |　영역    | 　　　　　　　　　　　　　　　　　　　　　　　　　스택     |
     | :-------: | :----------------------------------------------------------: |
     | Front-End | <img src="https://img.shields.io/badge/REACT-17.0.0-76B900?style=for-the-badge&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/REDUX-4.1.2-76B900?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/MATERIAL UI-5.2.8-76B900?style=for-the-badge&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/STYLED COMPONENTS-5.3.3-76B900?style=for-the-badge&logo=styledcomponents&logoColor=white"/> |
     | Back-End  | <img src="https://img.shields.io/badge/NODE.JS-16.13.2-93b023?&style=for-the-badge&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/SWAGGER-6.1.0-93b023?&style=for-the-badge&logo=swagger&logoColor=white"/> <img src="https://img.shields.io/badge/jwt-8.5.1-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/EXPRESS.JS-4.17.1-93b023?&style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/mybatis-0.6.5-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/cors-2.8.5-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/multer-1.4.4-93b023?&style=for-the-badge&logo=&logoColor=white"/> |
