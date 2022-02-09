@@ -15,12 +15,12 @@
 
 - **진행사항**
 
-|               |                            완료                              |         예정 [2월 10일 (목) ~ ]         |
-| :-----------: | :----------------------------------------------------------: | :-------------------------------------: |
-| **Front-End** | Layout/Auth/User/Search/Board/Community/Notice/Comment/Admin 구현 및 Redux 적용 | Main/MyFarm 구현 후, 추가 기능 구현, QA |
-| **Back-End**  | DB생성 및 Server 설치, REST API 구축 및 Swagger 적용,  CI/CD 자동배포 |           추가 기능 구현, QA            |
-|   **Kiosk**   |                Raspberry Pi DB/Firebase 연동                 |                    -                    |
-|   **기타**    |                       PJT 산출물 정리                        |         UCC 제작, 최종발표 준비         |
+    |               |                            완료                              |         예정 [2월 10일 (목) ~ ]         |
+    | :-----------: | :----------------------------------------------------------: | :-------------------------------------: |
+    | **Front-End** | Layout/Auth/User/Search/Board/Community/Notice/Comment/Admin 구현 및 Redux 적용 | Main/MyFarm 구현 후, 추가 기능 구현, QA |
+    | **Back-End**  | DB생성 및 Server 설치, REST API 구축 및 Swagger 적용,  CI/CD 자동배포 |           추가 기능 구현, QA            |
+    |   **Kiosk**   |                Raspberry Pi DB/Firebase 연동                 |                    -                    |
+    |   **기타**    |                       PJT 산출물 정리                        |         UCC 제작, 최종발표 준비         |
 
 
 
@@ -95,23 +95,23 @@
 
 - **Tech-Stack / Tools**
 
-|   영역    |                             스택                             |
-| :-------: | :----------------------------------------------------------: |
-| Front-End | <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/> <img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/> |
-| Back-End  | <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/> <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/>  **MYBATIS** |
-|   Kiosk   | <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Qt_logo_2016.svg" alt="qt" width="50" height="28"/> <img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=Raspberry%20Pi&logoColor=white"/> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/> <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> |
-|  DevOps   | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="50" height="28"/> <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/> |
+    |   영역    |                             스택                             |
+    | :-------: | :----------------------------------------------------------: |
+    | Front-End | <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/> <img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/> |
+    | Back-End  | <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/> <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/>  **MYBATIS** |
+    |   Kiosk   | <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Qt_logo_2016.svg" alt="qt" width="50" height="28"/> <img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=Raspberry%20Pi&logoColor=white"/> <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/> <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> |
+    |  DevOps   | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="50" height="28"/> <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/> |
 
 
 
 - **Version**
 
-|   영역    |                             스택                             |
-| :-------: | :----------------------------------------------------------: |
-| Front-End | <img src="https://img.shields.io/badge/REACT-17.0.0-76B900?style=for-the-badge&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/REDUX-4.1.2-76B900?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/MATERIAL UI-5.2.8-76B900?style=for-the-badge&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/STYLED COMPONENTS-5.3.3-76B900?style=for-the-badge&logo=styledcomponents&logoColor=white"/> |
-| Back-End  | <img src="https://img.shields.io/badge/NODE.JS-16.13.2-93b023?&style=for-the-badge&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/SWAGGER-6.1.0-93b023?&style=for-the-badge&logo=swagger&logoColor=white"/> <img src="https://img.shields.io/badge/jwt-8.5.1-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/EXPRESS.JS-4.17.1-93b023?&style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/mybatis-0.6.5-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/cors-2.8.5-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/multer-1.4.4-93b023?&style=for-the-badge&logo=&logoColor=white"/> |
-|   Kiosk   | <img src="https://img.shields.io/badge/qt-5.0.0-93b023?&style=for-the-badge&logo=qt&logoColor=white"/> <img src="https://img.shields.io/badge/raspberry pi-4.0.0-93b023?&style=for-the-badge&logo=raspberrypi&logoColor=white"/> <img src="https://img.shields.io/badge/linux-11.0.0-93b023?&style=for-the-badge&logo=linux&logoColor=white"/> |
-|  DevOps   | <img src="https://img.shields.io/badge/docker-20.10.12-93b023?&style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/MYSQL-8.0.28-93b023?&style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/jenkins-2.319.2-93b023?&style=for-the-badge&logo=jenkins&logoColor=white"/> |
+    |   영역    |                             스택                             |
+    | :-------: | :----------------------------------------------------------: |
+    | Front-End | <img src="https://img.shields.io/badge/REACT-17.0.0-76B900?style=for-the-badge&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/REDUX-4.1.2-76B900?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/MATERIAL UI-5.2.8-76B900?style=for-the-badge&logo=mui&logoColor=white"/> <img src="https://img.shields.io/badge/STYLED COMPONENTS-5.3.3-76B900?style=for-the-badge&logo=styledcomponents&logoColor=white"/> |
+    | Back-End  | <img src="https://img.shields.io/badge/NODE.JS-16.13.2-93b023?&style=for-the-badge&logo=node.js&logoColor=white"/> <img src="https://img.shields.io/badge/SWAGGER-6.1.0-93b023?&style=for-the-badge&logo=swagger&logoColor=white"/> <img src="https://img.shields.io/badge/jwt-8.5.1-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/EXPRESS.JS-4.17.1-93b023?&style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/mybatis-0.6.5-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/cors-2.8.5-93b023?&style=for-the-badge&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/multer-1.4.4-93b023?&style=for-the-badge&logo=&logoColor=white"/> |
+    |   Kiosk   | <img src="https://img.shields.io/badge/qt-5.0.0-93b023?&style=for-the-badge&logo=qt&logoColor=white"/> <img src="https://img.shields.io/badge/raspberry pi-4.0.0-93b023?&style=for-the-badge&logo=raspberrypi&logoColor=white"/> <img src="https://img.shields.io/badge/linux-11.0.0-93b023?&style=for-the-badge&logo=linux&logoColor=white"/> |
+    |  DevOps   | <img src="https://img.shields.io/badge/docker-20.10.12-93b023?&style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/MYSQL-8.0.28-93b023?&style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/jenkins-2.319.2-93b023?&style=for-the-badge&logo=jenkins&logoColor=white"/> |
 
 
 
@@ -123,22 +123,22 @@
 
 - **팀명** : **청바지** [**청**춘은 **바**로 **지**금!]
 
-|   이름   |                 역할                 |      내용       |
-| :------: | :----------------------------------: | :-------------: |
-| 🦆 최소원 | **팀장** / 백엔드 개발 / Kiosk 개발  |    기획 총괄    |
-| 🐫 오윤택 |           **백엔드 리더**            |   백엔드 총괄   |
-| 🐹 한혜성 |       백엔드 개발 / 백엔드 QA        |                 |
-| 🐸 이정아 |         **프론트엔드 리더**          | 프론트엔드 총괄 |
-| 🐂 황소현 | 프론트 개발 / Kiosk 개발 / 프론트 QA |                 |
-| 🦍 이동준 |       프론트 개발 / Jira 관리        |                 |
+    |   이름   |                 역할                 |      내용       |
+    | :------: | :----------------------------------: | :-------------: |
+    | 🦆 최소원 | **팀장** / 백엔드 개발 / Kiosk 개발  |    기획 총괄    |
+    | 🐫 오윤택 |           **백엔드 리더**            |   백엔드 총괄   |
+    | 🐹 한혜성 |       백엔드 개발 / 백엔드 QA        |                 |
+    | 🐸 이정아 |         **프론트엔드 리더**          | 프론트엔드 총괄 |
+    | 🐂 황소현 | 프론트 개발 / Kiosk 개발 / 프론트 QA |                 |
+    | 🦍 이동준 |       프론트 개발 / Jira 관리        |                 |
 
 
 
 - **협업 링크**
 
-| <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"/> | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> | <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> | <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white"/> |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| [**`Daily Scrum`**](https://www.notion.so/5934c5579cec4460818bad76641363d0?v=700fdcd203754c4088ba9a5bd50e91aa) | [**`Front-End`**](https://www.notion.so/7d5b4d3e84124c64958ed97303ce58fd?v=00ee4f8f6580469eb70adea42717ac00) | [**`Back-End`**](https://www.notion.so/c4cc58fb3024432aa3bd71a0e670e05d?v=9995e22893534bb9ab2d5edfc1e4ff51) | [**`Git`**](https://www.notion.so/GIT-15a1490c08fb4a89b1e1eca7494a0787) | [**`Jira`**](https://www.notion.so/JIRA-1d2c1288517c45719a3fc98346f8d153) |
+    | <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"/> | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40"/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> | <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> | <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white"/> |
+    | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+    | [**`Daily Scrum`**](https://www.notion.so/5934c5579cec4460818bad76641363d0?v=700fdcd203754c4088ba9a5bd50e91aa) | [**`Front-End`**](https://www.notion.so/7d5b4d3e84124c64958ed97303ce58fd?v=00ee4f8f6580469eb70adea42717ac00) | [**`Back-End`**](https://www.notion.so/c4cc58fb3024432aa3bd71a0e670e05d?v=9995e22893534bb9ab2d5edfc1e4ff51) | [**`Git`**](https://www.notion.so/GIT-15a1490c08fb4a89b1e1eca7494a0787) | [**`Jira`**](https://www.notion.so/JIRA-1d2c1288517c45719a3fc98346f8d153) |
 
 
 
