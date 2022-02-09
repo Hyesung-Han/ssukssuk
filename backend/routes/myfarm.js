@@ -279,6 +279,7 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
     result: "success",
     url: req.url,
     body: req.body,
+    path: insertParams.file_path,
   });
 }); // 내 농장 이미지 업로드 end
 
