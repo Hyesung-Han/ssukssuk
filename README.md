@@ -192,17 +192,6 @@
 
 
 
-
-### React Component
-
----
-
-![React_Components](/uploads/14bfc5b64474992cb9d1e076d7cdd0e1/React_Components.png)
-
-
-
-
-
 ### 시스템 구성도
 
 ---
@@ -210,6 +199,16 @@
 - **시스템 아키텍처 (System Architecture)**
 
 ![System_Technology](/uploads/e663cb85e01461ef2d95500d05bcd018/System_Technology.png)
+
+
+
+
+### Project File Structure
+
+---
+- [**`프론트엔드 구조`**](https://bronzed-gateway-8e0.notion.site/9f89212c19d94ea599a571e9501b7bac)
+- [**`백엔드 구조`**](https://bronzed-gateway-8e0.notion.site/91042099bb6440fd88c4bfa48a3e4dcd)
+
 
 
 
