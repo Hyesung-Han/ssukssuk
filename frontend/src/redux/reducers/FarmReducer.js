@@ -1,5 +1,6 @@
 const SET_FARM = 'setFarm';
 const SET_FARM_INIT = 'setFarmInit';
+const SET_FARM_NO='setFarmNo';
 const SET_PATH = 'setPath';
 
 const FarmInitialState = {
@@ -17,6 +18,10 @@ const FarmInitialState = {
 export const setFarm = farm => ({
   type: SET_FARM,
   farm,
+});
+export const setFarm_no = farm_no => ({
+  type: SET_FARM_NO,
+  farm_no,
 });
 
 export const setFarmInit = () => ({
