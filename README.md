@@ -168,7 +168,7 @@
 
 - **내 농장 IoT** 
 
-![Sequence_Diagram1](/uploads/5cb94584c2f690b96e4df666bff83ea0/Sequence_Diagram1.png)
+![Sequence_Diagram1](/uploads/cc68a739ecfbcfe1c9d787ae1337c450/Sequence_Diagram1.png)
 
 
 
