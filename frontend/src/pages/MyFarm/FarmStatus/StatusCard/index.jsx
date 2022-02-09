@@ -1,9 +1,13 @@
+import { useContext } from 'react';
+
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Grid, Menu, MenuItem, Typography } from '@mui/material';
 
 // project imports
 import MainCard from '../../../../components/Card/MainCard';
+import { CommonContext } from '../../../../context/CommonContext';
+
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: '#FFE57F',
@@ -41,8 +45,14 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
   },
 }));
 
-const StatusCard = () => {
+const StatusCard = props => {
   const theme = useTheme();
+
+  const {parsingDate } = useContext(CommonContext);
+
+  const temp=props.curSensorData.temp;
+  const humi=props.curSensorData.humi;
+  const sensor_date=props.curSensorData.sensor_date;
 
   return (
     <>
@@ -57,7 +67,7 @@ const StatusCard = () => {
                     sx={{
                       ...theme.typography.commonAvatar,
                       ...theme.typography.largeAvatar,
-                      backgroundColor: theme.palette.secondary[800],
+                      // backgroundColor: theme.palette.secondary[800],
                       mt: 1,
                     }}
                   ></Avatar>
@@ -74,7 +84,7 @@ const StatusCard = () => {
                       mb: 0.75,
                     }}
                   >
-                    온도
+                    온도 : {temp}°C
                   </Typography>
                   <Typography
                     sx={{
@@ -83,7 +93,7 @@ const StatusCard = () => {
                       mb: 0.75,
                     }}
                   >
-                    습도
+                    습도 : {humi}%
                   </Typography>
                 </Grid>
               </Grid>
@@ -97,7 +107,7 @@ const StatusCard = () => {
                 color: theme.palette.secondary[200],
               }}
             >
-              2022.01.11 14:12
+              {parsingDate(sensor_date)}
             </Typography>
           </Grid>
         </Box>
