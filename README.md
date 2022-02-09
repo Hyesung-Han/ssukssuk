@@ -174,8 +174,7 @@
 
 -  **커뮤니티 (Board)**
 
-![Sequence_Diagram2](/uploads/073f5661dfde7ce52810c96f96ee2442/Sequence_Diagram2.png)
-
+![Sequence_Diagram2](/uploads/bfc0ac9a172937bae4759cce34479dd2/Sequence_Diagram2.PNG)
 
 
 
