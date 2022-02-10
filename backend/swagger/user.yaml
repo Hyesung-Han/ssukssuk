@@ -207,6 +207,50 @@ paths:
               description: "date in UTC when token expires"
         "400":
           description: "Invalid username/password supplied"
+  /user/regi-email:
+    post:
+      tags:
+        - "user"
+      summary: "user email sand"
+      description: "email sand."
+      operationId: "email sand"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_email"
+          in: "formData"
+          description: "user email sand"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
+    get:
+      tags:
+        - "user"
+      summary: "get user email"
+      description: "user email get code."
+      operationId: "user email get code"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "user_email"
+          in: "query"
+          description: "user_email"
+          required: true
+          type: "string"
+        - name: "authNum"
+          in: "query"
+          description: "authNum"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
 securityDefinitions:
   jwt:
     type: apiKey

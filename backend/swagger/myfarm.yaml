@@ -158,6 +158,47 @@ paths:
         default:
           description: "successful delete"
 
+  /myfarm/live:
+    post:
+      tags:
+        - "myfarm"
+      summary: "live myfarm img"
+      description: "live myfarm img"
+      operationId: "live myfarm"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "live myfarm img"
+          required: true
+          schema:
+            $ref: "#/definitions/myfarm_live"
+      responses:
+        default:
+          description: "successful operation"
+
+    delete:
+      tags:
+        - "myfarm"
+      summary: "Delete live myfarm img"
+      description: "Delete live myfarm img"
+      operationId: "Delete live myfarm"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Delete live myfarm img"
+          required: true
+          schema:
+            $ref: "#/definitions/myfarm_live"
+      responses:
+        default:
+          description: "successful delete"
+
 securityDefinitions:
   jwt:
     type: apiKey
@@ -176,6 +217,14 @@ definitions:
         type: "string"
     xml:
       name: "myfarm_update"
+
+  myfarm_live:
+    type: "object"
+    properties:
+      farm_no:
+        type: "integer"
+    xml:
+      name: "myfarm_live"
 
 externalDocs:
   description: "Find out more about Swagger"

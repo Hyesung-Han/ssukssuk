@@ -279,6 +279,7 @@ app.post("/upload", upload.single("farm"), async (req, res) => {
     result: "success",
     url: req.url,
     body: req.body,
+    path: insertParams.file_path,
   });
 }); // 내 농장 이미지 업로드 end
 
@@ -347,5 +348,112 @@ app.delete("/upload", async (req, res) => {
     });
   }
 }); // 내 농장 이미지 삭제 end
+
+// 내 농장 라이브 이미지 add(02.10 OYT)
+app.post("/live",  async (req, res) => {
+  if (!req.body || !req.body.farm_no) {
+    res.status(403).send({ result: "fail" });
+    return;
+  }
+
+  var insertParams = {
+    farm_no: req.body.farm_no,
+  };
+
+  let insertQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.INSERT.live",
+    insertParams,
+    { language: "sql", indent: "  " }
+  );
+  let data = [];
+  try {
+    data = await req.sequelize.query(insertQuery, {
+      type: req.sequelize.QueryTypes.INSERT,
+    });
+    console.log("TCL: data", data);
+  } catch (error) {
+    res.status(403).send({ result: "fail", error: error });
+    return;
+  }
+
+  var selectParams = {
+    farm_no: req.body.farm_no,
+  };
+
+  var selectQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.SELECT.live",
+    selectParams,
+    { language: "sql", indent: " " }
+  );
+  let live = [];
+  let cnt = 0;
+  try {
+    while(cnt < 10){
+      live = await req.sequelize.query(selectQuery, {
+        type: req.sequelize.QueryTypes.SELECT,
+      });
+      if(live[0].file_name != null) break;
+      else {
+        cnt++;
+        await sleep(500);
+      }
+    }
+    console.log("TCL: live", live);
+  } catch (error) {
+    res.json({status: 403, result: "fail", error: error });
+    return;
+  }
+
+  if (live.length == 0) {
+    res.json({status: 403, result: "fail"});
+    return;
+  }
+  res.json({
+    result: "success",
+  });
+}); // 내 농장 라이브 이미지 end
+
+// 내 농장 live 이미지 삭제 add (02.10 OYT)
+app.delete("/live", async (req, res) => {
+  if (!req.body || !req.body.farm_no) {
+    res.status(403).send({ result: "fail1" });
+    return;
+  }
+
+  var deleteParams = {
+    farm_no: req.body.farm_no,
+  };
+
+  var deleteQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.DELETE.live",
+    deleteParams,
+    { language: "sql", indent: "  " }
+  );
+
+  let deleteData = [];
+  try {
+    deleteData = await req.sequelize.query(deleteQuery, {
+      type: req.sequelize.QueryTypes.DELETE,
+    });
+    console.log("live-image-delete success");
+  } catch (error) {
+    res.status(403).send({ result: "fail3", error: error });
+    return;
+  }
+  res.json({
+    result: "success",
+  });
+  
+}); // 내 농장 live 이미지 삭제 end
+
+// sleep
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+} 
 
 module.exports = app;

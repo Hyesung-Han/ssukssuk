@@ -10,18 +10,17 @@ from time import sleep
 
 sense = SenseHat()
 
-class pollingThread(QThread):
-    def __init__(self,dbConnect, farm_no, user_id):
+class pollingSensorThread(QThread):
+    def __init__(self, farm_no, user_id):
         super().__init__()
         
         self.farm_no=farm_no
         self.user_id=user_id
-        self.dbConnect=dbConnect
 
     def run(self): 
         while True:
-            #time.sleep(10)
-            time.sleep(60*10)
+            time.sleep(10)
+            #time.sleep(60*10)
             self.dbInit()
             self.setQuery()
             
