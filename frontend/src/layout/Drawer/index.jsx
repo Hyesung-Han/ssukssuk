@@ -2,6 +2,7 @@ import React, { useContext, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setInit } from '../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../redux/reducers/FarmReducer';
 import { CommonContext } from '../../context/CommonContext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -44,6 +45,7 @@ const DrawerHeaderGroup = () => {
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
     dispatch(setInit());
+    dispatch(setFarmInit());
 
     alert('You are logged out.');
 
@@ -51,7 +53,12 @@ const DrawerHeaderGroup = () => {
   };
 
   return (
-    <Grid container direction="row" justify="space-between" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <Grid item>
         {user.status ? (
           <Button
@@ -166,7 +173,12 @@ const DrawerFooterGroup = () => {
   const { user } = useContext(CommonContext);
 
   return (
-    <Grid container direction="row" justify="flex-start" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="center"
+    >
       <Grid item xs={6}>
         {!user.status && <Fragment></Fragment>}
       </Grid>

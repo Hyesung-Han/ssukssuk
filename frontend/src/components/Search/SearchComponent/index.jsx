@@ -31,7 +31,7 @@ const SearchComponent = () => {
     setSearchValue(value);
   };
 
-  const [value, setValue]=useState('');
+  const [value, setValue] = useState('');
   const onChangeSearchValueHandler = e => {
     setValue(e.target.value);
   };
@@ -41,7 +41,7 @@ const SearchComponent = () => {
       <Grid
         container
         alignItems="flex-end"
-        justify="center"
+        justifyContent="center"
         direction="column"
         className="search-component-grid"
         onClick={TopSearchCloseHandler}

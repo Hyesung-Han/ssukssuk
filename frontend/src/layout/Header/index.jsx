@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setInit } from '../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../redux/reducers/FarmReducer';
 
 import { CommonContext } from '../../context/CommonContext';
 import SignResponsiveDialog from '../../components/Auth/SignResponsiveDialog/';
 import UserResponsiveDialog from '../../components/User/UserResponsiveDialog/';
-import VoteDetailResponsiveDialog from '../../components/Main/VoteDetailResponsiveDialog/';
 
 import {
   Grid,
@@ -63,6 +63,7 @@ const Header = props => {
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
     dispatch(setInit());
+    dispatch(setFarmInit());
 
     alert('You are logged out.');
 
@@ -83,7 +84,7 @@ const Header = props => {
           <Grid
             container
             direction="column"
-            justify="space-between"
+            justifyContent="space-between"
             aria-label="open drawer"
             onClick={() => {
               setDrawerOpen(!drawerOpen);
@@ -104,7 +105,7 @@ const Header = props => {
           <Grid
             className="appbar-wrap"
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="center"
           >
             <Grid item>
@@ -116,7 +117,8 @@ const Header = props => {
                 <img
                   className="logo_img"
                   src={
-                    history.location.pathname.indexOf('/CommunityDetail') == -1
+                    (history.location.pathname.indexOf('/CommunityDetail') == -1 &&
+                    history.location.pathname.indexOf('/NoticeDetail')==-1)
                       ? 'images/ssug_green.png'
                       : '../images/ssug_green.png'
                   }
@@ -152,7 +154,7 @@ const Header = props => {
                     <Button
                       color="primary"
                       variant="contained"
-                      onClick={onClickRedirectPathHandler('/Notice')}
+                      onClick={onClickRedirectPathHandler('/MyFarm')}
                       className="display-none header-button"
                     >
                       내 농장
@@ -217,7 +219,6 @@ const Header = props => {
       </Wrapper>
       <SignResponsiveDialog />
       <UserResponsiveDialog />
-      <VoteDetailResponsiveDialog />
     </>
   );
 };

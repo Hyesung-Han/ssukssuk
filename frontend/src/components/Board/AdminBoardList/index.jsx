@@ -34,7 +34,6 @@ import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 
 import MenuList from '@mui/material/MenuList';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
@@ -173,10 +172,8 @@ const FadeMenu = props => {
   const userId = props.checkId;
   const getUserList = props.getUserList;
 
-  // 무한? console.log(userId);
   const { serverUrlBase } = useContext(CommonContext);
 
-  // 라즈베리파이에서 만든거 강퇴 안됨(??)
   const onDeleteUser = async props => {
     setAnchorEl(null);
     Axios.delete(serverUrlBase + `/admin/delete/` + userId)
@@ -476,7 +473,6 @@ const AdminBoardList = () => {
       });
   };
 
-  // 1번인가? 여러번인가?
   useEffect(() => {
     getUserList();
   }, []);

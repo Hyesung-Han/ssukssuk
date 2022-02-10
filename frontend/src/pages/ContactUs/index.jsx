@@ -13,14 +13,14 @@ const ContactUs = () => {
               <img src="/images/contact_us_img_1.png" alt="" />
             </Grid>
             <Grid className="title">CALL</Grid>
-            <Grid className="text">02-6622-3300</Grid>
+            <Grid className="text">010-5775-XXXX</Grid>
           </Grid>
           <Grid xs={12} sm={4} md={4} item>
             <Grid className="img">
               <img src="/images/contact_us_img_2.png" alt="" />
             </Grid>
             <Grid className="title">E-MAIL</Grid>
-            <Grid className="text">help@samsungsupport.com</Grid>
+            <Grid className="text">thdnjs008@unist.ac.kr</Grid>
           </Grid>
           <Grid
             xs={12}
