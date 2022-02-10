@@ -41,7 +41,7 @@
     (
         #{title}, 
         #{author}, 
-        now(),
+        (SELECT DATE_ADD(NOW(), INTERVAL 9 HOUR)),
         #{content},
         #{code},
         #{user_id}
@@ -116,7 +116,7 @@
         #{user_nickName},
         #{community_no},
         #{text},
-        now(),
+        (SELECT DATE_ADD(NOW(), INTERVAL 9 HOUR)),
         #{user_id}
     )
   </insert>
