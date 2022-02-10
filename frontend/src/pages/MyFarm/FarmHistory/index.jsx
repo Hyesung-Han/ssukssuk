@@ -11,7 +11,8 @@ import MainCard from '../../../components/Card/MainCard';
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: '#fff',
   position: 'relative',
-  border: 'none',
+  border: 'solid',
+  bordercolor: 'green',
   margin: '50px 0px 50px 0px',
 }));
 const FarmHistory = () => {

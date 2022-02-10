@@ -18,7 +18,7 @@ const NoticeDetail = ({ match }) => {
   const no = match.params.no;
   let history = useHistory();
 
-  const { serverUrlBase,parsingDate } = useContext(CommonContext);
+  const { serverUrlBase, parsingDate } = useContext(CommonContext);
   const user = useSelector(state => state.Auth.user);
   const [notice, setNotice] = useState();
   const getNotice = async () => {
@@ -86,7 +86,7 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -103,7 +103,7 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -123,7 +123,7 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
@@ -131,10 +131,8 @@ const NoticeDetail = ({ match }) => {
                 내용
               </Grid>
               <Grid item className="body-content body-content-text" xs={9}>
-                <Paper elevation={0}>
-                {notice.notice_content}
-                </Paper>
-                </Grid>
+                <Paper elevation={0}>{notice.notice_content}</Paper>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

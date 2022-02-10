@@ -87,7 +87,7 @@ const NoticeWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -101,7 +101,7 @@ const NoticeWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -120,7 +120,7 @@ const NoticeWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >

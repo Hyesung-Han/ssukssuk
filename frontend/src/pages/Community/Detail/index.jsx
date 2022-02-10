@@ -18,7 +18,7 @@ const CommunityDetail = ({ match }) => {
   const no = match.params.no;
   let history = useHistory();
 
-  const { serverUrlBase,parsingDate } = useContext(CommonContext);
+  const { serverUrlBase, parsingDate } = useContext(CommonContext);
   const user = useSelector(state => state.Auth.user);
   const [Community, setCommunity] = useState();
   const getCommunity = async () => {
@@ -83,15 +83,19 @@ const CommunityDetail = ({ match }) => {
   return (
     <Layout>
       <Wrapper>
-      <Grid container>
-          <h2>{Community.community_code === 'C01' ? '자유 게시판' : '멘토링 게시판'}</h2>
+        <Grid container>
+          <h2>
+            {Community.community_code === 'C01'
+              ? '자유 게시판'
+              : '멘토링 게시판'}
+          </h2>
         </Grid>
         <Grid container className="root-box" direction="column">
           <Grid item className="body-box">
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -108,7 +112,7 @@ const CommunityDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -128,18 +132,16 @@ const CommunityDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
               <Grid item className="body-header" xs={2}>
                 내용
               </Grid>
-                <Grid item className="body-content body-content-text" xs={9}>
-                <Paper elevation={0}>
-                {Community.community_content}
-                </Paper>
-                </Grid>
+              <Grid item className="body-content body-content-text" xs={9}>
+                <Paper elevation={0}>{Community.community_content}</Paper>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

@@ -7,7 +7,6 @@ import { setFarmInit } from '../../redux/reducers/FarmReducer';
 import { CommonContext } from '../../context/CommonContext';
 import SignResponsiveDialog from '../../components/Auth/SignResponsiveDialog/';
 import UserResponsiveDialog from '../../components/User/UserResponsiveDialog/';
-import VoteDetailResponsiveDialog from '../../components/Main/VoteDetailResponsiveDialog/';
 
 import {
   Grid,
@@ -85,7 +84,7 @@ const Header = props => {
           <Grid
             container
             direction="column"
-            justify="space-between"
+            justifyContent="space-between"
             aria-label="open drawer"
             onClick={() => {
               setDrawerOpen(!drawerOpen);
@@ -106,7 +105,7 @@ const Header = props => {
           <Grid
             className="appbar-wrap"
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="center"
           >
             <Grid item>
@@ -219,7 +218,6 @@ const Header = props => {
       </Wrapper>
       <SignResponsiveDialog />
       <UserResponsiveDialog />
-      <VoteDetailResponsiveDialog />
     </>
   );
 };

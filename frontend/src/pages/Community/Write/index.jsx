@@ -7,7 +7,7 @@ import Wrapper from './styles';
 import Axios from 'axios';
 
 import { CommonContext } from '../../../context/CommonContext';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 import Swal from 'sweetalert2';
 
@@ -47,32 +47,27 @@ const CommunityWrite = () => {
     setContent(e.target.value);
   };
 
-
   const onClickCommunityWriteHandler = () => {
-    if(!user.status) 
-    {
-      alert("회원정보 오류! 로그인을 확인해주세요");
+    if (!user.status) {
+      alert('회원정보 오류! 로그인을 확인해주세요');
       history.push('/Community');
       return;
     }
 
-    Axios.post(serverUrlBase + `/community/regi`, {   
-        community_title: title,
-        community_author: user.user_nickName,
-        community_content: content,
-        community_code: code,
-        community_user_id: user.user_id
+    Axios.post(serverUrlBase + `/community/regi`, {
+      community_title: title,
+      community_author: user.user_nickName,
+      community_content: content,
+      community_code: code,
+      community_user_id: user.user_id,
     })
       .then(data => {
-        if(data.status===200)
-        {
+        if (data.status === 200) {
           Swal.fire({
             icon: 'success',
             title: '글이 성공적으로 등록되었습니다.',
           });
-        }
-        else
-        {
+        } else {
           Swal.fire({
             icon: 'error',
             title: '에러',
@@ -102,7 +97,7 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -145,7 +140,7 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -164,7 +159,7 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
