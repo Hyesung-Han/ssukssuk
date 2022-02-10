@@ -45,6 +45,7 @@ class login(QMainWindow):
             else:
                 self.survey=survey(self.dbConnect,id_l,farm_no)
                 self.survey.show()
+                pass
 
 app = QApplication([])
 win = login()
