@@ -83,7 +83,7 @@
         #{file_path}, 
         #{file_type},
         #{file_size},
-        now()
+        (SELECT DATE_ADD(NOW(), INTERVAL 9 HOUR))
     )
   </insert>
 
