@@ -1,3 +1,9 @@
+FROM node:10
+CMD ["npm", "install"]
+
+FROM node:10
+CMD ["npm", "run", "build"]
+
 # nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용합니다.
 FROM nginx
 
