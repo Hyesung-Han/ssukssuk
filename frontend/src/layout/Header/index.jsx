@@ -117,7 +117,8 @@ const Header = props => {
                 <img
                   className="logo_img"
                   src={
-                    history.location.pathname.indexOf('/CommunityDetail') == -1
+                    (history.location.pathname.indexOf('/CommunityDetail') == -1 &&
+                    history.location.pathname.indexOf('/NoticeDetail')==-1)
                       ? 'images/ssug_green.png'
                       : '../images/ssug_green.png'
                   }
