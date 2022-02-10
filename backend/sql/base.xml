@@ -94,4 +94,12 @@
     LIMIT 1
   </select>
 
+  <select id="AUTH.SELECT.emailchk">
+  	/*email 중복검사*/
+    SELECT  
+        user_email
+    FROM user_t
+    WHERE user_email = #{user_email}
+  </select>
+
 </mapper>

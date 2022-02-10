@@ -4,16 +4,20 @@ from PyQt5.QtCore import *
 from PyQt5 import QtSql
 from dbConnect import dbConnect
 
-from sensor import pollingThread
+from sensor import pollingSensorThread
 from sense_emu import SenseHat
+from firebase import pollingCameraThread
 
 class survey(QMainWindow):
     def __init__(self, dbConnect,user_id,farm_no):
         super().__init__()
         loadUi("survey.ui",self)
                  
-        self.sensor=pollingThread(dbConnect,farm_no,user_id)
+        self.sensor=pollingSensorThread(farm_no,user_id)
         self.sensor.start()
+        
+        self.firebase = pollingCameraThread(farm_no, user_id)
+        self.firebase.start()
         
         self.sense = SenseHat()
         # 버튼 연결
