@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import Layout from './../../layout/';
 import Wrapper from './styles';
+
 const Terms = () => {
   return (
     <Layout>

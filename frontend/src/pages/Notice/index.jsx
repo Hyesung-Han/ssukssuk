@@ -1,32 +1,20 @@
-// import { Grid, Button } from '@material-ui/core';
 import React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
-
-import {
-  Grid,
-  Button,
-  Pagination,
-  Box,
-  Typography,
-  Tabs,
-  Tab,
-} from '@mui/material';
-
+import { Grid, Button, Pagination, Tabs, Tab } from '@mui/material';
 import BoardList from '../../components/Board/BoardList/';
 import { useHistory } from 'react-router-dom';
 import SearchComponent from '../../components/Search/SearchComponent';
-
 import Layout from '../../layout/';
-
 import { CommonContext } from '../../context/CommonContext';
 import { ViewContext } from '../../context/ViewContext';
 import Wrapper from './styles';
-
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@emotion/react';
+
+import '../../App.css';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -52,7 +40,7 @@ function createData(no, hit, title, author, date, noticeCode, commentCnt) {
 
 const Notice = () => {
   const user = useSelector(state => state.Auth.user);
-  const { setIsSignUp, serverUrlBase } = useContext(CommonContext);
+  const { serverUrlBase } = useContext(CommonContext);
 
   let history = useHistory();
 
@@ -74,8 +62,6 @@ const Notice = () => {
   const onClickNoticeWriteHandler = () => {
     if (!user.status) {
       alert('로그인이 필요합니다');
-      // setIsSignUp('SignIn');
-      // history.push('/Auth');
     } else {
       history.push('/NoticeWrite');
     }
@@ -84,7 +70,7 @@ const Notice = () => {
   const pageLen = [];
   const setPageLen = () => {
     pageLen.splice(0, pageLen.length);
-    pageLen.push(noticeLen === 1 ? 0 : parseInt(noticeLen / 10) + 1);
+    pageLen.push(noticeLen === 0 ? 1 : parseInt(noticeLen / 10) + (noticeLen%10===0)?0:1);
   };
 
   const getNoticeListCnt = () => {
@@ -96,7 +82,7 @@ const Notice = () => {
       .then(data => {
         let total = 0;
         const cnt_data = data.data.data;
-        cnt_data.map(cur => {
+        cnt_data.forEach(cur => {
           if (cur.notice_code === 'N01') total += cur.list_cnt;
           else if (cur.notice_code === 'N02') total += cur.list_cnt;
         });
@@ -118,7 +104,7 @@ const Notice = () => {
     })
       .then(data => {
         const tempList = [];
-        data.data.data.map(row => {
+        data.data.data.forEach(row => {
           if (row.notice_author) {
             tempList.push(
               createData(
@@ -140,7 +126,6 @@ const Notice = () => {
       });
   };
 
-  // useEffect를 3개로 나눠놓으니까 처음 실행할 때 서버에 3번 연결하네;;;;;
   useEffect(() => {
     getNoticeListCnt();
     setPageLen();
@@ -164,7 +149,7 @@ const Notice = () => {
 
   useEffect(() => {
     readNoticeList();
-    window.scrollTo(0, 0); // 스크롤 맨 위로 이동
+    window.scrollTo(0, 0);
   }, [page]);
 
   setPageLen();
@@ -197,7 +182,10 @@ const Notice = () => {
                   textColor="primary"
                 >
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
+                    }}
                     label={'전체 게시판 (' + noticeLen + ')'}
                   />
                 </Tabs>
@@ -205,6 +193,7 @@ const Notice = () => {
             </ThemeProvider>
             <Grid item>
               <Button
+                sx={{fontFamily: `'Do Hyeon', sans-serif`,}}
                 className="write-button"
                 onClick={onClickNoticeWriteHandler}
               >
@@ -212,7 +201,6 @@ const Notice = () => {
               </Button>
             </Grid>
           </Grid>
-          {/* {searchValue && <div className="result">{searchValue} 검색 결과</div>} */}
           <BoardList listType={'Notice'} listData={listData} />
 
           <Grid

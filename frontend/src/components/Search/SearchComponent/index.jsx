@@ -1,21 +1,16 @@
 import React, { useContext, useState } from 'react';
 
 import { Grid, TextField, Button } from '@material-ui/core';
-import { FormControl, Select, MenuItem } from '@mui/material';
+import { Select, MenuItem } from '@mui/material';
 
-import SearchIcon from '@material-ui/icons/Search';
 import Wrapper from './styles';
 
 import { ViewContext } from '../../../context/ViewContext';
 
 const SearchComponent = () => {
-  const {
-    searchValue,
-    setSearchValue,
-    searchCategory,
-    setSearchCategory,
-    // setIsSearch,
-  } = useContext(ViewContext);
+  const { setSearchValue, searchCategory, setSearchCategory } = useContext(
+    ViewContext,
+  );
 
   const handleChange = event => {
     setSearchCategory(event.target.value);
@@ -31,7 +26,7 @@ const SearchComponent = () => {
     setSearchValue(value);
   };
 
-  const [value, setValue]=useState('');
+  const [value, setValue] = useState('');
   const onChangeSearchValueHandler = e => {
     setValue(e.target.value);
   };
@@ -41,7 +36,7 @@ const SearchComponent = () => {
       <Grid
         container
         alignItems="flex-end"
-        justify="center"
+        justifyContent="center"
         direction="column"
         className="search-component-grid"
         onClick={TopSearchCloseHandler}
@@ -52,9 +47,9 @@ const SearchComponent = () => {
               <Select
                 value={searchCategory}
                 onChange={handleChange}
-                // autoWidth="false"
                 displayEmpty
                 className="select-box"
+                // sx={{fontFamily: `'Do Hyeon', sans-serif`, fontSize:18}}
               >
                 <MenuItem value={0}>제목+내용</MenuItem>
               </Select>
@@ -62,8 +57,6 @@ const SearchComponent = () => {
             <Grid item>
               <TextField
                 value={value}
-                // placeholder="찾고싶은 내용을 입력하세요"
-                // autoFocus={true}
                 variant="outlined"
                 size="small"
                 onChange={onChangeSearchValueHandler}

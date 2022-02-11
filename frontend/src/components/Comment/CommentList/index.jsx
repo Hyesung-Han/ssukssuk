@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import CommentItem from '../CommentItem';
 
 import { List } from '@mui/material';

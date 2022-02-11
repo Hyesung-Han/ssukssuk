@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import MyInfo from './../MyInfo/';
 import ChangePassword from './../ChangePassword/';

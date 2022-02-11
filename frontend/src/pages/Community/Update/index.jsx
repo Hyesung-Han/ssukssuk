@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import Layout from '../../../layout/';
-
 import Wrapper from './styles';
 import Axios from 'axios';
-
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
-
 import Swal from 'sweetalert2';
-
 import { Grid, Button, InputBase } from '@mui/material';
 
 const CommunityUpdate = ({ match }) => {
@@ -20,7 +15,7 @@ const CommunityUpdate = ({ match }) => {
   const { serverUrlBase } = useContext(CommonContext);
   const user = useSelector(state => state.Auth.user);
 
-  const [code, setCode]=useState('');
+  const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -28,7 +23,7 @@ const CommunityUpdate = ({ match }) => {
     try {
       const res = await Axios.get(serverUrlBase + `/community/detail/` + no);
       const data = res.data.data;
-      
+
       setCode(data.community_code);
       setTitle(data.community_title);
       setContent(data.community_content);
@@ -99,7 +94,7 @@ const CommunityUpdate = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -113,7 +108,7 @@ const CommunityUpdate = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -132,7 +127,7 @@ const CommunityUpdate = ({ match }) => {
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
