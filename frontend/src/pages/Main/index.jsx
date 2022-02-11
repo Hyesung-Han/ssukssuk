@@ -160,56 +160,60 @@ const Main = () => {
                 opacity: 0.7,
               }}
             />
-            <Typography
-              variant="h4"
-              marked="center"
-              component="h2"
-              sx={{ mb: 14 }}
-            >
-              How it works
-            </Typography>
-            <div>
+            <p sx={{ mb: 14 }} className="what_to_do">
+              무엇을 할 수 있나요?
+            </p>
+            <div className="desc">
               <Grid container spacing={5}>
                 <Grid item xs={12} md={4}>
                   <Box sx={item}>
-                    <Box sx={number}>1.</Box>
-                    <Box
-                      component="img"
-                      src="https://cdn-icons-png.flaticon.com/128/4481/4481323.png"
-                      alt="suitcase"
-                      sx={image}
-                    />
-                    <Typography variant="h5" align="center">
-                      언제 어디서든 농장을 지켜봐요
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Box sx={item}>
-                    <Box sx={number}>2.</Box>
+                    <p className="sub_title">1. 농작물 기록</p>
                     <Box
                       component="img"
                       src="https://cdn-icons-png.flaticon.com/128/4478/4478100.png"
-                      alt="graph"
+                      alt="suitcase"
                       sx={image}
                     />
-                    <Typography variant="h5" align="center">
-                      나만의 농장을 어쩌구~~해요~
-                    </Typography>
+                    <p>
+                      Kiosk를 통해
+                      <br />
+                      농작물의 상태 변화를
+                      <br />
+                      기록해요
+                    </p>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Box sx={item}>
-                    <Box sx={number}>3.</Box>
+                    <p className="sub_title">2. 농작물 감시</p>
+                    <Box
+                      component="img"
+                      src="https://cdn-icons-png.flaticon.com/128/4481/4481323.png"
+                      alt="graph"
+                      sx={image}
+                    />
+                    <p>
+                      IoT 기기를 이용해
+                      <br />
+                      멀리서도 농작물의
+                      <br />
+                      환경을 확인해요
+                    </p>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box sx={item}>
+                    <p className="sub_title">3. 멘토링 커뮤니티</p>
                     <Box
                       component="img"
                       src="https://cdn-icons-png.flaticon.com/128/4185/4185445.png"
                       alt="clock"
                       sx={image}
                     />
-                    <Typography variant="h5" align="center">
-                      도움이 필요할 땐 언제든 고수에게~
-                    </Typography>
+                    <p>
+                      도움이 필요할 땐<br />
+                      언제든 공유해요
+                    </p>
                   </Box>
                 </Grid>
               </Grid>

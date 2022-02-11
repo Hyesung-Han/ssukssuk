@@ -149,8 +149,9 @@ const CurrentImage = () => {
                     <Typography
                       sx={{
                         mt: 1,
-                        fontSize: '20px',
-                        fontWeight: 700,
+                        fontSize: '25px',
+                        fontWeight: 500,
+                        fontFamily: `'Do Hyeon', sans-serif`,
                       }}
                     >
                       실시간 농장 확인하기

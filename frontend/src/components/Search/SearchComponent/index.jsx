@@ -49,6 +49,7 @@ const SearchComponent = () => {
                 onChange={handleChange}
                 displayEmpty
                 className="select-box"
+                // sx={{fontFamily: `'Do Hyeon', sans-serif`, fontSize:18}}
               >
                 <MenuItem value={0}>제목+내용</MenuItem>
               </Select>

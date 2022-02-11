@@ -12,6 +12,8 @@ import Loader from './Loader';
 import { styled } from '@mui/material/styles';
 import MainCard from '../../../components/Card/MainCard';
 
+import '../../../App.css';
+
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: '#dcedc8',
   position: 'relative',
@@ -105,8 +107,9 @@ const FarmInfo = props => {
                 <Typography
                   sx={{
                     fontSize: '20px',
-                    fontWeight: 600,
+                    fontWeight: 500,
                     padding: '0px 20px',
+                    fontFamily: `'Do Hyeon', sans-serif`,
                   }}
                 >
                   차트
@@ -125,8 +128,9 @@ const FarmInfo = props => {
                       <Typography
                         sx={{
                           fontSize: '20px',
-                          fontWeight: 600,
+                          fontWeight: 500,
                           padding: '0px 30px 10px 30px',
+                          fontFamily: `'Do Hyeon', sans-serif`,
                         }}
                       >
                         현재 온/습도

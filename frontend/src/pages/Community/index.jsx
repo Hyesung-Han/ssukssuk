@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@emotion/react';
 
+import '../../App.css';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -69,10 +71,21 @@ const Community = () => {
     pageLen.splice(0, pageLen.length);
 
     pageLen.push(
-      freeLen + mentoLen === 1 ? 0 : parseInt((freeLen + mentoLen) / 10) + 1,
+      freeLen + mentoLen === 0
+        ? 1
+        : parseInt((freeLen + mentoLen) / 10) +
+          ((parseInt((freeLen + mentoLen) % 10) === 0)? 0: 1),
     );
-    pageLen.push(freeLen === 1 ? 0 : parseInt(freeLen / 10) + 1);
-    pageLen.push(mentoLen === 1 ? 0 : parseInt(mentoLen / 10) + 1);
+    pageLen.push(
+      freeLen === 0
+        ? 1
+        : parseInt(freeLen / 10) + (parseInt(freeLen % 10 === 0)? 0: 1),
+    );
+    pageLen.push(
+      mentoLen === 0
+        ? 1
+        : parseInt(mentoLen / 10) + (parseInt(mentoLen / 10 === 0)? 0: 1),
+    );
   };
 
   const getCommunityListCnt = () => {
@@ -192,19 +205,22 @@ const Community = () => {
                 >
                   <Tab
                     sx={{
-                      fontSize: 18,
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
                     }}
                     label={'전체 게시판 (' + (freeLen + mentoLen) + ')'}
                   />
                   <Tab
                     sx={{
-                      fontSize: 18,
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
                     }}
                     label={'자유 게시판 (' + freeLen + ')'}
                   />
                   <Tab
                     sx={{
-                      fontSize: 18,
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
                     }}
                     label={'멘토링 게시판 (' + mentoLen + ')'}
                   />
@@ -213,6 +229,7 @@ const Community = () => {
             </ThemeProvider>
             <Grid item>
               <Button
+                sx={{fontFamily: `'Do Hyeon', sans-serif`,}}
                 className="write-button"
                 onClick={onClickCommunityWriteHandler}
               >

@@ -33,7 +33,7 @@ import './App.css';
 
 // const
 const defaultThumbnailImage = 'default_user.jpg';
-const HOST = '52.79.38.33:3001';
+const HOST = 'i6a103.p.ssafy.io:3001';
 const serverUrl = `http://${HOST}/v1`;
 const serverUrlBase = `http://${HOST}`;
 const serverImgUrl = `https://ssafy-viba-s3.s3.ap-northeast-2.amazonaws.com/public/`;
@@ -112,8 +112,7 @@ const App = () => {
   const [signDialogOpen, setSignDialogOpen] = useState(false);
   const [infoDialogOpen, setInfoDetailDialogOpen] = useState(false);
   const [userDialogOpen, setUserDetailDialogOpen] = useState(false);
-  const [regiIoTDialogOpen, setRegiIotDialogOpen]=useState(false);
-
+  const [regiIoTDialogOpen, setRegiIotDialogOpen] = useState(false);
 
   return (
     <CommonContext.Provider
@@ -142,7 +141,7 @@ const App = () => {
         setIsSignUp,
         parsingDate,
         regiIoTDialogOpen,
-        setRegiIotDialogOpen
+        setRegiIotDialogOpen,
       }}
     >
       <MuiThemeProvider theme={theme}>

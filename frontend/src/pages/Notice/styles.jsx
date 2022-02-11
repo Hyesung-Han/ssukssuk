@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   }
 
   & .write-button {
-    font-weight: 700;
+    font-weight: 400;
     font-size: 16px;
     padding: 5px 13px;
     color: #ffffff;

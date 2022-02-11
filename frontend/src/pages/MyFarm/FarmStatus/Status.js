@@ -50,9 +50,10 @@ class Status extends React.Component {
                     <Typography
                       sx={{
                         fontSize: '25px',
-                        fontWeight: 700,
+                        fontWeight: 600,
                         color: '#ffffff',
                         mb: 0.75,
+                        fontFamily: `'Do Hyeon', sans-serif`,
                       }}
                     >
                       온도 : {parseFloat(temp).toFixed(1)}°C
@@ -60,9 +61,10 @@ class Status extends React.Component {
                     <Typography
                       sx={{
                         fontSize: '25px',
-                        fontWeight: 700,
+                        fontWeight: 600,
                         color: '#ffffff',
                         mb: 0.75,
+                        fontFamily: `'Do Hyeon', sans-serif`,
                       }}
                     >
                       습도 : {parseFloat(humi).toFixed(1)}%
@@ -81,6 +83,7 @@ class Status extends React.Component {
               color: '#555555',
               mt: 0.75,
               mr: 1,
+              fontFamily: `'Do Hyeon', sans-serif`,
             }}
           >
             측정 시간 : {sensor_date}

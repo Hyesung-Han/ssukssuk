@@ -48,7 +48,8 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 const InfoCard = () => {
   const theme = useTheme();
-  const farm = useSelector(state => state.Farm.farm);
+  // const farm = useSelector(state => state.Farm.farm);
+  const farm={"farm_name":"소현 농장","farm_text":"내가 바로 농사왕!","farm_regidate":"2022:02:11 13:29"}
   const { parsingDate } = useContext(CommonContext);
 
   return (
@@ -59,11 +60,12 @@ const InfoCard = () => {
             <Grid item>
               <Typography
                 sx={{
-                  fontSize: '22px',
+                  fontSize: '28px',
                   fontWeight: 700,
                   mr: 1,
                   mt: 0.75,
                   mb: 0.5,
+                  fontFamily: `'Do Hyeon', sans-serif`,
                 }}
               >
                 {farm.farm_name}
@@ -80,6 +82,7 @@ const InfoCard = () => {
                   fontWeight: 500,
                   mr: 1,
                   mb: 0.75,
+                  fontFamily: `'Do Hyeon', sans-serif`,
                 }}
               >
                 {farm.farm_text}
@@ -93,6 +96,7 @@ const InfoCard = () => {
               fontSize: '14px',
               fontWeight: 500,
               color: theme.palette.secondary[200],
+              fontFamily: `'Do Hyeon', sans-serif`,
             }}
           >
             쑥쑥 시작일 : {parsingDate(farm.farm_regidate)}
