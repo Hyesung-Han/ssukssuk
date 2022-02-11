@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setInit } from '../../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../../redux/reducers/FarmReducer';
 import Axios from 'axios';
 import crypto from 'crypto';
 import { CommonContext } from '../../../context/CommonContext';
@@ -15,8 +16,6 @@ import {
 } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Wrapper from './styles';
-
-import store from 'store';
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -103,7 +102,7 @@ const ContentDefaultComponent = props => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={2}
       >
@@ -161,6 +160,7 @@ const MyInfoButtonGroupComponent = props => {
           console.log(data);
           if (data.data.result === 'success') {
             dispatch(setInit());
+            dispatch(setFarmInit());
 
             successSign.fire({
               icon: 'success',
@@ -206,7 +206,7 @@ const MyInfoButtonGroupComponent = props => {
       <Grid
         container
         direction="row"
-        justify="flex-end"
+        justifyContent="flex-end"
         alignItems="center"
         className="my-info-button-group-component-grid"
       >
@@ -243,7 +243,7 @@ const DeleteUserComponent = params => {
         <Grid
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
         >

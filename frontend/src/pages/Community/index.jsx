@@ -1,23 +1,19 @@
-// import { Grid, Button } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
-
 import { Grid, Button, Pagination, Tabs, Tab } from '@mui/material';
-
 import BoardList from '../../components/Board/BoardList/';
 import { useHistory } from 'react-router-dom';
 import SearchComponent from '../../components/Search/SearchComponent';
-
 import Layout from '../../layout/';
-
 import { CommonContext } from '../../context/CommonContext';
 import { ViewContext } from '../../context/ViewContext';
 import Wrapper from './styles';
-
 import { useSelector } from 'react-redux';
-
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@emotion/react';
+
+import '../../App.css';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -65,8 +61,6 @@ const Community = () => {
   const onClickCommunityWriteHandler = () => {
     if (!user.status) {
       alert('로그인이 필요합니다');
-      // setIsSignUp('SignIn');
-      // history.push('/Auth');
     } else {
       history.push('/CommunityWrite');
     }
@@ -77,10 +71,21 @@ const Community = () => {
     pageLen.splice(0, pageLen.length);
 
     pageLen.push(
-      freeLen + mentoLen === 1 ? 0 : parseInt((freeLen + mentoLen) / 10) + 1,
+      freeLen + mentoLen === 0
+        ? 1
+        : parseInt((freeLen + mentoLen) / 10) +
+          (parseInt((freeLen + mentoLen) % 10) === 0)? 0: 1,
     );
-    pageLen.push(freeLen === 1 ? 0 : parseInt(freeLen / 10) + 1);
-    pageLen.push(mentoLen === 1 ? 0 : parseInt(mentoLen / 10) + 1);
+    pageLen.push(
+      freeLen === 0
+        ? 1
+        : parseInt(freeLen / 10) + parseInt(freeLen % 10 === 0)? 0: 1,
+    );
+    pageLen.push(
+      mentoLen === 0
+        ? 1
+        : parseInt(mentoLen / 10) + parseInt(mentoLen / 10 === 0)? 0: 1,
+    );
   };
 
   const getCommunityListCnt = () => {
@@ -94,7 +99,7 @@ const Community = () => {
         tf = tm = 0;
 
         const cnt_data = data.data.data;
-        cnt_data.map(cur => {
+        cnt_data.forEach(cur => {
           if (cur.community_code === 'C01') tf = cur.list_cnt;
           else if (cur.community_code === 'C02') tm = cur.list_cnt;
         });
@@ -122,7 +127,7 @@ const Community = () => {
     })
       .then(data => {
         const tempList = [];
-        data.data.data.map(row => {
+        data.data.data.forEach(row => {
           if (row.community_author) {
             tempList.push(
               createData(
@@ -143,7 +148,6 @@ const Community = () => {
       });
   };
 
-  // useEffect를 3개로 나눠놓으니까 처음 실행할 때 서버에 3번 연결하네;;;;;
   useEffect(() => {
     getCommunityListCnt();
     setPageLen();
@@ -167,7 +171,7 @@ const Community = () => {
 
   useEffect(() => {
     readCommunityList();
-    window.scrollTo(0, 0); // 스크롤 맨 위로 이동
+    window.scrollTo(0, 0);
   }, [page]);
 
   setPageLen();
@@ -200,15 +204,24 @@ const Community = () => {
                   textColor="primary"
                 >
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
+                    }}
                     label={'전체 게시판 (' + (freeLen + mentoLen) + ')'}
                   />
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
+                    }}
                     label={'자유 게시판 (' + freeLen + ')'}
                   />
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 20,
+                      fontFamily: `'Do Hyeon', sans-serif`,
+                    }}
                     label={'멘토링 게시판 (' + mentoLen + ')'}
                   />
                 </Tabs>
@@ -216,6 +229,7 @@ const Community = () => {
             </ThemeProvider>
             <Grid item>
               <Button
+                sx={{fontFamily: `'Do Hyeon', sans-serif`,}}
                 className="write-button"
                 onClick={onClickCommunityWriteHandler}
               >
@@ -223,7 +237,6 @@ const Community = () => {
               </Button>
             </Grid>
           </Grid>
-          {/* {searchValue && <div className="result">{searchValue} 검색 결과</div>} */}
           <BoardList listType={'Community'} listData={listData} />
 
           <Grid

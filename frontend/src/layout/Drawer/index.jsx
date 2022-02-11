@@ -2,23 +2,19 @@ import React, { useContext, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setInit } from '../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../redux/reducers/FarmReducer';
 import { CommonContext } from '../../context/CommonContext';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import {
   Button,
   Grid,
-  Avatar,
   Divider,
   Drawer,
   List,
   ListItem,
   ListItemText,
-  IconButton,
 } from '@mui/material';
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Wrapper from './styles';
 
 const DrawerHeaderGroup = () => {
@@ -28,15 +24,6 @@ const DrawerHeaderGroup = () => {
 
   const { setDrawerOpen } = useContext(CommonContext);
 
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
-
-  const onClickRedirectPathHandler = name => () => {
-    setDrawerOpen(false);
-    history.push(name);
-  };
-
   const handleSignInDialogOpen = () => {
     history.push('/Auth');
   };
@@ -44,6 +31,7 @@ const DrawerHeaderGroup = () => {
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
     dispatch(setInit());
+    dispatch(setFarmInit());
 
     alert('You are logged out.');
 
@@ -51,7 +39,12 @@ const DrawerHeaderGroup = () => {
   };
 
   return (
-    <Grid container direction="row" justify="space-between" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <Grid item>
         {user.status ? (
           <Button
@@ -79,26 +72,9 @@ const DrawerHeaderGroup = () => {
 
 const DrawerListGroup = () => {
   let history = useHistory();
-  const dispatch = useDispatch();
   const user = useSelector(state => state.Auth.user);
 
-  const {
-    setUserDetailDialogOpen,
-    setUserDialogIndex,
-    setDrawerOpen,
-  } = useContext(CommonContext);
-
-  const onClickEditProfileOpenHandler = () => {
-    setDrawerOpen(false);
-    setUserDialogIndex(0);
-    setUserDetailDialogOpen(true);
-  };
-
-  const onClickChangePasswordOpenHandler = () => {
-    setDrawerOpen(false);
-    setUserDialogIndex(1);
-    setUserDetailDialogOpen(true);
-  };
+  const { setDrawerOpen } = useContext(CommonContext);
 
   const onClickRedirectPathHandler = name => () => {
     setDrawerOpen(false);
@@ -166,7 +142,12 @@ const DrawerFooterGroup = () => {
   const { user } = useContext(CommonContext);
 
   return (
-    <Grid container direction="row" justify="flex-start" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="center"
+    >
       <Grid item xs={6}>
         {!user.status && <Fragment></Fragment>}
       </Grid>

@@ -2,21 +2,19 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setInit } from '../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../redux/reducers/FarmReducer';
 
 import { CommonContext } from '../../context/CommonContext';
 import SignResponsiveDialog from '../../components/Auth/SignResponsiveDialog/';
 import UserResponsiveDialog from '../../components/User/UserResponsiveDialog/';
-import VoteDetailResponsiveDialog from '../../components/Main/VoteDetailResponsiveDialog/';
 
 import {
   Grid,
   Typography,
   AppBar,
   Button,
-  IconButton,
   useMediaQuery,
 } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import Wrapper from './styles';
 
 const Header = props => {
@@ -35,9 +33,6 @@ const Header = props => {
 
   const user = useSelector(state => state.Auth.user);
   const handleSignInDialogOpen = name => e => {
-    // Need props function
-    // 나중에 여기서 컴포넌트 바꾸는거 context쓰면 관련된거 다시 렌더링되니까 auth에서 바꾸도록 props줘서 변경하는 방법으로 가고싶다ㅎㅎ
-    // 다른 사람들이랑 충돌 안나도록 일단은 이렇게 하고 나중에 다 만들고 나서 바꿀 수 있으면 바꾸자
     if (name === 'SignIn') {
       setIsSignUp('SignIn');
     } else if (name === 'SignUp') {
@@ -63,6 +58,7 @@ const Header = props => {
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
     dispatch(setInit());
+    dispatch(setFarmInit());
 
     alert('You are logged out.');
 
@@ -83,7 +79,7 @@ const Header = props => {
           <Grid
             container
             direction="column"
-            justify="space-between"
+            justifyContent="space-between"
             aria-label="open drawer"
             onClick={() => {
               setDrawerOpen(!drawerOpen);
@@ -104,7 +100,7 @@ const Header = props => {
           <Grid
             className="appbar-wrap"
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="center"
           >
             <Grid item>
@@ -116,7 +112,9 @@ const Header = props => {
                 <img
                   className="logo_img"
                   src={
-                    history.location.pathname.indexOf('/CommunityDetail') == -1
+                    history.location.pathname.indexOf('/CommunityDetail') ==
+                      -1 &&
+                    history.location.pathname.indexOf('/NoticeDetail') == -1
                       ? 'images/ssug_green.png'
                       : '../images/ssug_green.png'
                   }
@@ -152,13 +150,13 @@ const Header = props => {
                     <Button
                       color="primary"
                       variant="contained"
-                      onClick={onClickRedirectPathHandler('/Notice')}
+                      onClick={onClickRedirectPathHandler('/MyFarm')}
                       className="display-none header-button"
                     >
                       내 농장
                     </Button>
                   </Grid>
-                )}
+                )} 
               </Grid>
             </Grid>
 
@@ -217,7 +215,6 @@ const Header = props => {
       </Wrapper>
       <SignResponsiveDialog />
       <UserResponsiveDialog />
-      <VoteDetailResponsiveDialog />
     </>
   );
 };

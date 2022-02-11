@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import Layout from '../../layout/';
-
 import { CommonContext } from '../../context/CommonContext';
 
 const Auth = () => {

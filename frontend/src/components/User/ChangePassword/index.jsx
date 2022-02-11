@@ -76,16 +76,6 @@ const InputComponent = props => {
     } else {
       props.setDisabled(true);
     }
-    // console.log(!!!!inputValue['현재 비밀번호']);
-
-    // if (
-    //   inputValue['현재 비밀번호'] === '' ||
-    //   inputValue['새 비밀번호'] === '' ||
-    //   inputValue['새 비밀번호 확인'] === '' ||
-    //   inputPwdErr === true
-    // ) {
-    //   props.setDisabled(true);
-    // }
   }, [
     inputValue['현재 비밀번호'],
     inputValue['새 비밀번호'],
@@ -140,7 +130,7 @@ const ContentDefaultComponent = props => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={2}
       >
@@ -237,18 +227,6 @@ const MyInfoButtonGroupComponent = props => {
       .catch(error => {
         console.log(error);
       });
-
-    // var body = {
-    //   new_pwd: hashPassword,
-    //   before_pwd: hashBeforePwd,
-    //   user_id: user.user_id,
-    // };
-
-    // if (respone['status'] === 200) {
-    //   alert('Has changed.');
-    // } else {
-    //   alert('Change failed.');
-    // }
   };
 
   return (
@@ -256,7 +234,7 @@ const MyInfoButtonGroupComponent = props => {
       <Grid
         container
         direction="row"
-        justify="flex-end"
+        justifyContent="flex-end"
         alignItems="center"
         className="my-info-button-group-component-grid"
       >
@@ -287,13 +265,14 @@ const MyInfoButtonGroupComponent = props => {
 // 전체 구조
 const ChangePasswordComponent = params => {
   const [disabled, setDisabled] = useState(true);
+
   return (
     <Wrapper>
       <form noValidate autoComplete="off">
         <Grid
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
         >
