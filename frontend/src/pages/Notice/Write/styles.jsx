@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     .body-header {
       width: 200px;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 20px;
       color: #868e96;
 
       text-align: center;
@@ -58,9 +58,9 @@ const Wrapper = styled.div`
   & .write-button {
     margin: 10px 0;
 
-    font-weight: 700;
-    font-size: 16px;
-    padding: 5px 13px;
+    font-weight: 400;
+    font-size: 20px;
+    padding: 3px 10px;
     color: #ffffff;
     background-color: #9aba11;
 

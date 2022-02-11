@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { Grid, Button, InputBase, Paper } from '@mui/material';
 
+import '../../../App.css';
+
 const CommunityDetail = ({ match }) => {
   const no = match.params.no;
   let history = useHistory();
@@ -79,7 +81,7 @@ const CommunityDetail = ({ match }) => {
     <Layout>
       <Wrapper>
         <Grid container>
-          <h2>
+          <h2 >
             {Community.community_code === 'C01'
               ? '자유 게시판'
               : '멘토링 게시판'}

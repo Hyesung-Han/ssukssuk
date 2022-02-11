@@ -6,7 +6,7 @@ import Axios from 'axios';
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Grid, Button, InputBase } from '@mui/material';
+import { Typography,Grid, Button, InputBase } from '@mui/material';
 
 const NoticeWrite = ({ match }) => {
   const no = match.params.no;
@@ -97,7 +97,6 @@ const NoticeWrite = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -105,13 +104,12 @@ const NoticeWrite = ({ match }) => {
                 분류
               </Grid>
               <Grid item className="body-content">
-                {code === 'N01' ? '공지사항' : '문의하기'}
+                <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'N01' ? '공지사항' : '문의하기'}</Typography>
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -124,13 +122,14 @@ const NoticeWrite = ({ match }) => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
+                  sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+
                 />
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
@@ -145,6 +144,7 @@ const NoticeWrite = ({ match }) => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
+                    sx={{ fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
                   />
                 </Grid>
               </div>
@@ -156,6 +156,7 @@ const NoticeWrite = ({ match }) => {
             <Button
               className="write-button"
               onClick={onClickNoticeUpdateHandler}
+              sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
             >
               수정하기
             </Button>
