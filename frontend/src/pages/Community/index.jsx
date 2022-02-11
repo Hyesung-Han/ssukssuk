@@ -74,17 +74,17 @@ const Community = () => {
       freeLen + mentoLen === 0
         ? 1
         : parseInt((freeLen + mentoLen) / 10) +
-          (parseInt((freeLen + mentoLen) % 10) === 0)? 0: 1,
+          ((parseInt((freeLen + mentoLen) % 10) === 0)? 0: 1),
     );
     pageLen.push(
       freeLen === 0
         ? 1
-        : parseInt(freeLen / 10) + parseInt(freeLen % 10 === 0)? 0: 1,
+        : parseInt(freeLen / 10) + (parseInt(freeLen % 10 === 0)? 0: 1),
     );
     pageLen.push(
       mentoLen === 0
         ? 1
-        : parseInt(mentoLen / 10) + parseInt(mentoLen / 10 === 0)? 0: 1,
+        : parseInt(mentoLen / 10) + (parseInt(mentoLen / 10 === 0)? 0: 1),
     );
   };
 

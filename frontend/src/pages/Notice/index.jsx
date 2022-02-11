@@ -70,7 +70,7 @@ const Notice = () => {
   const pageLen = [];
   const setPageLen = () => {
     pageLen.splice(0, pageLen.length);
-    pageLen.push(noticeLen === 0 ? 1 : parseInt(noticeLen / 10) + (noticeLen%10===0)?0:1);
+    pageLen.push(noticeLen === 0 ? 1 : parseInt(noticeLen / 10) + ((noticeLen%10===0)?0:1));
   };
 
   const getNoticeListCnt = () => {

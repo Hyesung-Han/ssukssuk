@@ -127,9 +127,9 @@ const FarmInfo = props => {
                   </Grid>
                 </Grid>
                 <Grid item alignSelf="center">
-                  {/* {curSensorData && */}
+                  {curSensorData &&
                      <Status curSensorData={curSensorData}/>
-                  {/* } */}
+                  }
                 </Grid>
               </Grid>
             </Grid>
