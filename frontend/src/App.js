@@ -112,6 +112,8 @@ const App = () => {
   const [signDialogOpen, setSignDialogOpen] = useState(false);
   const [infoDialogOpen, setInfoDetailDialogOpen] = useState(false);
   const [userDialogOpen, setUserDetailDialogOpen] = useState(false);
+  const [regiIoTDialogOpen, setRegiIotDialogOpen]=useState(false);
+
 
   return (
     <CommonContext.Provider
@@ -139,6 +141,8 @@ const App = () => {
         isSignUp,
         setIsSignUp,
         parsingDate,
+        regiIoTDialogOpen,
+        setRegiIotDialogOpen
       }}
     >
       <MuiThemeProvider theme={theme}>

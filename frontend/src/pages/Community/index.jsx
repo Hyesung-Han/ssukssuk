@@ -191,15 +191,21 @@ const Community = () => {
                   textColor="primary"
                 >
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 18,
+                    }}
                     label={'전체 게시판 (' + (freeLen + mentoLen) + ')'}
                   />
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 18,
+                    }}
                     label={'자유 게시판 (' + freeLen + ')'}
                   />
                   <Tab
-                    className="tab-style"
+                    sx={{
+                      fontSize: 18,
+                    }}
                     label={'멘토링 게시판 (' + mentoLen + ')'}
                   />
                 </Tabs>
