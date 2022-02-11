@@ -1,0 +1,306 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+  - name: "notice"
+    description: "Operations about notice"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://swagger.io"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /notice/delete/{no}:
+    delete:
+      tags:
+        - "notice"
+      summary: "Delete by notice_no"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "deletenotice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "no"
+          description: "no of the notice that needs to be deleted"
+          required: true
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/detail/{no}:
+    get:
+      tags:
+        - "notice"
+      summary: "get notice detail"
+      description: "get notice detail"
+      operationId: "notice detail no"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: path
+          name: "no"
+          description: "detail no"
+          required: true
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/list:
+    get:
+      tags:
+        - "notice"
+      summary: "list"
+      description: "글 목록 보기"
+      operationId: "notice list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "notice_code"
+          in: "query"
+          description: "notice list"
+          required: false
+          type: "string"
+
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
+
+        - name: "page_no"
+          in: "query"
+          description: "페이지 수"
+          required: true
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/listcount:
+    get:
+      tags:
+        - "notice"
+      summary: "listcount"
+      description: "글 목록 개수 보기"
+      operationId: "notice list count"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "notice_code"
+          in: "query"
+          description: "notice list"
+          required: false
+          type: "string"
+
+        - name: "keyword"
+          in: "query"
+          description: "검색어"
+          required: false
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/write:
+    post:
+      tags:
+        - "notice"
+      summary: "write notice"
+      description: "write notice"
+      operationId: "write notice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "write notice"
+          required: true
+          schema:
+            $ref: "#/definitions/notice_write"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/update:
+    patch:
+      tags:
+        - "notice"
+      summary: "Update notice"
+      description: "Update notice"
+      operationId: "updatenotice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update notice"
+          required: true
+          schema:
+            $ref: "#/definitions/notice_update"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/comment/write:
+    post:
+      tags:
+        - "notice_comment"
+      summary: "write notice_comment"
+      description: "write notice_comment"
+      operationId: "write notice_comment"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "write notice_comment"
+          required: true
+          schema:
+            $ref: "#/definitions/notice_comment_write"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/comment/update:
+    patch:
+      tags:
+        - "notice_comment"
+      summary: "Update notice_comment"
+      description: "Update notice_comment"
+      operationId: "Update notice_comment"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update notice_comment"
+          required: true
+          schema:
+            $ref: "#/definitions/notice_comment_update"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/comment/delete/{no}:
+    delete:
+      tags:
+        - "notice_comment"
+      summary: "Delete by notice_comment"
+      description: "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors"
+      operationId: "deletenotice"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "no"
+          description: "no of the notice that needs to be deleted"
+          required: true
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+  /notice/comment/list:
+    get:
+      tags:
+        - "notice_comment"
+      summary: "list"
+      description: "댓글 목록 보기"
+      operationId: "notice comment list"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "article_no"
+          in: "query"
+          description: "notice comment list"
+          required: false
+          type: "integer"
+      responses:
+        default:
+          description: "successful operation"
+
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: "Authorization"
+    in: "header"
+
+definitions:
+  notice_update:
+    type: "object"
+    properties:
+      notice_no:
+        type: "integer"
+      notice_title:
+        type: "string"
+      notice_content:
+        type: "string"
+    xml:
+      name: "notice_update"
+
+  notice_write:
+    type: "object"
+    properties:
+      notice_title:
+        type: "string"
+      notice_author:
+        type: "string"
+      notice_content:
+        type: "string"
+      notice_code:
+        type: "string"
+      notice_user_id:
+        type: "string"
+    xml:
+      name: "notice_write"
+
+  notice_comment_write:
+    type: "object"
+    properties:
+      comment_user_nickName:
+        type: "string"
+      article_no:
+        type: "integer"
+      comment_text:
+        type: "string"
+      comment_user_id:
+        type: "string"
+    xml:
+      name: "notice_comment_write"
+
+  notice_comment_update:
+    type: "object"
+    properties:
+      comment_no:
+        type: "integer"
+      comment_text:
+        type: "string"
+    xml:
+      name: "notice_comment_update"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
