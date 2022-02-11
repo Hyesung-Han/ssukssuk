@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setInit } from '../../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../../redux/reducers/FarmReducer';
 
 import MyInfo from './../MyInfo/';
 import ChangePassword from './../ChangePassword/';
@@ -33,11 +36,6 @@ function TabPanel(props) {
   );
 }
 
-// TabPanel.propTypes = {
-//   index: PropTypes.any.isRequired,
-//   value: PropTypes.any.isRequired,
-// };
-
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
@@ -47,31 +45,22 @@ function a11yProps(index) {
 
 export default function VerticalTabs() {
   let history = useHistory();
+  const dispatch = useDispatch();
   const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
-  const {
-    userDialogIndex,
-    setUserDialogIndex,
-    setDrawerOpen,
-    setUser,
-  } = useContext(CommonContext);
+  const { userDialogIndex, setUserDialogIndex, setDrawerOpen } = useContext(
+    CommonContext,
+  );
   const labels = ['회원정보 수정', '비밀번호 변경', '로그아웃', '회원탈퇴'];
   const handleChange = (event, newValue) => {
     setUserDialogIndex(newValue);
   };
   const onClickSignOutOpenHandler = () => {
     setDrawerOpen(false);
-    setUser({
-      user_no: 0,
-      user_id: '',
-      user_nm: '',
-      user_pwd: '',
-      user_img_url: '',
-      status: '',
-      web_site: '',
-      token: '',
-    });
-    setUserDialogIndex(0);
+    dispatch(setInit());
+    dispatch(setFarmInit());
+
     alert('You are logged out.');
+
     history.push('/');
   };
 
