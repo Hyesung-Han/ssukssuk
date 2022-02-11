@@ -1,4 +1,4 @@
-# **‍💻** Front-End
+# *‍💻** Front-End
 
 ### 📌프론트엔드
 
@@ -83,10 +83,11 @@
 - [ ] 회원가입
   - [ ] **`index.js:1 Warning: Each child in a list should have a unique "key" prop`** [??]
   - [x] 유효성 검사 1글자씩 모자람 : 해결
-  - [x] 클릭뿐만 아니라 엔터도 먹이게 해놈
   - [x] 이름 & 별명 중복체크
     - [x] 한글만 되게 하고 싶은데... (숫자/영어 안됨)
     - [x] UseEffect 미친듯이 호출... (조건 중복 해결)
+  - [x] 이메일 지워서 형식 다시 안맞으면 인증버튼 비활성화 : 해결
+  - [x] 이메일 인증 막눌러도 가입 인증됨...
 
 
 
@@ -126,9 +127,9 @@
     - [x] `justify`를 `justifycontent`로
   - [ ] **`Notice/Detail, Update, Write`**
     - [x] `justify`를 `justifycontent`로
-  - [ ] 문의사항 페이지
-    - [ ] 공지 and 문의 둘다
-      - [ ] 상세보기로 들어가면 헤더에 로고 안뜸
+  - [x] 문의사항 페이지
+    - [x] 공지 and 문의 둘다
+      - [x] 상세보기로 들어가면 헤더에 로고 안뜸
   - [x] **`User/MyInfo`**
     - [x] `rowsMax`를 `maxRows`로
     - [x] 버튼 내용 변경 (영어를 한글로)
