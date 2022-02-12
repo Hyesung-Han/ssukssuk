@@ -12,6 +12,7 @@ import { CommonContext } from '../../../context/CommonContext';
 import { useMediaQuery, Box, Typography, Tabs, Tab } from '@material-ui/core';
 import Wrapper from './styles';
 import '../../../App.css';
+import Swal from 'sweetalert2';
 
 function TabPanel(props) {
   const { value, index, ...other } = props;
@@ -53,8 +54,11 @@ export default function VerticalTabs() {
     setDrawerOpen(false);
     dispatch(setInit());
     dispatch(setFarmInit());
-
-    alert('You are logged out.');
+    Swal.fire(
+      '로그아웃 되었습니다.',
+      '오늘도 쑥쑥을 이용해 주셔서 감사합니다',
+      'info',
+    );
 
     history.push('/');
   };
