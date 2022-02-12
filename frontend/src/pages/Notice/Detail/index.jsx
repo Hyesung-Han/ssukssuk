@@ -105,7 +105,7 @@ const NoticeDetail = ({ match }) => {
                 작성자
               </Grid>
               <Grid item className="body-content" xs={7}>
-                <InputBase value={notice.notice_author} />
+                <InputBase value={notice.notice_author} sx={{fontFamily: `'Do Hyeon', sans-serif`,}} />
               </Grid>
               <Grid item className="body-header" xs={2}>
                 조회수
