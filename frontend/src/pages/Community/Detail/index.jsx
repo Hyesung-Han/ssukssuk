@@ -76,7 +76,7 @@ const CommunityDetail = ({ match }) => {
     history.goBack();
   };
 
-  if (!Community) return <>loading중..</>;
+  if (!Community) return <Layout>loading중..</Layout>;
   return (
     <Layout>
       <Wrapper>
@@ -109,7 +109,6 @@ const CommunityDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -129,7 +128,6 @@ const CommunityDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >

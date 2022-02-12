@@ -69,7 +69,7 @@ const NoticeDetail = ({ match }) => {
     history.goBack();
   };
 
-  if (!notice) return <>loading중..</>;
+  if (!notice) return (<Layout>loading중..</Layout>);
   return (
     <Layout>
       <Wrapper>
@@ -98,7 +98,6 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -118,7 +117,6 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
