@@ -9,15 +9,10 @@ import ChangePassword from './../ChangePassword/';
 import DeleteAccount from './../DeleteAccount/';
 import { CommonContext } from '../../../context/CommonContext';
 
-import {
-  useMediaQuery,
-  Button,
-  Box,
-  Typography,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import { useMediaQuery, Box, Typography, Tabs, Tab } from '@material-ui/core';
 import Wrapper from './styles';
+import '../../../App.css';
+
 function TabPanel(props) {
   const { value, index, ...other } = props;
   return (
@@ -83,26 +78,23 @@ export default function VerticalTabs() {
               <Tab
                 key={index}
                 label={x}
-                style={{ opacity: 1, marginTop: 20 }}
+                style={{
+                  fontSize: 16,
+                  fontWeight: 500,
+                  fontFamily: `'Do Hyeon', sans-serif`,
+                  lineHeight: '22px',
+                }}
                 onClick={onClickSignOutOpenHandler}
                 {...a11yProps(index)}
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="sign-out-btn"
-                >
-                  {x}
-                </Button>
-              </Tab>
+              />
             ) : (
               <Tab
                 key={index}
                 label={x}
                 style={{
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  fontFamily: 'Noto Sans KR',
+                  fontSize: 16,
+                  fontWeight: 500,
+                  fontFamily: `'Do Hyeon', sans-serif`,
                   lineHeight: '22px',
                   color: index === userDialogIndex ? '#9aba11' : '#3c3c3c',
                 }}

@@ -3,19 +3,13 @@ import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Button, Typography } from '@mui/material';
 import Layout from '../../layout';
 import Wrapper from './styles';
+import '../../App.css';
 
 const item = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   px: 5,
-};
-
-const number = {
-  fontSize: 24,
-  fontFamily: 'default',
-  color: 'secondary.main',
-  fontWeight: 'medium',
 };
 
 const image = {
@@ -47,14 +41,6 @@ const Main = () => {
             alignItems: 'center',
           }}
         >
-          <Typography
-            color="inherit"
-            align="center"
-            variant="h2"
-            marked="center"
-          >
-            Upgrade your Farm
-          </Typography>
           <Background
             sx={{
               backgroundColor: '#FBF7F2',
@@ -72,20 +58,42 @@ const Main = () => {
                   sx={{
                     display: 'flex',
                     justifyContent: 'center',
-                    bgcolor: '#ffc071',
-                    py: 8,
+                    bgcolor: '#ffd49e',
+                    py: 6,
                     px: 3,
                     boxShadow: 3,
                   }}
                 >
-                  <Box component="form" sx={{ maxWidth: 400 }}>
-                    <Typography variant="h2" gutterBottom className="title">
+                  <Box component="form" sx={{ maxWidth: 380, maxHeight: 200 }}>
+                    <Typography
+                      variant="h4"
+                      gutterBottom
+                      className="title1"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
+                      내 농장 속 IoT
+                    </Typography>
+                    <Typography
+                      variant="h3"
+                      gutterBottom
+                      className="title2"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
                       쑥쑥
                     </Typography>
-                    <Typography variant="h5">
-                      IoT를 이용한 농장 관리
-                      <br />
-                      농장이 멀리있어도 안심돼요
+                    <Typography
+                      variant="h5"
+                      className="title_desc"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
+                      농사를 짓는 모든 사람들을 위한 공간
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      className="title_desc"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
+                      멀리 있어도 걱정하지 마세요
                     </Typography>
                   </Box>
                 </Box>
@@ -174,13 +182,7 @@ const Main = () => {
                       alt="suitcase"
                       sx={image}
                     />
-                    <p>
-                      Kiosk를 통해
-                      <br />
-                      농작물의 상태 변화를
-                      <br />
-                      기록해요
-                    </p>
+                    <p>Kiosk를 통해 농작물의 상태 변화를 기록해요</p>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
