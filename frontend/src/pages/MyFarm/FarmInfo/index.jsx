@@ -6,7 +6,7 @@ import FarmImage from './FarmImage';
 import { Grid } from '@mui/material';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: '#fafafa',
+  backgroundColor: '#dcedc8',
   position: 'relative',
   justifyContent: 'center',
   border: 'none',

@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CommonContext } from '../../../../context/CommonContext';
+import Loader from './Loader';
 
 // firebase
 import { ref, getDownloadURL } from 'firebase/storage';
@@ -18,7 +19,7 @@ import {
   CardActionArea,
   Dialog,
 } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 // project imports
@@ -90,11 +91,11 @@ function SimpleDialog(props) {
   if (!open) {
     closeImg();
   }
-
+  console.log('asdf');
   return (
     <Dialog onClose={handleClose} open={open}>
       {farmImg === '' ? (
-        <CircularProgress />
+        <Loader type="spin" color="#009cff" />
       ) : (
         <img src={farmImg} alt="실시간 이미지"></img>
       )}

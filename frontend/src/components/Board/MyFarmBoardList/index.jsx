@@ -40,8 +40,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -95,7 +93,8 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      {/* 여기는 히스토리 목차 색상! */}
+      <TableRow sx={{ bgcolor: '#fff9c4' }}>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -138,6 +137,7 @@ const EnhancedTableToolbar = props => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
+          // 여기가 설문히스토리 큰 목차 색상 [안바뀌네]
           bgcolor: theme =>
             alpha(
               theme.palette.primary.main,
@@ -162,7 +162,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-// 내농장 페이지 하단부에 히스토리로 갈 히스토리 컴포넌트
 const MyFarmBoardList = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('user_name');
@@ -192,9 +191,6 @@ const MyFarmBoardList = () => {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
-    // console.log(name);
-
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -226,7 +222,6 @@ const MyFarmBoardList = () => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - myFarmHistory.length) : 0;
 
@@ -238,7 +233,6 @@ const MyFarmBoardList = () => {
       },
     })
       .then(data => {
-        // console.log(data.data.data);
         setMyFarmHistory(data.data.data);
       })
       .catch(function(error) {
@@ -251,7 +245,16 @@ const MyFarmBoardList = () => {
   }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    // 여기는 덴스 패딩 색깔
+    <Box
+      sx={{
+        border: '3px solid',
+        borderColor: '#81c784',
+        borderRadius: 2,
+        bgcolor: '#c5e1a5',
+        width: '100%',
+      }}
+    >
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -268,8 +271,6 @@ const MyFarmBoardList = () => {
               rowCount={myFarmHistory.length}
             />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(myFarmHistory, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
@@ -346,6 +347,7 @@ const MyFarmBoardList = () => {
         />
       </Paper>
       <FormControlLabel
+        sx={{ ml: 1 }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />

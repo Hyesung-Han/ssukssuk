@@ -4,11 +4,12 @@ import SurveyList from './SurveyList';
 import MainCard from '../../../components/Card/MainCard';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: '#fff',
+  backgroundColor: '#dcedc8',
   position: 'relative',
-  border: 'solid',
-  bordercolor: 'green',
-  margin: '50px 0px 50px 0px',
+  justifyContent: 'center',
+  border: 'none',
+  margin: '30px 0px 40px 0px',
+  padding: '5px 30px 5px 30px',
 }));
 const FarmHistory = () => {
   return (

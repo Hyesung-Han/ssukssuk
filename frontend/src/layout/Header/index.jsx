@@ -16,6 +16,7 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import Wrapper from './styles';
+import Swal from 'sweetalert2';
 
 const Header = props => {
   const dispatch = useDispatch();
@@ -59,9 +60,11 @@ const Header = props => {
     setDrawerOpen(false);
     dispatch(setInit());
     dispatch(setFarmInit());
-
-    alert('You are logged out.');
-
+    Swal.fire(
+      '로그아웃 되었습니다.',
+      '오늘도 쑥쑥을 이용해 주셔서 감사합니다',
+      'info',
+    );
     history.push('/');
   };
 
@@ -156,7 +159,7 @@ const Header = props => {
                       내 농장
                     </Button>
                   </Grid>
-                )} 
+                )}
               </Grid>
             </Grid>
 

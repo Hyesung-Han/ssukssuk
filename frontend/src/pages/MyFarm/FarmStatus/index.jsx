@@ -9,9 +9,19 @@ import { Grid, Typography } from '@mui/material';
 import ScatterPlot from './ScatterPlot';
 import Loader from './Loader';
 
+import { styled } from '@mui/material/styles';
+import MainCard from '../../../components/Card/MainCard';
+
 import '../../../App.css';
 
-
+const CardWrapper = styled(MainCard)(({ theme }) => ({
+  backgroundColor: '#dcedc8',
+  position: 'relative',
+  justifyContent: 'center',
+  border: 'none',
+  margin: '30px 0px 40px 0px',
+  padding: '5px 30px 5px 30px',
+}));
 
 const FarmInfo = props => {
   const { serverUrlBase, parsingDate } = useContext(CommonContext);
@@ -88,55 +98,55 @@ const FarmInfo = props => {
   }, []);
 
   return (
-    <Wrapper>
-      <Grid container>
-        <Grid item xs={12}>
-          <Grid container>
-            <Grid className="chart-grid" item md={8}>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  fontWeight: 500,
-                  padding: '0px 20px',
-                  fontFamily: `'Do Hyeon', sans-serif`,
-                }}
-              >
-                차트
-              </Typography>
-              {alert && <ScatterPlot chartData={chartData} />}
-              {!alert && <Loader type="spin" color="#3e7925" />}
-            </Grid>
-            <Grid item md={4}>
-              <Grid container direction="column">
-                <Grid item>
-                  <Grid
-                    container
-                    direction="row"
-                    justify-content="space-between"
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: '20px',
-                        fontWeight: 500,
-                        padding: '0px 30px 10px 30px',
-                        fontFamily: `'Do Hyeon', sans-serif`,
-                      }}
+    <CardWrapper>
+      <Wrapper>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid container>
+              <Grid className="chart-grid" item md={8}>
+                <Typography
+                  sx={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    padding: '0px 20px',
+                    fontFamily: `'Do Hyeon', sans-serif`,
+                  }}
+                >
+                  차트
+                </Typography>
+                {alert && <ScatterPlot chartData={chartData} />}
+                {!alert && <Loader type="spin" color="#3e7925" />}
+              </Grid>
+              <Grid item md={4}>
+                <Grid container direction="column">
+                  <Grid item>
+                    <Grid
+                      container
+                      direction="row"
+                      justify-content="space-between"
                     >
-                      현재 온/습도
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: '20px',
+                          fontWeight: 500,
+                          padding: '0px 30px 10px 30px',
+                          fontFamily: `'Do Hyeon', sans-serif`,
+                        }}
+                      >
+                        현재 온/습도
+                      </Typography>
+                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid item alignSelf="center">
-                  {curSensorData &&
-                     <Status curSensorData={curSensorData}/>
-                  }
+                  <Grid item alignSelf="center">
+                    {curSensorData && <Status curSensorData={curSensorData} />}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Wrapper>
+      </Wrapper>
+    </CardWrapper>
   );
 };
 
