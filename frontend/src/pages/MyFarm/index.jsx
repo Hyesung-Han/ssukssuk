@@ -68,7 +68,7 @@ const MyFarm = () => {
         }}
       />
       <Wrapper>
-        <h2> 내 농장 페이지 </h2>
+        {/* <h2> 내 농장 페이지 </h2> */}
         <FarmInfo />
         <FarmStatus />
         <FarmHistory />
