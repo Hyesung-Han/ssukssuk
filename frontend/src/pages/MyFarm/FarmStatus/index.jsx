@@ -15,7 +15,7 @@ import MainCard from '../../../components/Card/MainCard';
 import '../../../App.css';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: '#dcedc8',
+  backgroundColor: '#fafafa',
   position: 'relative',
   justifyContent: 'center',
   border: 'none',
@@ -103,20 +103,23 @@ const FarmInfo = props => {
         <Grid container>
           <Grid item xs={12}>
             <Grid container>
-              <Grid className="chart-grid" item md={8}>
+              <Grid className="chart-grid" item md={7}>
                 <Typography
                   sx={{
                     fontSize: '20px',
                     fontWeight: 500,
-                    padding: '0px 20px',
                     fontFamily: `'Do Hyeon', sans-serif`,
+                    mb: 2,
                   }}
+                  variant="h6"
+                  component="div"
                 >
-                  차트
+                  📈차트
                 </Typography>
                 {alert && <ScatterPlot chartData={chartData} />}
                 {!alert && <Loader type="spin" color="#3e7925" />}
               </Grid>
+              <Grid item md={1}></Grid>
               <Grid item md={4}>
                 <Grid container direction="column">
                   <Grid item>
@@ -129,15 +132,17 @@ const FarmInfo = props => {
                         sx={{
                           fontSize: '20px',
                           fontWeight: 500,
-                          padding: '0px 30px 10px 30px',
                           fontFamily: `'Do Hyeon', sans-serif`,
+                          mb: 1,
                         }}
+                        variant="h6"
+                        component="div"
                       >
-                        현재 온/습도
+                        🔅온도 / 💧습도
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item alignSelf="center">
+                  <Grid item>
                     {curSensorData && <Status curSensorData={curSensorData} />}
                   </Grid>
                 </Grid>

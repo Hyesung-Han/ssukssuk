@@ -23,7 +23,7 @@ class Status extends React.Component {
     const isGood = calIsGood(temp, humi, sensor_date);
 
     return (
-      <Box sx={{ px: 2 }}>
+      <Box>
         <div
           className={
             isGood == 1
@@ -50,7 +50,7 @@ class Status extends React.Component {
                     <Typography
                       sx={{
                         fontSize: '25px',
-                        fontWeight: 600,
+                        fontWeight: 500,
                         color: '#ffffff',
                         mb: 0.75,
                         fontFamily: `'Do Hyeon', sans-serif`,
@@ -61,7 +61,7 @@ class Status extends React.Component {
                     <Typography
                       sx={{
                         fontSize: '25px',
-                        fontWeight: 600,
+                        fontWeight: 500,
                         color: '#ffffff',
                         mb: 0.75,
                         fontFamily: `'Do Hyeon', sans-serif`,
@@ -78,11 +78,10 @@ class Status extends React.Component {
         <Grid container justifyContent="flex-end">
           <Typography
             sx={{
-              fontSize: '12px',
-              fontWeight: 50,
+              fontSize: '18px',
+              fontWeight: 300,
               color: '#555555',
-              mt: 0.75,
-              mr: 1,
+              mt: 1,
               fontFamily: `'Do Hyeon', sans-serif`,
             }}
           >
