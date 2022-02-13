@@ -6,7 +6,7 @@ import Axios from 'axios';
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Grid, Button, InputBase } from '@mui/material';
+import { Typography, Grid, Button, InputBase } from '@mui/material';
 
 const CommunityUpdate = ({ match }) => {
   const no = match.params.no;
@@ -94,7 +94,6 @@ const CommunityUpdate = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -102,13 +101,12 @@ const CommunityUpdate = ({ match }) => {
                 분류
               </Grid>
               <Grid item className="body-content">
-                {code === 'C01' ? '자유 게시판' : '멘토링 게시판'}
+              <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'C01' ? '자유 게시판' : '멘토링 게시판'}</Typography>
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -121,13 +119,13 @@ const CommunityUpdate = ({ match }) => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
+                  sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
                 />
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
@@ -142,7 +140,8 @@ const CommunityUpdate = ({ match }) => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
-                  />
+                    sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+                    />
                 </Grid>
               </div>
             </Grid>
@@ -153,6 +152,7 @@ const CommunityUpdate = ({ match }) => {
             <Button
               className="write-button"
               onClick={onClickCommunityUpdateHandler}
+              sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
             >
               수정하기
             </Button>

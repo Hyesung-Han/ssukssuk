@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { Grid, Button, InputBase, Paper } from '@mui/material';
 
+import '../../../App.css';
+
 const CommunityDetail = ({ match }) => {
   const no = match.params.no;
   let history = useHistory();
@@ -74,12 +76,12 @@ const CommunityDetail = ({ match }) => {
     history.goBack();
   };
 
-  if (!Community) return <>loading중..</>;
+  if (!Community) return <Layout>loading중..</Layout>;
   return (
     <Layout>
       <Wrapper>
         <Grid container>
-          <h2>
+          <h2 >
             {Community.community_code === 'C01'
               ? '자유 게시판'
               : '멘토링 게시판'}
@@ -107,15 +109,14 @@ const CommunityDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
-              <Grid item className="body-header" xs={2}>
+              <Grid item className="body-header" xs={2} >
                 작성자
               </Grid>
               <Grid item className="body-content" xs={7}>
-                <InputBase value={Community.community_author} />
+                <InputBase value={Community.community_author} sx={{fontFamily: `'Do Hyeon', sans-serif`,}}/>
               </Grid>
               <Grid item className="body-header" xs={2}>
                 조회수
@@ -127,7 +128,6 @@ const CommunityDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >

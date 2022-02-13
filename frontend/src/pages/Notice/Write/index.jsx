@@ -6,7 +6,7 @@ import Axios from 'axios';
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Grid, Button, InputBase } from '@mui/material';
+import { Typography, Grid, Button, InputBase } from '@mui/material';
 
 const NoticeWrite = () => {
   let history = useHistory();
@@ -82,7 +82,6 @@ const NoticeWrite = () => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -90,13 +89,12 @@ const NoticeWrite = () => {
                 분류
               </Grid>
               <Grid item className="body-content">
-                {code === 'N01' ? '공지사항' : '문의하기'}
+                <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'N01' ? '공지사항' : '문의하기'}</Typography>
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -109,13 +107,13 @@ const NoticeWrite = () => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
+                  sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
                 />
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
@@ -130,6 +128,7 @@ const NoticeWrite = () => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
+                    sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
                   />
                 </Grid>
               </div>
@@ -141,6 +140,7 @@ const NoticeWrite = () => {
             <Button
               className="write-button"
               onClick={onClickNoticeWriteHandler}
+              sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
             >
               등록
             </Button>

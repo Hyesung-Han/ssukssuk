@@ -69,7 +69,7 @@ const NoticeDetail = ({ match }) => {
     history.goBack();
   };
 
-  if (!notice) return <>loading중..</>;
+  if (!notice) return (<Layout>loading중..</Layout>);
   return (
     <Layout>
       <Wrapper>
@@ -98,7 +98,6 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -106,7 +105,7 @@ const NoticeDetail = ({ match }) => {
                 작성자
               </Grid>
               <Grid item className="body-content" xs={7}>
-                <InputBase value={notice.notice_author} />
+                <InputBase value={notice.notice_author} sx={{fontFamily: `'Do Hyeon', sans-serif`,}} />
               </Grid>
               <Grid item className="body-header" xs={2}>
                 조회수
@@ -118,7 +117,6 @@ const NoticeDetail = ({ match }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
