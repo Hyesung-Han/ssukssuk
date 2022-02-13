@@ -57,31 +57,31 @@ const headCells = [
     id: 'survey_date',
     numeric: false,
     disablePadding: false,
-    label: 'Date',
+    label: '📅날짜',
   },
   {
     id: 'temperature',
     numeric: false,
     disablePadding: false,
-    label: '온도',
+    label: '🔅온도',
   },
   {
     id: 'humidity',
     numeric: false,
     disablePadding: false,
-    label: '습도 💧',
+    label: '💧습도',
   },
   {
     id: 'survey_result',
     numeric: false,
     disablePadding: false,
-    label: '상태',
+    label: '💯상태',
   },
   {
     id: 'survey_etc',
     numeric: false,
     disablePadding: false,
-    label: '특이사항',
+    label: '📝특이사항',
   },
 ];
 
@@ -137,7 +137,6 @@ const EnhancedTableToolbar = props => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          // 여기가 설문히스토리 큰 목차 색상 [안바뀌네]
           bgcolor: theme =>
             alpha(
               theme.palette.primary.main,
@@ -147,12 +146,16 @@ const EnhancedTableToolbar = props => {
       }}
     >
       <Typography
-        sx={{ flex: '1 1 100%' }}
+        sx={{
+          fontSize: '20px',
+          fontWeight: 500,
+          fontFamily: `'Do Hyeon', sans-serif`,
+        }}
         variant="h6"
         id="tableTitle"
         component="div"
       >
-        📚 설문 히스토리
+        📚설문 히스토리
       </Typography>
     </Toolbar>
   );
@@ -168,7 +171,7 @@ const MyFarmBoardList = () => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [myFarmHistory, setMyFarmHistory] = useState([]);
 
   const { serverUrlBase } = useContext(CommonContext);
@@ -245,13 +248,10 @@ const MyFarmBoardList = () => {
   }, []);
 
   return (
-    // 여기는 덴스 패딩 색깔
     <Box
       sx={{
-        border: '3px solid',
-        borderColor: '#81c784',
         borderRadius: 2,
-        bgcolor: '#c5e1a5',
+        bgcolor: '#f5f5f5',
         width: '100%',
       }}
     >

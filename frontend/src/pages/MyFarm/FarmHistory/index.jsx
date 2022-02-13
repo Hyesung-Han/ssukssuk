@@ -4,7 +4,7 @@ import SurveyList from './SurveyList';
 import MainCard from '../../../components/Card/MainCard';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: '#dcedc8',
+  backgroundColor: '#fafafa',
   position: 'relative',
   justifyContent: 'center',
   border: 'none',
