@@ -3,10 +3,10 @@ import MainCard from '../../../components/Card/MainCard';
 import InfoCard from './InfoCard';
 import CurrentImage from './CurrentImage';
 import FarmImage from './FarmImage';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: '#dcedc8',
+  backgroundColor: '#fafafa',
   position: 'relative',
   justifyContent: 'center',
   border: 'none',
@@ -17,11 +17,25 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 const FarmPicture = () => {
   return (
     <CardWrapper>
+      <Grid>
+        <Typography
+          sx={{
+            fontSize: '20px',
+            fontWeight: 500,
+            fontFamily: `'Do Hyeon', sans-serif`,
+            mb: 2,
+          }}
+          variant="h6"
+          component="div"
+        >
+          📋상태[이미지]
+        </Typography>
+      </Grid>
       <Grid container direction="row" spacing={1}>
         <Grid item xs={7}>
           <FarmImage />
         </Grid>
-        <Grid item xs={5} alignSelf="center">
+        <Grid item xs={5} alignSelf="flex-end">
           <InfoCard />
           <CurrentImage />
         </Grid>
