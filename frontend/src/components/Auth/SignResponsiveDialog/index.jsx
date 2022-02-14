@@ -582,9 +582,14 @@ const SignUpSection02 = () => {
       if (!regPwdCf.test(signUpUserData.passwordConfirmation)) {
         setSignUpPwdCfErr(true);
         setSignUpPwdCfErrMsg('비밀번호를 다시 한번 입력 바람');
-      } else {
+      } else if (
+        signUpUserData.password == signUpUserData.passwordConfirmation
+      ) {
         setSignUpPwdCfErr(false);
         setSignUpPwdCfErrMsg();
+      } else {
+        setSignUpPwdCfErr(true);
+        setSignUpPwdCfErrMsg('비밀번호가 일치하지 않습니다.');
       }
     }
 
