@@ -111,14 +111,14 @@ const CommunityWrite = () => {
                       value="C01"
                       control={<Radio />}
                       label={
-                        <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>자유 게시판</Typography>
+                        <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>자유 게시판</Typography>
                       }
                     />
                     <FormControlLabel
                       value="C02"
                       control={<Radio />}
                       label={
-                        <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>멘토링 게시판</Typography>
+                        <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>멘토링 게시판</Typography>
                       }
                     />
                   </RadioGroup>
@@ -140,7 +140,7 @@ const CommunityWrite = () => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
-                  sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+                  sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
                 />
               </Grid>
             </Grid>
@@ -161,7 +161,7 @@ const CommunityWrite = () => {
                     onChange={handleTextChange}
                     placeholder="내용을 입력하세요"
                     multiline={true}
-                    sx={{fontSize:20, fontFamily: `'Do Hyeon', sans-serif`,}}
+                    sx={{fontSize:18, fontFamily: `'Do Hyeon', sans-serif`,}}
                     className="body-content-input"
                   />
                 </Grid>

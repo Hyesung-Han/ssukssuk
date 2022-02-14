@@ -101,7 +101,7 @@ const CommunityUpdate = ({ match }) => {
                 분류
               </Grid>
               <Grid item className="body-content">
-              <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'C01' ? '자유 게시판' : '멘토링 게시판'}</Typography>
+              <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'C01' ? '자유 게시판' : '멘토링 게시판'}</Typography>
               </Grid>
             </Grid>
             <Grid
@@ -119,7 +119,7 @@ const CommunityUpdate = ({ match }) => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
-                  sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+                  sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
                 />
               </Grid>
             </Grid>
@@ -140,7 +140,7 @@ const CommunityUpdate = ({ match }) => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
-                    sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+                    sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
                     />
                 </Grid>
               </div>
@@ -152,7 +152,7 @@ const CommunityUpdate = ({ match }) => {
             <Button
               className="write-button"
               onClick={onClickCommunityUpdateHandler}
-              sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+              sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
             >
               수정하기
             </Button>

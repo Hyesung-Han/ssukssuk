@@ -81,7 +81,7 @@ const CommunityDetail = ({ match }) => {
     <Layout>
       <Wrapper>
         <Grid container>
-          <h2 >
+          <h2>
             {Community.community_code === 'C01'
               ? '자유 게시판'
               : '멘토링 게시판'}
@@ -99,10 +99,20 @@ const CommunityDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 제목
               </Grid>
-              <Grid item className="body-content" xs={8}>
+              <Grid
+                item
+                className="body-content"
+                xs={8}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {Community.community_title}
               </Grid>
-              <Grid item className="body-content" xs={2}>
+              <Grid
+                item
+                className="body-content"
+                xs={2}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {parsingDate(Community.community_date)}
               </Grid>
             </Grid>
@@ -112,16 +122,25 @@ const CommunityDetail = ({ match }) => {
               alignItems="center"
               className="title-box"
             >
-              <Grid item className="body-header" xs={2} >
+              <Grid item className="body-header" xs={2}>
                 작성자
               </Grid>
               <Grid item className="body-content" xs={8}>
-                <Grid sx={{fontFamily: `'Do Hyeon', sans-serif`,}}>{Community.community_author}</Grid>
+                <Grid
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+                >
+                  {Community.community_author}
+                </Grid>
               </Grid>
               <Grid item className="body-header" xs={1}>
                 조회수
               </Grid>
-              <Grid item className="body-content" xs={1}>
+              <Grid
+                item
+                className="body-content"
+                xs={1}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {Community.community_hit}
               </Grid>
             </Grid>
@@ -134,8 +153,14 @@ const CommunityDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 내용
               </Grid>
-              <Grid item className="body-content body-content-text" xs={9}>
-                <Paper elevation={0}>{Community.community_content}</Paper>
+              <Grid item className="body-content body-content-text" xs={10}>
+                <Paper
+                  elevation={0}
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+                  className="hihi"
+                >
+                  {Community.community_content}
+                </Paper>
               </Grid>
             </Grid>
           </Grid>
