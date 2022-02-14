@@ -115,10 +115,10 @@ const CommunityDetail = ({ match }) => {
               <Grid item className="body-header" xs={2} >
                 작성자
               </Grid>
-              <Grid item className="body-content" xs={7}>
-                <InputBase value={Community.community_author} sx={{fontFamily: `'Do Hyeon', sans-serif`,}}/>
+              <Grid item className="body-content" xs={8}>
+                <Grid sx={{fontFamily: `'Do Hyeon', sans-serif`,}}>{Community.community_author}</Grid>
               </Grid>
-              <Grid item className="body-header" xs={2}>
+              <Grid item className="body-header" xs={1}>
                 조회수
               </Grid>
               <Grid item className="body-content" xs={1}>
