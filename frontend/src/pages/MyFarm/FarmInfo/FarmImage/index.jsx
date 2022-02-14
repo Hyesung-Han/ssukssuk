@@ -51,7 +51,6 @@ const FarmImage = () => {
 
   useEffect(() => {}, [defaultImage]);
   useEffect(() => {
-    console.log();
     if (!defaultImage) {
       setDefaultImage('/images/default_farm_image.png');
     }

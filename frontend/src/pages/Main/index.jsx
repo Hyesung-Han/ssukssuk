@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Button, Typography } from '@mui/material';
 import Layout from '../../layout';
@@ -220,16 +221,17 @@ const Main = () => {
                 </Grid>
               </Grid>
             </div>
-            <Button
-              color="secondary"
-              size="large"
-              variant="contained"
-              component="a"
-              href="/premium-themes/onepirate/sign-up/"
-              sx={{ mt: 8 }}
-            >
-              시작하기
-            </Button>
+            <Link to="MyFarm">
+              <Button
+                color="secondary"
+                size="large"
+                variant="contained"
+                component="a"
+                sx={{ mt: 8 }}
+              >
+                시작하기
+              </Button>
+            </Link>
           </Container>
         </Box>
       </Wrapper>
