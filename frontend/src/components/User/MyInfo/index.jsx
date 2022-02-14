@@ -81,7 +81,6 @@ const MyInfoButtonGroupComponent = props => {
 
   const regNnm = /^[ㄱ-ㅎ|가-힣]+.{1,}$/;
   useEffect(() => {
-    console.log('수정테스트 : ' + inputValue.user_nickName, user.name);
     if (
       inputValue.user_nickName !== user.name &&
       regNnm.test(inputValue.user_nickName)

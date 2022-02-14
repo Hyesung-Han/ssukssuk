@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { CommonContext } from '../../../../context/CommonContext';
 import { setPath } from '../../../../redux/reducers/FarmReducer';
+import Wrapper from './styles';
 
 // material-ui
 import { styled } from '@mui/material/styles';
-import { CardActionArea, CardMedia } from '@mui/material';
+import { CardActionArea, CardMedia, Typography, Grid } from '@mui/material';
 
 // project imports
 import MainCard from '../../../../components/Card/MainCard';
@@ -15,8 +16,8 @@ import MainCard from '../../../../components/Card/MainCard';
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
-  width: '95%',
-  height: 310,
+  width: '100%',
+  height: '100%',
   border: 'none',
 }));
 
@@ -36,7 +37,6 @@ const FarmImage = () => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const getList = async formData => {
-    console.log('image', formData);
     try {
       const res = await Axios.post(serverUrlBase + '/myfarm/upload', formData);
       const { data } = res;
@@ -50,28 +50,38 @@ const FarmImage = () => {
   };
 
   useEffect(() => {}, [defaultImage]);
+  useEffect(() => {
+    if (!defaultImage) {
+      setDefaultImage('/images/default_farm_image.png');
+    }
+  }, []);
 
   return (
-    <>
-      <CardWrapper
-        style={{
-          display: 'flex',
-          alignItem: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <CardActionArea {...getRootProps()}>
-          <input {...getInputProps()} />
-          <CardMedia
-            component="img"
-            image={defaultImage}
-            alt="myFarmImg"
-            width="100%"
-            height="280"
-          />
-        </CardActionArea>
-      </CardWrapper>
-    </>
+    <CardWrapper
+      style={{
+        display: 'flex',
+        alignItem: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Wrapper>
+        <Grid className="wrapper">
+          <CardActionArea {...getRootProps()}>
+            <input {...getInputProps()} />
+            <Grid className="card">
+              <CardMedia component="img" image={defaultImage} alt="myFarmImg" />
+              <Grid className="info">
+                <Typography
+                  sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}
+                >
+                  클릭해서 사진을 등록하세요!
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardActionArea>
+        </Grid>
+      </Wrapper>
+    </CardWrapper>
   );
 };
 

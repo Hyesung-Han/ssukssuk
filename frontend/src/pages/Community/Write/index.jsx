@@ -14,7 +14,10 @@ import {
   FormControlLabel,
   Radio,
   InputBase,
+  Typography,
 } from '@mui/material';
+
+import '../../../App.css';
 
 const CommunityWrite = () => {
   let history = useHistory();
@@ -88,7 +91,6 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -108,12 +110,16 @@ const CommunityWrite = () => {
                     <FormControlLabel
                       value="C01"
                       control={<Radio />}
-                      label="자유 게시판"
+                      label={
+                        <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>자유 게시판</Typography>
+                      }
                     />
                     <FormControlLabel
                       value="C02"
                       control={<Radio />}
-                      label="멘토링 게시판"
+                      label={
+                        <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>멘토링 게시판</Typography>
+                      }
                     />
                   </RadioGroup>
                 </FormControl>
@@ -122,7 +128,6 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -135,6 +140,7 @@ const CommunityWrite = () => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
+                  sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
                 />
               </Grid>
             </Grid>
@@ -155,6 +161,7 @@ const CommunityWrite = () => {
                     onChange={handleTextChange}
                     placeholder="내용을 입력하세요"
                     multiline={true}
+                    sx={{fontSize:18, fontFamily: `'Do Hyeon', sans-serif`,}}
                     className="body-content-input"
                   />
                 </Grid>
@@ -167,6 +174,7 @@ const CommunityWrite = () => {
             <Button
               className="write-button"
               onClick={onClickCommunityWriteHandler}
+              sx={{fontFamily: `'Do Hyeon', sans-serif`,}}
             >
               등록
             </Button>

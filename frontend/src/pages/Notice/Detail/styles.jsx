@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     .body-header {
       width: 200px;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 20px;
       color: #868e96;
 
       text-align: center;
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
     }
 
     .body-content-text {
-      width: 900px;
+      width: auto;
       height: 350px;
       overflow: auto;
     }

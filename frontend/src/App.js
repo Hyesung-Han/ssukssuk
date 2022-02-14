@@ -7,7 +7,6 @@ import { createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 // hook
 import { CommonContext } from './context/CommonContext';
-import { useLocalStorageSetState } from './common/CommonHooks';
 
 // page
 import Main from './pages/Main/';
@@ -94,16 +93,6 @@ function parsingDate(date) {
 
 // app
 const App = () => {
-  const [user, setUser] = useLocalStorageSetState(
-    {
-      user_id: '',
-      user_nickName: '',
-      token: '',
-      status: '',
-      user_code: '',
-    },
-    'user',
-  );
   const [infoData, setInfoData] = useState({});
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [userDialogIndex, setUserDialogIndex] = useState(0);
@@ -118,8 +107,6 @@ const App = () => {
     <CommonContext.Provider
       value={{
         serverUrl,
-        user,
-        setUser,
         drawerOpen,
         setDrawerOpen,
         signDialogOpen,

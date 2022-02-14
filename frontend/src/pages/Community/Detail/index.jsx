@@ -7,7 +7,9 @@ import Axios from 'axios';
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Grid, Button, InputBase, Paper } from '@mui/material';
+import { Grid, Button, Paper } from '@mui/material';
+
+import '../../../App.css';
 
 const CommunityDetail = ({ match }) => {
   const no = match.params.no;
@@ -55,7 +57,6 @@ const CommunityDetail = ({ match }) => {
       if (result.value) {
         Axios.delete(serverUrlBase + '/Community/delete/' + no)
           .then(result => {
-            console.log(result);
             history.push('/Community');
           })
           .catch(e => {
@@ -74,7 +75,7 @@ const CommunityDetail = ({ match }) => {
     history.goBack();
   };
 
-  if (!Community) return <>loading중..</>;
+  if (!Community) return <Layout>loading중..</Layout>;
   return (
     <Layout>
       <Wrapper>
@@ -97,45 +98,68 @@ const CommunityDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 제목
               </Grid>
-              <Grid item className="body-content" xs={8}>
+              <Grid
+                item
+                className="body-content"
+                xs={8}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {Community.community_title}
               </Grid>
-              <Grid item className="body-content" xs={2}>
+              <Grid
+                item
+                className="body-content"
+                xs={2}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {parsingDate(Community.community_date)}
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="title-box"
             >
               <Grid item className="body-header" xs={2}>
                 작성자
               </Grid>
-              <Grid item className="body-content" xs={7}>
-                <InputBase value={Community.community_author} />
+              <Grid item className="body-content" xs={8}>
+                <Grid
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+                >
+                  {Community.community_author}
+                </Grid>
               </Grid>
-              <Grid item className="body-header" xs={2}>
+              <Grid item className="body-header" xs={1}>
                 조회수
               </Grid>
-              <Grid item className="body-content" xs={1}>
+              <Grid
+                item
+                className="body-content"
+                xs={1}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {Community.community_hit}
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
               <Grid item className="body-header" xs={2}>
                 내용
               </Grid>
-              <Grid item className="body-content body-content-text" xs={9}>
-                <Paper elevation={0}>{Community.community_content}</Paper>
+              <Grid item className="body-content body-content-text" xs={10}>
+                <Paper
+                  elevation={0}
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+                  className="hihi"
+                >
+                  {Community.community_content}
+                </Paper>
               </Grid>
             </Grid>
           </Grid>

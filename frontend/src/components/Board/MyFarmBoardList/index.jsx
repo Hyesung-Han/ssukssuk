@@ -40,8 +40,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -59,31 +57,31 @@ const headCells = [
     id: 'survey_date',
     numeric: false,
     disablePadding: false,
-    label: 'Date',
+    label: '📅날짜',
   },
   {
     id: 'temperature',
     numeric: false,
     disablePadding: false,
-    label: '온도',
+    label: '🔅온도',
   },
   {
     id: 'humidity',
     numeric: false,
     disablePadding: false,
-    label: '습도 💧',
+    label: '💧습도',
   },
   {
     id: 'survey_result',
     numeric: false,
     disablePadding: false,
-    label: '상태',
+    label: '💯상태',
   },
   {
     id: 'survey_etc',
     numeric: false,
     disablePadding: false,
-    label: '특이사항',
+    label: '📝특이사항',
   },
 ];
 
@@ -95,7 +93,8 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      {/* 여기는 히스토리 목차 색상! */}
+      <TableRow sx={{ bgcolor: '#fff9c4' }}>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -147,12 +146,16 @@ const EnhancedTableToolbar = props => {
       }}
     >
       <Typography
-        sx={{ flex: '1 1 100%' }}
+        sx={{
+          fontSize: '20px',
+          fontWeight: 500,
+          fontFamily: `'Do Hyeon', sans-serif`,
+        }}
         variant="h6"
         id="tableTitle"
         component="div"
       >
-        📚 설문 히스토리
+        📚설문 히스토리
       </Typography>
     </Toolbar>
   );
@@ -162,14 +165,13 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-// 내농장 페이지 하단부에 히스토리로 갈 히스토리 컴포넌트
 const MyFarmBoardList = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('user_name');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [myFarmHistory, setMyFarmHistory] = useState([]);
 
   const { serverUrlBase } = useContext(CommonContext);
@@ -192,9 +194,6 @@ const MyFarmBoardList = () => {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
-    // console.log(name);
-
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -226,7 +225,6 @@ const MyFarmBoardList = () => {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - myFarmHistory.length) : 0;
 
@@ -238,7 +236,6 @@ const MyFarmBoardList = () => {
       },
     })
       .then(data => {
-        // console.log(data.data.data);
         setMyFarmHistory(data.data.data);
       })
       .catch(function(error) {
@@ -250,8 +247,26 @@ const MyFarmBoardList = () => {
     getMyFarmHistory();
   }, []);
 
+  if (myFarmHistory.list_cnt <= 0)
+    return (
+      <Box
+        sx={{
+          borderRadius: 2,
+          bgcolor: '#f5f5f5',
+          width: '100%',
+        }}
+      >
+        설문 내역이 존재하지 않습니다.
+      </Box>
+    );
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        borderRadius: 2,
+        bgcolor: '#f5f5f5',
+        width: '100%',
+      }}
+    >
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -268,8 +283,6 @@ const MyFarmBoardList = () => {
               rowCount={myFarmHistory.length}
             />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(myFarmHistory, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
@@ -346,6 +359,7 @@ const MyFarmBoardList = () => {
         />
       </Paper>
       <FormControlLabel
+        sx={{ ml: 1 }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />

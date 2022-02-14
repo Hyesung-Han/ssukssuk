@@ -3,9 +3,18 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   padding-top: 100px;
   & .top-area {
-    margin-bottom: 150px;
+    margin-bottom: 130px;
   }
-  & .title {
+  & .title1 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  & .title2 {
+    font-size: 46px;
+    font-weight: 700;
+  }
+  & .title_desc {
+    font-size: 22px;
     font-weight: 700;
   }
   & .what_to_do {
