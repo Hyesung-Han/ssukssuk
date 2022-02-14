@@ -75,7 +75,6 @@ function SimpleDialog(props) {
           farm_no: farm.farm_no,
         },
       }).then(data => {
-        console.log(data.data.result);
         if (data.data.result === 'success') {
           setFarmImg('');
         }
