@@ -19,7 +19,7 @@ const options = {
             { jwt: [] }
         ],
         // host: 'localhost:3001',
-        host: '52.79.38.33:3001',
+        host: 'i6a103.p.ssafy.io:3001',
         basePath: '/'
     },
     apis: ['./routes/*.js', './swagger/*']
