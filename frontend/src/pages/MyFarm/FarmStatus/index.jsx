@@ -9,9 +9,19 @@ import { Grid, Typography } from '@mui/material';
 import ScatterPlot from './ScatterPlot';
 import Loader from './Loader';
 
+import { styled } from '@mui/material/styles';
+import MainCard from '../../../components/Card/MainCard';
+
 import '../../../App.css';
 
-
+const CardWrapper = styled(MainCard)(({ theme }) => ({
+  backgroundColor: '#fafafa',
+  position: 'relative',
+  justifyContent: 'center',
+  border: 'none',
+  margin: '30px 0px 40px 0px',
+  padding: '5px 30px 5px 30px',
+}));
 
 const FarmInfo = props => {
   const { serverUrlBase, parsingDate } = useContext(CommonContext);
@@ -63,7 +73,6 @@ const FarmInfo = props => {
     })
       .then(data => {
         const list = data.data.data[0];
-        console.log(list.sensor_date);
         const result = {
           humi: list.humidity,
           temp: list.temperature,
@@ -87,56 +96,69 @@ const FarmInfo = props => {
     }, 1000);
   }, []);
 
+  if (!chartData || !curSensorData)
+    return (
+      <CardWrapper>
+        <Wrapper>
+          <Grid container>차트 데이터가 존재하지 않습니다.</Grid>
+        </Wrapper>
+      </CardWrapper>
+    );
   return (
-    <Wrapper>
-      <Grid container>
-        <Grid item xs={12}>
-          <Grid container>
-            <Grid className="chart-grid" item md={8}>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  fontWeight: 500,
-                  padding: '0px 20px',
-                  fontFamily: `'Do Hyeon', sans-serif`,
-                }}
-              >
-                차트
-              </Typography>
-              {alert && <ScatterPlot chartData={chartData} />}
-              {!alert && <Loader type="spin" color="#3e7925" />}
-            </Grid>
-            <Grid item md={4}>
-              <Grid container direction="column">
-                <Grid item>
-                  <Grid
-                    container
-                    direction="row"
-                    justify-content="space-between"
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: '20px',
-                        fontWeight: 500,
-                        padding: '0px 30px 10px 30px',
-                        fontFamily: `'Do Hyeon', sans-serif`,
-                      }}
+    <CardWrapper>
+      <Wrapper>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid container>
+              <Grid className="chart-grid" item md={7}>
+                <Typography
+                  sx={{
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    fontFamily: `'Do Hyeon', sans-serif`,
+                    mb: 2,
+                  }}
+                  variant="h6"
+                  component="div"
+                >
+                  📈차트
+                </Typography>
+                {alert && <ScatterPlot chartData={chartData} />}
+                {!alert && <Loader type="spin" color="#3e7925" />}
+              </Grid>
+              <Grid item md={1}></Grid>
+              <Grid item md={4}>
+                <Grid container direction="column">
+                  <Grid item>
+                    <Grid
+                      container
+                      direction="row"
+                      justify-content="space-between"
                     >
-                      현재 온/습도
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: '20px',
+                          fontWeight: 500,
+                          fontFamily: `'Do Hyeon', sans-serif`,
+                          mb: 1,
+                        }}
+                        variant="h6"
+                        component="div"
+                      >
+                        🔅온도 / 💧습도
+                      </Typography>
+                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid item alignSelf="center">
-                  {curSensorData &&
-                     <Status curSensorData={curSensorData}/>
-                  }
+                  <Grid item>
+                    {curSensorData && <Status curSensorData={curSensorData} />}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Wrapper>
+      </Wrapper>
+    </CardWrapper>
   );
 };
 

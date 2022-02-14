@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import store from 'store';
+// import store from 'store';
 
-export const usePrevious = (value) => {
+export const usePrevious = value => {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -9,7 +9,7 @@ export const usePrevious = (value) => {
   return ref.current;
 };
 
-export const useKeyPress = (targetKey) => {
+export const useKeyPress = targetKey => {
   // State for keeping track of whether key is pressed
   const [keyPressed, setKeyPressed] = useState(false);
 
@@ -41,19 +41,19 @@ export const useKeyPress = (targetKey) => {
   return keyPressed;
 };
 
-export const useLocalStorageSetState = (initialValue, name) => {
-  if (!name) {
-    throw new Error('Name must be provided to persist to localStorage');
-  }
-  const actualInitialValue =
-    store.get(name) !== undefined ? store.get(name) : initialValue;
-  const [value, setValue] = useState(actualInitialValue);
+// export const useLocalStorageSetState = (initialValue, name) => {
+//   if (!name) {
+//     throw new Error('Name must be provided to persist to localStorage');
+//   }
+//   const actualInitialValue =
+//     store.get(name) !== undefined ? store.get(name) : initialValue;
+//   const [value, setValue] = useState(actualInitialValue);
 
-  useEffect(() => {
-    store.set(name, value);
-  }, [value]);
-  return [value, setValue];
-};
+//   useEffect(() => {
+//     store.set(name, value);
+//   }, [value]);
+//   return [value, setValue];
+// };
 
 export const useIntersectionObserver = ({
   root,

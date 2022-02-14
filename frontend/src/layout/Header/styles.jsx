@@ -97,7 +97,7 @@ const Wrapper = styled.div`
     opacity: 0.7;
     // transition: all 0.2s;
 
-    font-size: 18px;
+    font-size: 20px;
     color:#000000;
     background-color: #ffffff;
 

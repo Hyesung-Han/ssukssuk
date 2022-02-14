@@ -48,8 +48,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 const InfoCard = () => {
   const theme = useTheme();
-  // const farm = useSelector(state => state.Farm.farm);
-  const farm={"farm_name":"소현 농장","farm_text":"내가 바로 농사왕!","farm_regidate":"2022:02:11 13:29"}
+  const farm = useSelector(state => state.Farm.farm);
   const { parsingDate } = useContext(CommonContext);
 
   return (

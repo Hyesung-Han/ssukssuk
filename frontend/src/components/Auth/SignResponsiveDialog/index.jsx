@@ -337,8 +337,8 @@ const SignUpSection01 = () => {
 
 const SignUpSection02 = () => {
   const [disabled, setDisabled] = useState(true);
-  const [emailDisabled, setEmailDisabled] = useState(true);
-  const [emailConfirm, setEmailConfirm] = useState(false);
+  const [emailDisabled, setEmailDisabled] = useState(true); // 이메일 인증버튼
+  const [emailConfirm, setEmailConfirm] = useState(false); // 이메일 입력창
 
   const { signUpUserData, setSignUpUserData, setIsSignUp } = useContext(
     ViewContext,
@@ -446,53 +446,62 @@ const SignUpSection02 = () => {
     })
       .then(data => {
         if (data.status === 200 && data.data.result !== 'fail') {
-          Swal.fire({
-            target: document.querySelector('.MuiDialog-container'),
-            title: '이메일을 확인해 인증번호를 입력해주세요.',
-            input: 'text',
-            inputPlaceholder: '인증번호를 입력하세요',
-            inputAttributes: {
-              autocapitalize: 'off',
-            },
-            showCancelButton: true,
-            confirmButtonText: '완료',
-            showLoaderOnConfirm: true,
-            preConfirm: confirmNum => {
+          (async () => {
+            const { value: confirmNum } = await Swal.fire({
+              target: document.querySelector('.MuiDialog-container'),
+              title: '이메일을 확인해 인증번호를 입력해주세요.',
+              input: 'text',
+              inputPlaceholder: '인증번호를 입력하세요',
+              inputAttributes: {
+                autocapitalize: 'off',
+              },
+              showCancelButton: true,
+              confirmButtonText: '완료',
+              showLoaderOnConfirm: true,
+            });
+
+            if (confirmNum) {
               const query = 'user_email=' + email + '&authNum=' + confirmNum;
               Axios.get(serverUrlBase + '/user/regi-email?' + query)
                 .then(data => {
                   if (data.data.result === 'success') {
+                    setEmailDisabled(true);
                     setEmailConfirm(true);
+                    Swal.fire({
+                      target: document.querySelector('.MuiDialog-container'),
+                      title: '인증완료',
+                    });
+                    setEmailDisabled(true);
+                    setEmailConfirm(true);
+                  } else {
+                    // 틀린 인증번호 입력했을때
+                    setEmailDisabled(false);
+                    setEmailConfirm(false);
+                    Swal.fire({
+                      target: document.querySelector('.MuiDialog-container'),
+                      title: '인증실패',
+                    });
                   }
                 })
                 .catch(error => {
                   setEmailDisabled(false);
+                  setEmailConfirm(false);
+                  Swal.fire({
+                    target: document.querySelector('.MuiDialog-container'),
+                    title: '인증실패',
+                  });
                   console.log('email confirm error', error);
                 });
-            },
-            allowOutsideClick: () => !Swal.isLoading(),
-          }).then(result => {
-            if (result.isConfirmed && emailConfirm) {
-              setEmailConfirm(true);
-              Swal.fire({
-                target: document.querySelector('.MuiDialog-container'),
-                title: '인증완료',
-              });
-            } else if (result.isConfirmed && !emailConfirm) {
-              setEmailConfirm(false);
-              setEmailDisabled(false);
-              Swal.fire({
-                target: document.querySelector('.MuiDialog-container'),
-                title: '인증실패',
-              });
             } else {
-              setEmailConfirm(false);
               setEmailDisabled(false);
+              setEmailConfirm(false);
             }
-          });
+          })();
         } else {
-          setEmailDisabled(false);
+          setEmailConfirm(false);
+          setEmailDisabled(true);
           if (data.data.result === 'fail') {
+            // 사용중인 이메일일 때
             Swal.fire({
               target: document.querySelector('.MuiDialog-container'),
               icon: 'error',
@@ -527,8 +536,6 @@ const SignUpSection02 = () => {
   ];
 
   useEffect(() => {
-    console.log(signUpUserData);
-
     if (signUpUserData.id.length === 0) {
       setSignUpIdErr(false);
       setSignUpIdErrMsg();
@@ -575,9 +582,14 @@ const SignUpSection02 = () => {
       if (!regPwdCf.test(signUpUserData.passwordConfirmation)) {
         setSignUpPwdCfErr(true);
         setSignUpPwdCfErrMsg('비밀번호를 다시 한번 입력 바람');
-      } else {
+      } else if (
+        signUpUserData.password == signUpUserData.passwordConfirmation
+      ) {
         setSignUpPwdCfErr(false);
         setSignUpPwdCfErrMsg();
+      } else {
+        setSignUpPwdCfErr(true);
+        setSignUpPwdCfErrMsg('비밀번호가 일치하지 않습니다.');
       }
     }
 
