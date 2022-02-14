@@ -249,23 +249,6 @@ const SignInSection01 = () => {
             로그인
           </Button>
         </Grid>
-        <Grid item xs={12}>
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <IconButton
-              className="sign-in-butoon grid-item-icon-button"
-              onClick={onClickHandler}
-            >
-              <Typography className="grid-item-typography3">
-                {'비밀번호 찾기'}
-              </Typography>
-            </IconButton>
-          </Grid>
-        </Grid>
       </Grid>
     </Wrapper>
   );
