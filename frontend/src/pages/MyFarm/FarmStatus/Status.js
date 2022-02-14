@@ -38,7 +38,9 @@ class Status extends React.Component {
                   <Grid item>
                     <img
                       className="emoji_img"
-                      src={isGood == 1 ? 'images/smile.png' : 'images/bad.png'}
+                      src={
+                        isGood == 1 ? '/images/smile.png' : '/images/bad.png'
+                      }
                       alt="logo"
                     />
                   </Grid>

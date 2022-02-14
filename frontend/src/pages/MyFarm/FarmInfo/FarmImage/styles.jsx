@@ -5,8 +5,8 @@ const Wrapper = styled.div`
     display: inline-block;
   }
   .card {
-    width: 320px;
-    height: 320px;
+    width: 300px;
+    height: 260px;
     position: relative;
     display: flex;
     align-items: flex-end;

@@ -14,7 +14,6 @@ import {
   DialogTitle,
   useMediaQuery,
   Grid,
-  IconButton,
   Typography,
   Divider,
   TextField,
@@ -69,9 +68,6 @@ const SignInSection01 = () => {
   // 변화가 일어날 때마다 (값)
   const OnChangeHandler = name => e => {
     setSignInUserData({ ...signInUserData, [name]: e.target.value });
-  };
-  const onClickHandler = () => {
-    setIsSignUp('ForgotPw');
   };
 
   const [signInIdErr, setsSgnInIdErr] = useState(false);
