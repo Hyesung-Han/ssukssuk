@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
   & .desc {
     & .sub_title {
-      color: #9c27b0;
+      color: #ff9d00;
       font-size: 32px;
       font-weight: 500;
       text-shadow: 1px 1px 2px #8d8181;
@@ -38,6 +38,9 @@ const Wrapper = styled.div`
       text-align: center;
       // text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     }
+  }
+  & .mouse-cursor {
+    cursor: pointer;
   }
 `;
 export default Wrapper;

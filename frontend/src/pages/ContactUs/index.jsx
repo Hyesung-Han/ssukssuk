@@ -21,7 +21,7 @@ const ContactUs = () => {
               <img src="/images/contact_us_img_2.png" alt="" />
             </Grid>
             <Grid className="title">E-MAIL</Grid>
-            <Grid className="text">thdnjs008@unist.ac.kr</Grid>
+            <Grid className="text"> jeanstest6@gmail.com</Grid>
           </Grid>
           <Grid
             xs={12}

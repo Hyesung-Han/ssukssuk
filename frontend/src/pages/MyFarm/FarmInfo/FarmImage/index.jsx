@@ -16,8 +16,8 @@ import MainCard from '../../../../components/Card/MainCard';
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
-  width: '100%',
-  height: '100%',
+  width: '95%',
+  height: '300',
   border: 'none',
 }));
 
