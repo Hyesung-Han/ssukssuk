@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -57,31 +56,31 @@ const headCells = [
     id: 'survey_date',
     numeric: false,
     disablePadding: false,
-    label: '📅날짜',
+    label: '날짜',
   },
   {
     id: 'temperature',
     numeric: false,
     disablePadding: false,
-    label: '🔅온도',
+    label: '온도',
   },
   {
     id: 'humidity',
     numeric: false,
     disablePadding: false,
-    label: '💧습도',
+    label: '습도',
   },
   {
     id: 'survey_result',
     numeric: false,
     disablePadding: false,
-    label: '💯상태',
+    label: '상태',
   },
   {
     id: 'survey_etc',
     numeric: false,
     disablePadding: false,
-    label: '📝특이사항',
+    label: '특이사항',
   },
 ];
 
@@ -122,7 +121,6 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
@@ -130,19 +128,11 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = props => {
-  const { numSelected } = props;
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: theme =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity,
-            ),
-        }),
       }}
     >
       <Typography
@@ -161,14 +151,9 @@ const EnhancedTableToolbar = props => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 const MyFarmBoardList = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('user_name');
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -191,25 +176,6 @@ const MyFarmBoardList = () => {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -222,8 +188,6 @@ const MyFarmBoardList = () => {
   const handleChangeDense = event => {
     setDense(event.target.checked);
   };
-
-  const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - myFarmHistory.length) : 0;
@@ -268,7 +232,7 @@ const MyFarmBoardList = () => {
       }}
     >
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -276,7 +240,6 @@ const MyFarmBoardList = () => {
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
@@ -286,24 +249,16 @@ const MyFarmBoardList = () => {
               {stableSort(myFarmHistory, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.survey_date);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   return (
-                    <TableRow
-                      hover
-                      onClick={event => handleClick(event, row.survey_date)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.survey_date}
-                      selected={isItemSelected}
-                    >
+                    <TableRow hover role="checkbox" key={row.survey_date}>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="none"
                         align="center"
+                        style={{ width: '100px' }}
                       >
                         <Typography>{parsingDate(row.survey_date)}</Typography>
                       </TableCell>
@@ -330,7 +285,7 @@ const MyFarmBoardList = () => {
                           )}
                         </SeverityPill>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" sx={{ width: '600px' }}>
                         <Typography>{row.survey_etc}</Typography>
                       </TableCell>
                     </TableRow>

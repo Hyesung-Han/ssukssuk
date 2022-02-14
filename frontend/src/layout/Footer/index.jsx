@@ -49,8 +49,7 @@ const Footer = () => {
         <Grid item sm={12} md={4} className="right-box">
           <Grid className="text-box">
             <h2>For Help</h2>
-            <h3>xoem00@gmail.com</h3>
-            <h3>hanhs4544@gmail.com</h3>
+            <h3>jeanstest6@gmail.com</h3>
             <h4>Contact Out Customer Support Team</h4>
           </Grid>
         </Grid>

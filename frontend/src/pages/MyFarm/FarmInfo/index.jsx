@@ -23,7 +23,7 @@ const FarmPicture = () => {
             fontSize: '20px',
             fontWeight: 500,
             fontFamily: `'Do Hyeon', sans-serif`,
-            mb: 2,
+            mb: 1,
           }}
           variant="h6"
           component="div"

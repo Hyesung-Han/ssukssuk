@@ -14,7 +14,6 @@ import {
   DialogTitle,
   useMediaQuery,
   Grid,
-  IconButton,
   Typography,
   Divider,
   TextField,
@@ -70,9 +69,6 @@ const SignInSection01 = () => {
   const OnChangeHandler = name => e => {
     setSignInUserData({ ...signInUserData, [name]: e.target.value });
   };
-  const onClickHandler = () => {
-    setIsSignUp('ForgotPw');
-  };
 
   const [signInIdErr, setsSgnInIdErr] = useState(false);
   const [singInidErrMsg, setSingInidErrMsg] = useState();
@@ -127,7 +123,6 @@ const SignInSection01 = () => {
             icon: 'error',
             title: '입력 정보 오류!',
             text: '아이디 또는 비밀번호를 확인 바랍니다!',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
@@ -249,23 +244,6 @@ const SignInSection01 = () => {
             로그인
           </Button>
         </Grid>
-        <Grid item xs={12}>
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <IconButton
-              className="sign-in-butoon grid-item-icon-button"
-              onClick={onClickHandler}
-            >
-              <Typography className="grid-item-typography3">
-                {'비밀번호 찾기'}
-              </Typography>
-            </IconButton>
-          </Grid>
-        </Grid>
       </Grid>
     </Wrapper>
   );
@@ -377,7 +355,6 @@ const SignUpSection02 = () => {
         icon: 'error',
         title: '비밀번호 불일치',
         text: '다시 한번 확인해 주세요!',
-        footer: '<a href="">Why do I have this issue?</a>',
         target: document.querySelector('.MuiDialog-root'),
       });
       return;
@@ -414,7 +391,6 @@ const SignUpSection02 = () => {
             icon: 'error',
             title: '회원가입 실패!',
             text: '?',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
@@ -506,14 +482,12 @@ const SignUpSection02 = () => {
               target: document.querySelector('.MuiDialog-container'),
               icon: 'error',
               title: data.data.msg,
-              footer: '<a href="">Why do I have this issue?</a>',
             });
           } else {
             Swal.fire({
               target: document.querySelector('.MuiDialog-container'),
               icon: 'error',
               title: '이메일 전송 실패 관리자에게 문의하세요!',
-              footer: '<a href="">Why do I have this issue?</a>',
             });
           }
         }

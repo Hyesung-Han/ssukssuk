@@ -172,7 +172,6 @@ const MyInfoButtonGroupComponent = props => {
               icon: 'error',
               title: '입력 정보 오류',
               text: '비밀번호 다시 틀렸어요!',
-              footer: '<a href="">Why do I have this issue?</a>',
               target: document.querySelector('.MuiDialog-root'),
             });
           }
@@ -181,7 +180,6 @@ const MyInfoButtonGroupComponent = props => {
             icon: 'error',
             title: '탈퇴 실패!',
             text: '좀 더 있으라구 그냥 ^^',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
