@@ -96,6 +96,14 @@ const FarmInfo = props => {
     }, 1000);
   }, []);
 
+  if (!chartData || !curSensorData)
+    return (
+      <CardWrapper>
+        <Wrapper>
+          <Grid container>차트 데이터가 존재하지 않습니다.</Grid>
+        </Wrapper>
+      </CardWrapper>
+    );
   return (
     <CardWrapper>
       <Wrapper>

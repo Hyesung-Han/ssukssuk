@@ -247,6 +247,18 @@ const MyFarmBoardList = () => {
     getMyFarmHistory();
   }, []);
 
+  if (myFarmHistory.list_cnt <= 0)
+    return (
+      <Box
+        sx={{
+          borderRadius: 2,
+          bgcolor: '#f5f5f5',
+          width: '100%',
+        }}
+      >
+        설문 내역이 존재하지 않습니다.
+      </Box>
+    );
   return (
     <Box
       sx={{
