@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Button, Typography } from '@mui/material';
 import Layout from '../../layout';
@@ -30,6 +31,17 @@ const Background = styled(Box)({
 });
 
 const Main = () => {
+  let history = useHistory();
+  const user = useSelector(state => state.Auth.user);
+
+  const myfarmClickHandler = () => {
+    if (!user.status) {
+      history.push('/Auth');
+    } else {
+      history.push('/MyFarm');
+    }
+  };
+
   return (
     <Layout>
       <Wrapper>
@@ -221,17 +233,16 @@ const Main = () => {
                 </Grid>
               </Grid>
             </div>
-            <Link to="MyFarm">
-              <Button
-                color="secondary"
-                size="large"
-                variant="contained"
-                component="a"
-                sx={{ mt: 8 }}
-              >
-                시작하기
-              </Button>
-            </Link>
+            <Button
+              color="secondary"
+              size="large"
+              variant="contained"
+              component="a"
+              sx={{ mt: 8 }}
+              onClick={myfarmClickHandler}
+            >
+              시작하기
+            </Button>
           </Container>
         </Box>
       </Wrapper>
