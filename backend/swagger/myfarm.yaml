@@ -199,6 +199,27 @@ paths:
         default:
           description: "successful delete"
 
+  /myfarm/device:
+    post:
+      tags:
+        - "myfarm"
+      summary: "my farm device"
+      description: "my farm device"
+      operationId: "my farm device"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "my farm device"
+          required: true
+          schema:
+            $ref: "#/definitions/myfarm_device"
+      responses:
+        default:
+          description: "successful operation"
+
 securityDefinitions:
   jwt:
     type: apiKey
@@ -225,6 +246,20 @@ definitions:
         type: "integer"
     xml:
       name: "myfarm_live"
+
+  myfarm_device:
+    type: "object"
+    properties:
+      user_id:
+        type: "string"
+      user_name:
+        type: "string"
+      user_address:
+        type: "string"
+      user_phone:
+        type: "string"
+    xml:
+      name: "myfarm_update"
 
 externalDocs:
   description: "Find out more about Swagger"

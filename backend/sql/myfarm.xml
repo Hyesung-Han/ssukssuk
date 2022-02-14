@@ -94,7 +94,7 @@
     Where farm_no = #{farm_no}
   </delete>
 
-     <insert id="MYFARM.INSERT.live">
+  <insert id="MYFARM.INSERT.live">
      /* 내 농장 라이브 이미지 */
     INSERT INTO live_image_t
     (
@@ -120,5 +120,25 @@
     From live_image_t
     Where farm_no = #{farm_no}
   </delete>
+
+  <insert id="MYFARM.INSERT.device">
+     /* 내 농장 기기 신청 */
+    INSERT INTO my_farm_device
+    (
+        user_id,
+        user_name,
+        user_address,
+        user_phone,
+        regi_date
+    )
+    VALUES
+    (
+        #{user_id},
+        #{user_name},
+        #{user_address},
+        #{user_phone},
+        (SELECT DATE_ADD(NOW(), INTERVAL 9 HOUR))
+    )
+  </insert>
 
 </mapper>
