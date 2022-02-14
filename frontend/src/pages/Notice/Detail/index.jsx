@@ -7,7 +7,7 @@ import Axios from 'axios';
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Grid, Button, InputBase, Paper } from '@mui/material';
+import { Grid, Button, Paper } from '@mui/material';
 
 const NoticeDetail = ({ match }) => {
   const no = match.params.no;
