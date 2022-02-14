@@ -127,7 +127,6 @@ const SignInSection01 = () => {
             icon: 'error',
             title: '입력 정보 오류!',
             text: '아이디 또는 비밀번호를 확인 바랍니다!',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
@@ -360,7 +359,6 @@ const SignUpSection02 = () => {
         icon: 'error',
         title: '비밀번호 불일치',
         text: '다시 한번 확인해 주세요!',
-        footer: '<a href="">Why do I have this issue?</a>',
         target: document.querySelector('.MuiDialog-root'),
       });
       return;
@@ -397,7 +395,6 @@ const SignUpSection02 = () => {
             icon: 'error',
             title: '회원가입 실패!',
             text: '?',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
@@ -489,14 +486,12 @@ const SignUpSection02 = () => {
               target: document.querySelector('.MuiDialog-container'),
               icon: 'error',
               title: data.data.msg,
-              footer: '<a href="">Why do I have this issue?</a>',
             });
           } else {
             Swal.fire({
               target: document.querySelector('.MuiDialog-container'),
               icon: 'error',
               title: '이메일 전송 실패 관리자에게 문의하세요!',
-              footer: '<a href="">Why do I have this issue?</a>',
             });
           }
         }

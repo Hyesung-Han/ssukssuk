@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
   & .desc {
     & .sub_title {
-      color: #9c27b0;
+      color: #ff9d00;
       font-size: 32px;
       font-weight: 500;
       text-shadow: 1px 1px 2px #8d8181;

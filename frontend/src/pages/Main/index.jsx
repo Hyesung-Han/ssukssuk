@@ -156,7 +156,7 @@ const Main = () => {
           component="section"
           sx={{
             display: 'flex',
-            bgcolor: '#E6F3E6',
+            bgcolor: '#FFF2E2',
             overflow: 'hidden',
           }}
         >
