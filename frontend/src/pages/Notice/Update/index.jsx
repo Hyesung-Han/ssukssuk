@@ -104,7 +104,7 @@ const NoticeWrite = ({ match }) => {
                 분류
               </Grid>
               <Grid item className="body-content">
-                <Typography sx={{fontSize:20, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'N01' ? '공지사항' : '문의하기'}</Typography>
+                <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'N01' ? '공지사항' : '문의하기'}</Typography>
               </Grid>
             </Grid>
             <Grid
@@ -122,7 +122,7 @@ const NoticeWrite = ({ match }) => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
-                  sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+                  sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
 
                 />
               </Grid>
@@ -144,7 +144,7 @@ const NoticeWrite = ({ match }) => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
-                    sx={{ fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+                    sx={{ fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
                   />
                 </Grid>
               </div>
@@ -156,7 +156,7 @@ const NoticeWrite = ({ match }) => {
             <Button
               className="write-button"
               onClick={onClickNoticeUpdateHandler}
-              sx={{fontSize:20,fontFamily: `'Do Hyeon', sans-serif`,}}
+              sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
             >
               수정하기
             </Button>

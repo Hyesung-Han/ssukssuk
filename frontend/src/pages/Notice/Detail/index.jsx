@@ -7,7 +7,7 @@ import Axios from 'axios';
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { Grid, Button, InputBase, Paper } from '@mui/material';
+import { Grid, Button, Paper } from '@mui/material';
 
 const NoticeDetail = ({ match }) => {
   const no = match.params.no;
@@ -87,10 +87,20 @@ const NoticeDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 제목
               </Grid>
-              <Grid item className="body-content" xs={8}>
+              <Grid
+                item
+                className="body-content"
+                xs={8}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {notice.notice_title}
               </Grid>
-              <Grid item className="body-content" xs={2}>
+              <Grid
+                item
+                className="body-content"
+                xs={2}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {parsingDate(notice.notice_date)}
               </Grid>
             </Grid>
@@ -103,16 +113,22 @@ const NoticeDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 작성자
               </Grid>
-              <Grid item className="body-content" xs={7}>
-                <InputBase
-                  value={notice.notice_author}
-                  sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
-                />
+              <Grid item className="body-content" xs={8}>
+                <Grid
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+                >
+                  {notice.notice_author}
+                </Grid>
               </Grid>
-              <Grid item className="body-header" xs={2}>
+              <Grid item className="body-header" xs={1}>
                 조회수
               </Grid>
-              <Grid item className="body-content" xs={1}>
+              <Grid
+                item
+                className="body-content"
+                xs={1}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 {notice.notice_hit}
               </Grid>
             </Grid>
@@ -125,7 +141,12 @@ const NoticeDetail = ({ match }) => {
               <Grid item className="body-header" xs={2}>
                 내용
               </Grid>
-              <Grid item className="body-content body-content-text" xs={9}>
+              <Grid
+                item
+                className="body-content body-content-text"
+                xs={10}
+                sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
+              >
                 <Paper elevation={0}>{notice.notice_content}</Paper>
               </Grid>
             </Grid>
