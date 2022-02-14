@@ -2,7 +2,6 @@ const swaggerUi = require("swagger-ui-express");
 const swaggereJsdoc = require("swagger-jsdoc");
 
 const options = {
-<<<<<<< backend/swagger.js
     swaggerDefinition: {
         info: {
             title: 'SSukSSuk API',
