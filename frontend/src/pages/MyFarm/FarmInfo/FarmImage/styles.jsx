@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: flex-end;
     transition: 0.4s ease-out;
-    box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
+    // box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
     margin: 1em;
   }
   .card:hover {

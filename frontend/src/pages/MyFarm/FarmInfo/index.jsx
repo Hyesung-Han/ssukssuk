@@ -35,7 +35,7 @@ const FarmPicture = () => {
         <Grid item xs={7}>
           <FarmImage />
         </Grid>
-        <Grid item xs={5} alignSelf="flex-end">
+        <Grid item xs={5} alignSelf="center">
           <InfoCard />
           <CurrentImage />
         </Grid>
