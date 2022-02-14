@@ -29,7 +29,6 @@ const InputComponent = props => {
 
   const OnChangeHandler = name => e => {
     setInputValue({ ...inputValue, [name]: e.target.value });
-    console.log('OnChangeHandler -> inputValue', inputValue);
   };
 
   useEffect(() => {
@@ -157,7 +156,6 @@ const MyInfoButtonGroupComponent = props => {
     })
       .then(data => {
         if (data.status === 200) {
-          console.log(data);
           if (data.data.result === 'success') {
             dispatch(setInit());
             dispatch(setFarmInit());
@@ -170,7 +168,6 @@ const MyInfoButtonGroupComponent = props => {
 
             history.goBack();
           } else {
-            console.log(data);
             Swal.fire({
               icon: 'error',
               title: '입력 정보 오류',
@@ -180,7 +177,6 @@ const MyInfoButtonGroupComponent = props => {
             });
           }
         } else {
-          console.log(data);
           Swal.fire({
             icon: 'error',
             title: '탈퇴 실패!',

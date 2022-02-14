@@ -57,7 +57,6 @@ const CommunityDetail = ({ match }) => {
       if (result.value) {
         Axios.delete(serverUrlBase + '/Community/delete/' + no)
           .then(result => {
-            console.log(result);
             history.push('/Community');
           })
           .catch(e => {
@@ -81,7 +80,7 @@ const CommunityDetail = ({ match }) => {
     <Layout>
       <Wrapper>
         <Grid container>
-          <h2 >
+          <h2>
             {Community.community_code === 'C01'
               ? '자유 게시판'
               : '멘토링 게시판'}
@@ -112,11 +111,14 @@ const CommunityDetail = ({ match }) => {
               alignItems="center"
               className="title-box"
             >
-              <Grid item className="body-header" xs={2} >
+              <Grid item className="body-header" xs={2}>
                 작성자
               </Grid>
               <Grid item className="body-content" xs={7}>
-                <InputBase value={Community.community_author} sx={{fontFamily: `'Do Hyeon', sans-serif`,}}/>
+                <InputBase
+                  value={Community.community_author}
+                  sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                />
               </Grid>
               <Grid item className="body-header" xs={2}>
                 조회수

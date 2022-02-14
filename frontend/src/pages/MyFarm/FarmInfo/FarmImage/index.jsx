@@ -37,7 +37,6 @@ const FarmImage = () => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const getList = async formData => {
-    console.log('image', formData);
     try {
       const res = await Axios.post(serverUrlBase + '/myfarm/upload', formData);
       const { data } = res;

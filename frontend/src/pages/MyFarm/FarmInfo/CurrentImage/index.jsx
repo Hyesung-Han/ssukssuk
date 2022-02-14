@@ -91,7 +91,6 @@ function SimpleDialog(props) {
   if (!open) {
     closeImg();
   }
-  console.log('asdf');
   return (
     <Dialog onClose={handleClose} open={open}>
       {farmImg === '' ? (

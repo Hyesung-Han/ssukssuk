@@ -73,7 +73,6 @@ const FarmInfo = props => {
     })
       .then(data => {
         const list = data.data.data[0];
-        console.log(list.sensor_date);
         const result = {
           humi: list.humidity,
           temp: list.temperature,

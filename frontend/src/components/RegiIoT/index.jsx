@@ -64,8 +64,6 @@ const RegiIoT = () => {
   };
 
   const onClickRegiButton = e => {
-    console.log(address, phoneNumber);
-
     Swal.fire({
       icon: 'question',
       title: '정보를 확인해주세요',

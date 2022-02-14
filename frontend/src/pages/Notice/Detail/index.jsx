@@ -55,7 +55,6 @@ const NoticeDetail = ({ match }) => {
       if (result.value) {
         Axios.delete(serverUrlBase + '/notice/delete/' + no)
           .then(result => {
-            console.log(result);
             history.push('/Notice');
           })
           .catch(e => {
@@ -69,7 +68,7 @@ const NoticeDetail = ({ match }) => {
     history.goBack();
   };
 
-  if (!notice) return (<Layout>loading중..</Layout>);
+  if (!notice) return <Layout>loading중..</Layout>;
   return (
     <Layout>
       <Wrapper>
@@ -105,7 +104,10 @@ const NoticeDetail = ({ match }) => {
                 작성자
               </Grid>
               <Grid item className="body-content" xs={7}>
-                <InputBase value={notice.notice_author} sx={{fontFamily: `'Do Hyeon', sans-serif`,}} />
+                <InputBase
+                  value={notice.notice_author}
+                  sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                />
               </Grid>
               <Grid item className="body-header" xs={2}>
                 조회수
