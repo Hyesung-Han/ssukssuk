@@ -2,7 +2,15 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Container, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Container,
+  Button,
+  Typography,
+  Paper,
+  img,
+} from '@mui/material';
 import Layout from '../../layout';
 import Wrapper from './styles';
 import '../../App.css';
@@ -163,7 +171,7 @@ const Main = () => {
           <Container
             sx={{
               mt: 10,
-              mb: 15,
+              mb: 10,
               position: 'relative',
               display: 'flex',
               flexDirection: 'column',
@@ -233,16 +241,13 @@ const Main = () => {
                 </Grid>
               </Grid>
             </div>
-            <Button
-              color="secondary"
-              size="large"
-              variant="contained"
-              component="a"
-              sx={{ mt: 8 }}
-              onClick={myfarmClickHandler}
-            >
-              시작하기
-            </Button>
+            <img
+              src="/images/start_button.png"
+              alt="쑥쑥 시작하기"
+              onClick={() => myfarmClickHandler()}
+              className="mouse-cursor"
+              style={{ width: '240px', marginTop: '35px' }}
+            />
           </Container>
         </Box>
       </Wrapper>

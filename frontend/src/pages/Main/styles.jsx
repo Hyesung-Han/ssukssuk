@@ -39,5 +39,8 @@ const Wrapper = styled.div`
       // text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     }
   }
+  & .mouse-cursor {
+    cursor: pointer;
+  }
 `;
 export default Wrapper;
