@@ -202,7 +202,7 @@ const MyInfoButtonGroupComponent = props => {
             successSign.fire({
               icon: 'success',
               title: <strong>변경 완료!</strong>,
-              html: <i>자동 로그인 됬어요~!</i>,
+              html: <i>자동 로그인 됐어요~!</i>,
             });
             history.goBack();
           } else {
