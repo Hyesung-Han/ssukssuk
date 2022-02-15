@@ -25,13 +25,14 @@ const theme = createTheme({
   },
 });
 
-function createData(no, hit, title, author, date, commentCnt) {
+function createData(no, hit, title, author, date, communityCode, commentCnt) {
   return {
     no,
     hit,
     title,
     author,
     date,
+    communityCode,
     commentCnt,
   };
 }
@@ -74,17 +75,17 @@ const Community = () => {
       freeLen + mentoLen === 0
         ? 1
         : parseInt((freeLen + mentoLen) / 10) +
-          ((parseInt((freeLen + mentoLen) % 10) === 0)? 0: 1),
+            (parseInt((freeLen + mentoLen) % 10) === 0 ? 0 : 1),
     );
     pageLen.push(
       freeLen === 0
         ? 1
-        : parseInt(freeLen / 10) + (parseInt(freeLen % 10 === 0)? 0: 1),
+        : parseInt(freeLen / 10) + (parseInt(freeLen % 10 === 0) ? 0 : 1),
     );
     pageLen.push(
       mentoLen === 0
         ? 1
-        : parseInt(mentoLen / 10) + (parseInt(mentoLen / 10 === 0)? 0: 1),
+        : parseInt(mentoLen / 10) + (parseInt(mentoLen / 10 === 0) ? 0 : 1),
     );
   };
 
@@ -136,6 +137,7 @@ const Community = () => {
                 row.community_title,
                 row.community_author,
                 row.community_date,
+                row.community_code,
                 row.comment_cnt,
               ),
             );
@@ -229,7 +231,7 @@ const Community = () => {
             </ThemeProvider>
             <Grid item>
               <Button
-                sx={{fontFamily: `'Do Hyeon', sans-serif`,}}
+                sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
                 className="write-button"
                 onClick={onClickCommunityWriteHandler}
               >

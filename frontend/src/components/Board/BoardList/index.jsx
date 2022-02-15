@@ -87,7 +87,9 @@ const BoardList = props => {
                       align="center"
                       className="cell-front"
                     >
-                      {row.no}
+                      {listType === 'Community' &&
+                        (row.communityCode === 'C01' ? '자유' : '멘토링')}
+                      {listType === 'Notice' && row.no}
                     </TableCell>
                     <TableCell className="cell-body">
                       <Grid
