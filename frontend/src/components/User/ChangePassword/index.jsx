@@ -18,8 +18,8 @@ import Wrapper from './styles';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-const regPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
-const regPwdCf = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
+const regPwd = /^[a-z0-9#?!@$ %^&*-]{7,14}$/;
+const regPwdCf = /^[a-z0-9#?!@$ %^&*-]{7,14}$/;
 
 const successSign = withReactContent(Swal);
 

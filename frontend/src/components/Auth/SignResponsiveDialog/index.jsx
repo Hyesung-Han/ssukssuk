@@ -29,8 +29,8 @@ import withReactContent from 'sweetalert2-react-content';
 const regId = /^[a-z0-9]{4,}$/;
 
 // 비번/비번확인 체크 (영문소문자+숫자+특수문자 최소 1개 이상, 8~15자리)
-const regPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
-const regPwdCf = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
+const regPwd = /^[a-z0-9#?!@$ %^&*-]{7,14}$/;
+const regPwdCf = /^[a-z0-9#?!@$ %^&*-]{7,14}$/;
 
 // 이름/닉네임 체크 (한글만, 2자이상)
 const regNm = /^[가-힣]{2,}$/;
@@ -198,7 +198,6 @@ const SignInSection01 = () => {
         <Grid item xs={12}>
           <TextField
             required
-            error={signInIdErr}
             helperText={singInidErrMsg}
             id="outlined-required"
             label="아이디"
@@ -690,6 +689,7 @@ const SignUpSection02 = () => {
             helperText={signUpIdErrMsg}
             id="outlined-required1"
             label="아이디"
+            inputProps={{ maxLength: 20 }}
             defaultValue={signUpUserData.id}
             className="text-field"
             variant="outlined"
@@ -735,6 +735,7 @@ const SignUpSection02 = () => {
             error={signUpNmErr}
             helperText={signUpNmErrMsg}
             id="outlined-required2"
+            inputProps={{ maxLength: 20 }}
             label="이름"
             defaultValue={signUpUserData.name}
             className="text-field"
@@ -750,6 +751,7 @@ const SignUpSection02 = () => {
             helperText={signUpNnmErrMsg}
             id="outlined-required3"
             label="별명"
+            inputProps={{ maxLength: 20 }}
             defaultValue={signUpUserData.nickname}
             className="text-field"
             variant="outlined"
