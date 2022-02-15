@@ -79,7 +79,7 @@ const MyInfoButtonGroupComponent = props => {
       });
   };
 
-  const regNnm = /^[ㄱ-ㅎ|가-힣]+.{1,}$/;
+  const regNnm = /^[가-힣]{2,}$/;
   useEffect(() => {
     if (
       inputValue.user_nickName !== user.name &&
