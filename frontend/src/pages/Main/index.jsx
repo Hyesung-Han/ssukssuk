@@ -2,15 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import {
-  Box,
-  Grid,
-  Container,
-  Button,
-  Typography,
-  Paper,
-  img,
-} from '@mui/material';
+import { Box, Grid, Container, Typography } from '@mui/material';
 import Layout from '../../layout';
 import Wrapper from './styles';
 import '../../App.css';
