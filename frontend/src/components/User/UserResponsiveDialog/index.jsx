@@ -9,7 +9,7 @@ import { Dialog, useMediaQuery } from '@material-ui/core';
 const User = () => {
   const { userDialogOpen, setUserDetailDialogOpen } = useContext(CommonContext);
   let history = useHistory();
-  const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
+  // const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   const handleClose = () => {
     setUserDetailDialogOpen(false);
@@ -19,7 +19,7 @@ const User = () => {
   return (
     <ViewContext.Provider value={{}}>
       <Dialog
-        fullScreen={fullScreen}
+        // fullScreen={fullScreen}
         maxWidth={'md'}
         open={userDialogOpen}
         onClose={handleClose}

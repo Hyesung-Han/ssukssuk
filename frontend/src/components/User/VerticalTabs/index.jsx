@@ -76,35 +76,32 @@ export default function VerticalTabs() {
         style={{ paddingTop: 32 }}
       >
         {labels.map((x, index) => {
-          return (
-            !fullScreen &&
-            (x === '로그아웃' ? (
-              <Tab
-                key={index}
-                label={x}
-                style={{
-                  fontSize: 16,
-                  fontWeight: 500,
-                  fontFamily: `'Do Hyeon', sans-serif`,
-                  lineHeight: '22px',
-                }}
-                onClick={onClickSignOutOpenHandler}
-                {...a11yProps(index)}
-              />
-            ) : (
-              <Tab
-                key={index}
-                label={x}
-                style={{
-                  fontSize: 16,
-                  fontWeight: 500,
-                  fontFamily: `'Do Hyeon', sans-serif`,
-                  lineHeight: '22px',
-                  color: index === userDialogIndex ? '#9aba11' : '#3c3c3c',
-                }}
-                {...a11yProps(index)}
-              />
-            ))
+          return x === '로그아웃' ? (
+            <Tab
+              key={index}
+              label={x}
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                fontFamily: `'Do Hyeon', sans-serif`,
+                lineHeight: '22px',
+              }}
+              onClick={onClickSignOutOpenHandler}
+              {...a11yProps(index)}
+            />
+          ) : (
+            <Tab
+              key={index}
+              label={x}
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                fontFamily: `'Do Hyeon', sans-serif`,
+                lineHeight: '22px',
+                color: index === userDialogIndex ? '#9aba11' : '#3c3c3c',
+              }}
+              {...a11yProps(index)}
+            />
           );
         })}
       </Tabs>
