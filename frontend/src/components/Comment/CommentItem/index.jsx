@@ -29,7 +29,7 @@ const CommentItem = ({
   const [isVisible, setIsVisible] = useState('visible');
   const [isDoneVisible, setIsDoneVisible] = useState('hidden');
   const [newComment, setNewComment] = useState(comment);
-  const [writterCode, setWritterCode]=useState('U02');
+  const [writterCode, setWritterCode] = useState('U02');
 
   const { serverUrlBase, parsingDate } = useContext(CommonContext);
 
@@ -53,7 +53,7 @@ const CommentItem = ({
 
   const getCommentList = async () => {
     try {
-      Axios.get(serverUrlBase + '/user/myInfo/'+comment.comment_user_id)
+      Axios.get(serverUrlBase + '/user/myInfo/' + comment.comment_user_id)
         .then(data => {
           if (data.status === 200) {
             setWritterCode(data.data.user[0].user_code);
@@ -76,7 +76,7 @@ const CommentItem = ({
     }
   }, [updateDone]);
 
-  getCommentList()
+  getCommentList();
 
   return (
     <>
@@ -91,11 +91,11 @@ const CommentItem = ({
               )}
 
               {writterCode === 'U03' ||
-                writterCode === 'U04' && (
+                (writterCode === 'U04' && (
                   <IconButton aria-label="manager">
                     <ManageAccountsIcon />
                   </IconButton>
-                )}
+                ))}
 
               <Typography
                 sx={{ display: 'inline' }}
@@ -134,7 +134,9 @@ const CommentItem = ({
             </>
           }
         />
-        {user.user_id === comment.comment_user_id && (
+        {(user.user_id === comment.comment_user_id ||
+          user.user_code === 'U03' ||
+          user.user_code === 'U04') && (
           <React.Fragment>
             <IconButton
               aria-label="edit"
