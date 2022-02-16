@@ -20,7 +20,7 @@ const options = {
         ],
         // host: 'localhost:3001',
         host: 'i6a103.p.ssafy.io:3001',
-        basePath: '/'
+        basePath: '/api'
   },
   apis: ["./routes/*.js", "./swagger/*"],
 };
