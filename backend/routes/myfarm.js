@@ -463,15 +463,19 @@ app.post("/device", async(req,res) =>{
     user_phone: req.body.user_phone
   }
 
-  let insertQuery = mybatisMapper.getStatement(
+  var selectParams = {
+    user_id: req.body.user_id,
+  }
+
+  let selectQuery = mybatisMapper.getStatement(
     "MYFARM",
-    "MYFARM.INSERT.device",
-    insertParams,
+    "MYFARM.SELECT.device",
+    selectParams,
     { language: "sql", indent: "  " }
   );
-  let data = [];
+  let list = [];
   try {
-    data = await req.sequelize.query(insertQuery, {
+    list = await req.sequelize.query(selectQuery, {
       type: req.sequelize.QueryTypes.INSERT,
     });
     console.log("TCL: data", data);
@@ -480,13 +484,31 @@ app.post("/device", async(req,res) =>{
     return;
   }
 
-  if (data.length == 0) {
-    res.status(403).send({ result: "fail" });
-    return;
+  if (list.length == 0) {
+    let insertQuery = mybatisMapper.getStatement(
+      "MYFARM",
+      "MYFARM.INSERT.device",
+      insertParams,
+      { language: "sql", indent: "  " }
+    );
+    let data = [];
+    try {
+      data = await req.sequelize.query(insertQuery, {
+        type: req.sequelize.QueryTypes.INSERT,
+      });
+      console.log("TCL: data", data);
+    } catch (error) {
+      res.status(403).send({ result: "fail", error: error });
+      return;
+    }
+    if (data.length == 0) {
+      res.status(403).send({ result: "fail" });
+      return;
+    }
+    res.json({result : "success", url: req.url, body: req.body });
+  }else{
+    res.json({result : "fail", url: req.url, body: req.body });
   }
-
-  res.json({result : "success", url: req.url, body: req.body });
-
 });
 
 // 내 농장 기기신청 end

@@ -106,7 +106,7 @@
     )
   </insert>
 
-    <select id="MYFARM.SELECT.live">
+  <select id="MYFARM.SELECT.live">
   	/* 농장 라이브 이미지 */
     SELECT  
         file_name
@@ -140,5 +140,13 @@
         (SELECT DATE_ADD(NOW(), INTERVAL 9 HOUR))
     )
   </insert>
+
+  <select id="MYFARM.SELECT.device">
+  	/* 농장 디바이스 신청 확인 */
+    SELECT  
+        *
+    FROM my_farm_device
+    where user_id = #{user_id}
+  </select>
 
 </mapper>
