@@ -32,9 +32,9 @@ import './App.css';
 
 // const
 const defaultThumbnailImage = 'default_user.jpg';
-const HOST = 'i6a103.p.ssafy.io:3001';
-const serverUrl = `http://${HOST}/v1`;
-const serverUrlBase = `http://${HOST}`;
+const HOST = 'i6a103.p.ssafy.io/api';
+const serverUrl = `https://${HOST}/v1`;
+const serverUrlBase = `https://${HOST}`;
 const serverImgUrl = `https://ssafy-viba-s3.s3.ap-northeast-2.amazonaws.com/public/`;
 
 /// theme
