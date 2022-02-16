@@ -38,6 +38,20 @@ const NoticeWrite = () => {
       history.push('/Notice');
       return;
     }
+    if (!title || title === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '제목을 입력하세요',
+      });
+      return;
+    }
+    if (!content || content === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '내용을 입력하세요',
+      });
+      return;
+    }
 
     Axios.post(serverUrlBase + `/notice/write`, {
       notice_title: title,
@@ -89,7 +103,15 @@ const NoticeWrite = () => {
                 분류
               </Grid>
               <Grid item className="body-content">
-                <Typography sx={{fontSize:18, color:'#495057', fontFamily: `'Do Hyeon', sans-serif`,}}>{code === 'N01' ? '공지사항' : '문의하기'}</Typography>
+                <Typography
+                  sx={{
+                    fontSize: 18,
+                    color: '#495057',
+                    fontFamily: `'Do Hyeon', sans-serif`,
+                  }}
+                >
+                  {code === 'N01' ? '공지사항' : '문의하기'}
+                </Typography>
               </Grid>
             </Grid>
             <Grid
@@ -107,7 +129,7 @@ const NoticeWrite = () => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
-                  sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
                 />
               </Grid>
             </Grid>
@@ -128,7 +150,7 @@ const NoticeWrite = () => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
-                    sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
+                    sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
                   />
                 </Grid>
               </div>
@@ -140,7 +162,7 @@ const NoticeWrite = () => {
             <Button
               className="write-button"
               onClick={onClickNoticeWriteHandler}
-              sx={{fontSize:18,fontFamily: `'Do Hyeon', sans-serif`,}}
+              sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
             >
               등록
             </Button>
