@@ -70,7 +70,11 @@ const Notice = () => {
   const pageLen = [];
   const setPageLen = () => {
     pageLen.splice(0, pageLen.length);
-    pageLen.push(noticeLen === 0 ? 1 : parseInt(noticeLen / 10) + ((noticeLen%10===0)?0:1));
+    pageLen.push(
+      noticeLen === 0
+        ? 1
+        : parseInt(noticeLen / 10) + (noticeLen % 10 === 0 ? 0 : 1),
+    );
   };
 
   const getNoticeListCnt = () => {
@@ -186,14 +190,14 @@ const Notice = () => {
                       fontSize: 20,
                       fontFamily: `'Do Hyeon', sans-serif`,
                     }}
-                    label={'전체 게시판 (' + noticeLen + ')'}
+                    label={'문의 게시판 (' + noticeLen + ')'}
                   />
                 </Tabs>
               </Grid>
             </ThemeProvider>
             <Grid item>
               <Button
-                sx={{fontFamily: `'Do Hyeon', sans-serif`,}}
+                sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
                 className="write-button"
                 onClick={onClickNoticeWriteHandler}
               >
