@@ -554,7 +554,7 @@ const SignUpSection02 = () => {
     } else {
       if (!regPwdCf.test(signUpUserData.passwordConfirmation)) {
         setSignUpPwdCfErr(true);
-        setSignUpPwdCfErrMsg('비밀번호를 다시 한번 입력 바람');
+        setSignUpPwdCfErrMsg('비밀번호 확인을 다시 한번 입력 바람');
       } else if (
         signUpUserData.password == signUpUserData.passwordConfirmation
       ) {
