@@ -24,24 +24,34 @@ const Comment = props => {
 
   const onClickCommentWriteHandler = e => {
     if (!user.status) {
-      alert('댓글을 작성하기 위해서는 로그인이 필요합니다');
-    } else {
-      Axios.post(serverUrlBase + boardUrl + '/comment/write', {
-        comment_user_nickName: user.user_nickName,
-        article_no: props.no,
-        comment_text: content,
-        comment_user_id: user.user_id,
-      })
-        .then(data => {
-          if (data.status === 200) {
-            setContent('');
-            getCommentList();
-          }
-        })
-        .catch(e => {
-          console.log('notice comment write error', e);
-        });
+      Swal.fire({
+        icon: 'error',
+        title: '댓글을 작성하기 위해서는 로그인이 필요합니다',
+      });
+      return;
     }
+    if (content === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '내용을 입력하세요',
+      });
+      return;
+    }
+    Axios.post(serverUrlBase + boardUrl + '/comment/write', {
+      comment_user_nickName: user.user_nickName,
+      article_no: props.no,
+      comment_text: content,
+      comment_user_id: user.user_id,
+    })
+      .then(data => {
+        if (data.status === 200) {
+          setContent('');
+          getCommentList();
+        }
+      })
+      .catch(e => {
+        console.log('notice comment write error', e);
+      });
   };
 
   const getCommentList = async () => {
