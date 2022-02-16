@@ -119,7 +119,7 @@ const DrawerListGroup = () => {
         >
           <ListItemText primary={'우리 팀 소개'} disableTypography />
         </ListItem>
-        {(user.user_code === 'U03' || user.user_code === 'U04') && (
+        {user.user_code === 'U04' && (
           <ListItem
             button
             key={'Admin'}
