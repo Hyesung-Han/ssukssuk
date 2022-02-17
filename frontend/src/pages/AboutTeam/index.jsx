@@ -19,7 +19,7 @@ const AboutTeam = () => {
                 />
               </Grid>
               <h2>최소원</h2>
-              <p>팀리더, 백엔드/Kiosk 개발</p>
+              <p>팀장, Back-end, Kiosk</p>
             </Grid>
             <Grid item xs={12} md={4}>
               <Grid className="license-img">
@@ -30,7 +30,7 @@ const AboutTeam = () => {
                 />
               </Grid>
               <h2>오윤택</h2>
-              <p>백엔드 리더</p>
+              <p>Back-end 리더, 서버</p>
             </Grid>
             <Grid item xs={12} md={4}>
               <Grid className="license-img">
@@ -41,7 +41,7 @@ const AboutTeam = () => {
                 />
               </Grid>
               <h2>한혜성</h2>
-              <p>백엔드 개발/QA</p>
+              <p>Back-end, QA</p>
             </Grid>
             <Grid item xs={12} md={4}>
               <Grid className="license-img">
@@ -52,7 +52,7 @@ const AboutTeam = () => {
                 />
               </Grid>
               <h2>이정아</h2>
-              <p>프론트엔드 리더</p>
+              <p>Front-end 리더, Git</p>
             </Grid>
             <Grid item xs={12} md={4}>
               <Grid className="license-img">
@@ -63,7 +63,7 @@ const AboutTeam = () => {
                 />
               </Grid>
               <h2>황소현</h2>
-              <p>프론트엔드 개발/QA</p>
+              <p>Front-end, QA, Kiosk</p>
             </Grid>
             <Grid item xs={12} md={4}>
               <Grid className="license-img">
@@ -74,7 +74,7 @@ const AboutTeam = () => {
                 />
               </Grid>
               <h2>이동준</h2>
-              <p>프론트엔드 개발/Jira 관리</p>
+              <p>Front-end, 영상, Jira</p>
             </Grid>
           </Grid>
         </Grid>

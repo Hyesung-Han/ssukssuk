@@ -509,6 +509,8 @@ const SignUpSection02 = () => {
   ];
 
   useEffect(() => {
+    console.log('이메일 인증버튼', emailDisabled);
+    console.log('이메일 입력창', emailConfirm);
     if (signUpUserData.id.length === 0) {
       setSignUpIdErr(false);
       setSignUpIdErrMsg();
@@ -554,7 +556,7 @@ const SignUpSection02 = () => {
     } else {
       if (!regPwdCf.test(signUpUserData.passwordConfirmation)) {
         setSignUpPwdCfErr(true);
-        setSignUpPwdCfErrMsg('비밀번호를 다시 한번 입력 바람');
+        setSignUpPwdCfErrMsg('비밀번호 확인을 다시 한번 입력 바람');
       } else if (
         signUpUserData.password == signUpUserData.passwordConfirmation
       ) {
@@ -613,7 +615,7 @@ const SignUpSection02 = () => {
         setSignUpEmaErr(true);
         setSignUpEmaErrMsg('이메일 형식에 맞게 작성 바람');
       } else {
-        setEmailDisabled(false);
+        if (!emailConfirm) setEmailDisabled(false);
         setSignUpEmaErr(false);
         setSignUpEmaErrMsg();
       }

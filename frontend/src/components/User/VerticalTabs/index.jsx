@@ -9,7 +9,7 @@ import ChangePassword from './../ChangePassword/';
 import DeleteAccount from './../DeleteAccount/';
 import { CommonContext } from '../../../context/CommonContext';
 
-import { useMediaQuery, Box, Typography, Tabs, Tab } from '@material-ui/core';
+import { Box, Typography, Tabs, Tab } from '@material-ui/core';
 import Wrapper from './styles';
 import '../../../App.css';
 import Swal from 'sweetalert2';
@@ -42,7 +42,7 @@ function a11yProps(index) {
 export default function VerticalTabs() {
   let history = useHistory();
   const dispatch = useDispatch();
-  const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
+  // const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
   const { userDialogIndex, setUserDialogIndex, setDrawerOpen } = useContext(
     CommonContext,
   );
@@ -76,35 +76,32 @@ export default function VerticalTabs() {
         style={{ paddingTop: 32 }}
       >
         {labels.map((x, index) => {
-          return (
-            !fullScreen &&
-            (x === '로그아웃' ? (
-              <Tab
-                key={index}
-                label={x}
-                style={{
-                  fontSize: 16,
-                  fontWeight: 500,
-                  fontFamily: `'Do Hyeon', sans-serif`,
-                  lineHeight: '22px',
-                }}
-                onClick={onClickSignOutOpenHandler}
-                {...a11yProps(index)}
-              />
-            ) : (
-              <Tab
-                key={index}
-                label={x}
-                style={{
-                  fontSize: 16,
-                  fontWeight: 500,
-                  fontFamily: `'Do Hyeon', sans-serif`,
-                  lineHeight: '22px',
-                  color: index === userDialogIndex ? '#9aba11' : '#3c3c3c',
-                }}
-                {...a11yProps(index)}
-              />
-            ))
+          return x === '로그아웃' ? (
+            <Tab
+              key={index}
+              label={x}
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                fontFamily: `'Do Hyeon', sans-serif`,
+                lineHeight: '22px',
+              }}
+              onClick={onClickSignOutOpenHandler}
+              {...a11yProps(index)}
+            />
+          ) : (
+            <Tab
+              key={index}
+              label={x}
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                fontFamily: `'Do Hyeon', sans-serif`,
+                lineHeight: '22px',
+                color: index === userDialogIndex ? '#9aba11' : '#3c3c3c',
+              }}
+              {...a11yProps(index)}
+            />
           );
         })}
       </Tabs>
