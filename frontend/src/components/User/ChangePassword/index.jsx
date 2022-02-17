@@ -53,9 +53,14 @@ const InputComponent = props => {
         if (!regPwdCf.test(inputValue['새 비밀번호 확인'])) {
           setsInputPwdErr(true);
           setInputPwdErrMsg('제대로 입력해주세요!');
-        } else {
+        } else if (
+          inputValue['새 비밀번호 확인'] === inputValue['새 비밀번호']
+        ) {
           setsInputPwdErr(false);
           setInputPwdErrMsg();
+        } else {
+          setsInputPwdErr(true);
+          setInputPwdErrMsg('비밀번호가 일치하지 않습니다.');
         }
       }
     }
