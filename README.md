@@ -121,7 +121,7 @@
 
 
 
-- [**`화면정의서 링크`**](Outputs/화면정의서/화면정의서.pdf)
+## 6. ERD [DB Modeling]
 
 ![image-20220217162548594](/uploads/d3ea2396a391b9cd4fd2e0b795c8e781/image-20220217162548594.png)
 
@@ -197,9 +197,6 @@ npm start
 ```
 
 
----
-- [**`프론트엔드 구조 링크`**](https://bronzed-gateway-8e0.notion.site/9f89212c19d94ea599a571e9501b7bac)
-- [**`백엔드 구조 링크`**](https://bronzed-gateway-8e0.notion.site/91042099bb6440fd88c4bfa48a3e4dcd)
 
 2. 실행
 
