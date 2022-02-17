@@ -5,7 +5,6 @@ class dbConnect:
     def __init__(self):
         super().__init__()
         #self.dbInit()
-        print("hi")
         
     def dbInit(self):
          self.db = QtSql.QSqlDatabase.addDatabase('QMYSQL')
@@ -40,6 +39,7 @@ class dbConnect:
         
         self.query.next()
         hashpw = self.query.value(0)
+        print(hashpw)
 
         pw_l = pw_l.encode('utf-8')
         hashpw = hashpw.encode('utf-8')

@@ -8,7 +8,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import storage
 from uuid import uuid4
-import schedule
+#import schedule
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtSql
@@ -33,19 +33,19 @@ class pollingCameraThread(QThread):
         print(user_id,farm_no)
         self.user_id=user_id
         self.farm_no = farm_no
-        
-
-    def run(self):
+    
+    def dbInit(self):
         self.db = QtSql.QSqlDatabase.addDatabase('QMYSQL')
         self.db.setHostName("i6a103.p.ssafy.io")
         self.db.setDatabaseName("jeans")
         self.db.setUserName("ssukssuk")
         self.db.setPassword("cjdcnsdmsqkfhwlrma")
         ok = self.db.open()
-        print(ok)    
-
-        #query run
+        print(ok)  
         
+
+    def run(self):
+        #query run        
         while True:
             time.sleep(3)
             self.getQuery()
@@ -111,7 +111,8 @@ class pollingCameraThread(QThread):
     def getQuery(self):        
         #while True:
         #time.sleep(0.5)
-        print(self.farm_no)
+        #print(self.farm_no)
+        self.dbInit()
         self.query = QtSql.QSqlQuery();
         self.query.prepare("select farm_no from live_image_t where farm_no=:farm_no");
         self.query.bindValue(":farm_no", self.farm_no)
@@ -122,7 +123,7 @@ class pollingCameraThread(QThread):
 
         
              
-#th = pollingThread()
+#th = pollingCameraThread()
 #th.start()
 
 #app = QApplication([])

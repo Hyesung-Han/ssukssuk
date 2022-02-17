@@ -5,16 +5,17 @@ from PyQt5 import QtSql
 import hashlib
 
 from farmregi import farmregi
+#from keyboard import keyboard
 from survey import survey
 from dbConnect import dbConnect
 
 class login(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("loginpage.ui",self)
+        loadUi("/home/pi/Desktop/iot/loginpage.ui",self)
         
         self.dbConnect=dbConnect()
-    
+            
     def get_hash(self,msg):
         h=hashlib.sha512()
         h.update(msg)
@@ -38,16 +39,17 @@ class login(QMainWindow):
             self.close()
             
             farm_no = self.dbConnect.findFarm(id_l)
+            print(farm_no)
             
             if farm_no==-1:
                 self.farmregi=farmregi(self.dbConnect,id_l)
-                self.farmregi.show()
+                self.farmregi.showMaximized()
             else:
                 self.survey=survey(self.dbConnect,id_l,farm_no)
-                self.survey.show()
+                self.survey.showMaximized()
                 pass
 
 app = QApplication([])
 win = login()
-win.show()
+win.showMaximized()
 app.exec()

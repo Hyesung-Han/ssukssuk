@@ -11,7 +11,7 @@ from firebase import pollingCameraThread
 class survey(QMainWindow):
     def __init__(self, dbConnect,user_id,farm_no):
         super().__init__()
-        loadUi("survey.ui",self)
+        loadUi("/home/pi/Desktop/iot/survey.ui",self)
                  
         self.sensor=pollingSensorThread(farm_no,user_id)
         self.sensor.start()

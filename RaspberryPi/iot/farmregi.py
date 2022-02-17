@@ -11,7 +11,7 @@ from survey import survey
 class farmregi(QMainWindow):
     def __init__(self, dbConnect,user_id):
         super().__init__()
-        loadUi("farmregi.ui",self)
+        loadUi("/home/pi/Desktop/iot/farmregi.ui",self)
         
         self.dbConnect=dbConnect
         self.user_id=user_id
@@ -39,6 +39,6 @@ class farmregi(QMainWindow):
         farm_no=self.dbConnect.findFarm(self.user_id);
         
         self.survey=survey(self.dbConnect,self.user_id,farm_no)
-        self.survey.show()
+        self.survey.showMaximized()
         
 

@@ -17,12 +17,12 @@ class pollingSensorThread(QThread):
         self.farm_no=farm_no
         self.user_id=user_id
 
-    def run(self): 
+    def run(self):
         while True:
             time.sleep(10)
-            #time.sleep(60*10)
             self.dbInit()
             self.setQuery()
+            time.sleep(60*10)
             
     def dbInit(self):
         self.db = QtSql.QSqlDatabase.addDatabase('QMYSQL')
@@ -34,8 +34,10 @@ class pollingSensorThread(QThread):
         print(ok)
 
     def setQuery(self):
-        temp = sense.get_temperature()
-        humidity = sense.get_humidity()        
+        #temp = sense.get_temperature()
+        #humidity = sense.get_humidity()        
+        temp=23.1
+        humidity=59.2
         
         msg = "  Temp : " + str(temp) + "  Humid : " + str(humidity)
         print(msg)
