@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keyboard>
+
+<options>
+<!-- not yet implemented -->
+</options>
+
+<layout id="defualt keyboard">
+  <row>
+    <key>
+	  <default display="`" />
+	  <shifted display="~" />
+    </key>
+    <key>
+	  <default display="1" />                
+	  <shifted display="!" />
+    </key>
+    <key>
+	  <default display="2" />                
+	  <shifted display='@' />
+    </key>
+    <key>
+	  <default display="3" />
+	  <shifted display="#" />          
+    </key>
+    <key>
+	  <default display="4" />
+	  <shifted display="$" />                
+    </key>
+    <key>
+	  <default display="5" />
+	  <shifted display="%" />                
+    </key>
+    <key>
+	  <default display="6" />
+	  <shifted display="^" />                
+    </key>
+    <key>
+	  <default display="7" />
+	  <shifted display="&amp;" />                
+    </key>
+    <key>
+	  <default display="8" />
+	  <shifted display="*" />                
+    </key>
+    <key>
+	  <default display="9" />
+	  <shifted display="(" />                
+    </key>
+    <key>
+	  <default display="0" />
+	  <shifted display=")" />                
+    </key>
+    <key>
+	  <default display="-" />
+	  <shifted display="_" />                
+    </key>
+    <key>
+	  <default display="=" />
+	  <shifted display="+" />                
+    </key>
+
+	<key fill="true">
+	  <default display="Bksp" action="backspace"/>
+    </key>
+<!--
+    <space width="500" extended="true"/>
+
+    <key width="4000"  extended="true">
+	  <default display="Home" action="home"/>
+    </key>
+    <key width="4000"  extended="true">
+	  <default display="PgUp" action="pageup"/>
+    </key>
+
+    <space width="500" extended="true"/>
+-->
+  </row>
+
+  <row>
+    <key fill="true">
+	  <default display="↹" action="tab"/>
+      <!--<default display="Tab" action="tab"/>-->
+    </key>
+    <key obey-caps='true'>
+	<default display="qㅂ" action="q" />                
+	<shifted display="Qㅃ" action="Q"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="wㅈ" action="w" />                
+	  <shifted display="Wㅉ" action="W"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="eㄷ" action="e" />                
+	  <shifted display="Eㄸ" action="E"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="rㄱ" action="r" />                
+	  <shifted display="Rㄲ" action="R"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="tㅅ" action="t"/>                
+	  <shifted display="Tㅆ" action="T"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="yㅛ" action="y"/>                
+	  <shifted display="Yㅛ" action="Y"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="uㅕ" action="u"/>                
+	  <shifted display="Uㅕ" action="U"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="iㅑ" action="i"/>                
+	  <shifted display="Iㅑ" action="I"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="oㅐ" action="o"/>                
+	  <shifted display="Oㅒ" action="O"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="pㅔ" action="p"/>                
+	  <shifted display="Pㅖ" action="P"/>
+    </key>
+    <key>
+	  <default display="{" />                
+	  <shifted display="[" />
+    </key>
+    <key>
+	  <default display="}" />                
+	  <shifted display="]" />
+    </key>
+    <key fill="true">
+	  <default display="\" />                
+	  <shifted display="|" />
+    </key>
+<!--
+    <space width="500" extended="true"/>
+
+    <key width="4000"  extended="true">
+	  <default display="End" action="end"/>
+    </key>
+    <key width="4000"  extended="true">
+	  <default display="PgDn" action="pagedown"/>
+    </key>
+
+    <space width="500" extended="true"/>
+-->
+  </row>
+  <row>
+    <key fill="true">
+	  <default display="Caps" action="modifier:caps"/>                
+    </key>
+    <key obey-caps='true'>
+	  <default display="aㅁ" action="a"/>                
+	  <shifted display="Aㅁ" action="A"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="sㄴ" action="s"/>                
+	  <shifted display="Sㄴ" action="S"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="dㅇ" action="d"/>                
+	  <shifted display="Dㅇ" action="D"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="fㄹ" action="f"/>                
+	  <shifted display="Fㄹ" action="F"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="gㅎ" action="g"/>                
+	  <shifted display="Gㅎ" action="G"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="hㅗ" action="h"/>                
+	  <shifted display="Hㅗ" action="H"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="jㅓ" action="j"/>                
+	  <shifted display="Jㅓ" action="J"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="kㅏ" action="k"/>                
+	  <shifted display="Kㅏ" action="K"/>
+    </key>
+    <key obey-caps='true'>
+	  <default display="lㅣ" action="l"/>                
+	  <shifted display="Lㅣ" action="L"/>
+    </key>
+    <key>
+	  <default display=";" />                
+	  <shifted display=":" />
+    </key>
+    <key>
+	  <default display="'" />                
+	  <shifted display='"' />
+    </key>
+    <key fill="true">
+	  <default display="◀┛" action="return"/>
+      <!-- <default display="Ret" action="return"/> -->
+    </key>
+<!--
+    <space width="500" extended="true"/>
+
+    <space width="4000"  extended="true" />
+
+    <space width="4000"  extended="true" />
+
+    <space width="500" extended="true"/>
+-->
+  </row>
+  <row>
+    <key fill="true">
+	  <default display="Shift" action="modifier:shift"/>                
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="zㅋ" action="z"/>                
+	  <shifted display="Zㅋ" action="Z"/>
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="xㅌ" action="x"/>                
+	  <shifted display="Xㅌ" action="X"/>
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="cㅊ" action="c"/>                
+	  <shifted display="Cㅊ" action="C"/>
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="vㅍ" action="v"/>                
+	  <shifted display="Vㅍ" action="V"/>
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="bㅠ" action="b"/>                
+	  <shifted display="Bㅠ" action="B"/>
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="nㅜ" action="n"/>                
+	  <shifted display="Nㅜ" action="N"/>
+    </key>
+
+    <key obey-caps='true'>
+	  <default display="mㅡ" action="m"/>                
+	  <shifted display="Mㅡ" action="M"/>
+    </key>
+
+    <key>
+	  <default display="," />                
+	  <shifted display="&lt;" />
+    </key>
+    <key>
+	  <default display="." />                
+	  <shifted display="&gt;" />
+    </key>
+    <key>
+	  <default display="/" />                
+	  <shifted display="?" />
+    </key>
+
+
+    <key fill="true">
+	  <default display="Shift" action="modifier:shift"/>                
+    </key>
+<!--
+    <space width="500" extended="true"/>
+
+    <space width="4000"  extended="true" />
+
+    <space width="4000"  extended="true" />
+
+    <space width="500" extended="true"/>
+-->
+ </row>
+  <row>
+    <key fill="true">
+	  <default display="Ctrl" action="modifier:ctrl"/>                
+    </key>
+
+    <key fill="true">
+	  <default display="alt" action="modifier:alt"/>                
+    </key>
+
+
+    <key width="9000">
+	  <default display=" " action="space" />                
+    </key>
+
+    <key>
+	  <default display="한/영" action="home" />        
+    </key>
+<!--
+    <space width="500" extended="true"/>
+
+    <space width="4000"  extended="true" />
+
+    <space width="4000"  extended="true" />
+
+    <space width="500" extended="true"/>
+-->
+</row>
+</layout>
+</keyboard>
