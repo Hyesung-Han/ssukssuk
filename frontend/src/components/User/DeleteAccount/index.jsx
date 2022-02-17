@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setInit } from '../../../redux/reducers/AuthReducer';
+import { setFarmInit } from '../../../redux/reducers/FarmReducer';
 import Axios from 'axios';
 import crypto from 'crypto';
 import { CommonContext } from '../../../context/CommonContext';
@@ -16,8 +17,6 @@ import {
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Wrapper from './styles';
 
-import store from 'store';
-
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -30,7 +29,6 @@ const InputComponent = props => {
 
   const OnChangeHandler = name => e => {
     setInputValue({ ...inputValue, [name]: e.target.value });
-    console.log('OnChangeHandler -> inputValue', inputValue);
   };
 
   useEffect(() => {
@@ -103,7 +101,7 @@ const ContentDefaultComponent = props => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={2}
       >
@@ -158,9 +156,9 @@ const MyInfoButtonGroupComponent = props => {
     })
       .then(data => {
         if (data.status === 200) {
-          console.log(data);
           if (data.data.result === 'success') {
             dispatch(setInit());
+            dispatch(setFarmInit());
 
             successSign.fire({
               icon: 'success',
@@ -170,22 +168,18 @@ const MyInfoButtonGroupComponent = props => {
 
             history.goBack();
           } else {
-            console.log(data);
             Swal.fire({
               icon: 'error',
               title: '입력 정보 오류',
               text: '비밀번호 다시 틀렸어요!',
-              footer: '<a href="">Why do I have this issue?</a>',
               target: document.querySelector('.MuiDialog-root'),
             });
           }
         } else {
-          console.log(data);
           Swal.fire({
             icon: 'error',
             title: '탈퇴 실패!',
             text: '좀 더 있으라구 그냥 ^^',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
@@ -206,7 +200,7 @@ const MyInfoButtonGroupComponent = props => {
       <Grid
         container
         direction="row"
-        justify="flex-end"
+        justifyContent="flex-end"
         alignItems="center"
         className="my-info-button-group-component-grid"
       >
@@ -243,7 +237,7 @@ const DeleteUserComponent = params => {
         <Grid
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
         >

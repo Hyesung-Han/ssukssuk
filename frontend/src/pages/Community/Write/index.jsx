@@ -1,29 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import Layout from '../../../layout';
-
 import Wrapper from './styles';
 import Axios from 'axios';
-
 import { CommonContext } from '../../../context/CommonContext';
-import { useSelector, useDispatch } from 'react-redux'
-
+import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-
 import {
   Grid,
   Button,
   FormControl,
-  Select,
-  MenuItem,
   RadioGroup,
   FormControlLabel,
   Radio,
   InputBase,
-  Container,
-  Box,
+  Typography,
 } from '@mui/material';
+
+import '../../../App.css';
 
 const CommunityWrite = () => {
   let history = useHistory();
@@ -47,32 +41,42 @@ const CommunityWrite = () => {
     setContent(e.target.value);
   };
 
-
   const onClickCommunityWriteHandler = () => {
-    if(!user.status) 
-    {
-      alert("회원정보 오류! 로그인을 확인해주세요");
+    if (!user.status) {
+      alert('회원정보 오류! 로그인을 확인해주세요');
       history.push('/Community');
       return;
     }
 
-    Axios.post(serverUrlBase + `/community/regi`, {   
-        community_title: title,
-        community_author: user.user_nickName,
-        community_content: content,
-        community_code: code,
-        community_user_id: user.user_id
+    if (!title || title === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '제목을 입력하세요',
+      });
+      return;
+    }
+    if (!content || content === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '내용을 입력하세요',
+      });
+      return;
+    }
+
+    Axios.post(serverUrlBase + `/community/regi`, {
+      community_title: title,
+      community_author: user.user_nickName,
+      community_content: content,
+      community_code: code,
+      community_user_id: user.user_id,
     })
       .then(data => {
-        if(data.status===200)
-        {
+        if (data.status === 200) {
           Swal.fire({
             icon: 'success',
             title: '글이 성공적으로 등록되었습니다.',
           });
-        }
-        else
-        {
+        } else {
           Swal.fire({
             icon: 'error',
             title: '에러',
@@ -102,7 +106,6 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -111,15 +114,6 @@ const CommunityWrite = () => {
               </Grid>
               <Grid item className="body-content">
                 <FormControl>
-                  {/* <Select
-                    value={category}
-                    onChange={handleChange}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem value={'C01'}>자유 게시판</MenuItem>
-                    <MenuItem value={'C02'}>멘토 게시판</MenuItem>
-                  </Select> */}
                   <RadioGroup
                     row
                     value={code}
@@ -131,12 +125,32 @@ const CommunityWrite = () => {
                     <FormControlLabel
                       value="C01"
                       control={<Radio />}
-                      label="자유 게시판"
+                      label={
+                        <Typography
+                          sx={{
+                            fontSize: 18,
+                            color: '#495057',
+                            fontFamily: `'Do Hyeon', sans-serif`,
+                          }}
+                        >
+                          자유 게시판
+                        </Typography>
+                      }
                     />
                     <FormControlLabel
                       value="C02"
                       control={<Radio />}
-                      label="멘토링 게시판"
+                      label={
+                        <Typography
+                          sx={{
+                            fontSize: 18,
+                            color: '#495057',
+                            fontFamily: `'Do Hyeon', sans-serif`,
+                          }}
+                        >
+                          멘토링 게시판
+                        </Typography>
+                      }
                     />
                   </RadioGroup>
                 </FormControl>
@@ -145,7 +159,6 @@ const CommunityWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -158,13 +171,14 @@ const CommunityWrite = () => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
                 />
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               className="text-box"
             >
@@ -178,6 +192,7 @@ const CommunityWrite = () => {
                     onChange={handleTextChange}
                     placeholder="내용을 입력하세요"
                     multiline={true}
+                    sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
                     className="body-content-input"
                   />
                 </Grid>
@@ -190,6 +205,7 @@ const CommunityWrite = () => {
             <Button
               className="write-button"
               onClick={onClickCommunityWriteHandler}
+              sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
             >
               등록
             </Button>

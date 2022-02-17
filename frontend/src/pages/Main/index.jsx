@@ -1,23 +1,17 @@
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Container, Button, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography } from '@mui/material';
 import Layout from '../../layout';
-
 import Wrapper from './styles';
+import '../../App.css';
 
 const item = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   px: 5,
-};
-
-const number = {
-  fontSize: 24,
-  fontFamily: 'default',
-  color: 'secondary.main',
-  fontWeight: 'medium',
 };
 
 const image = {
@@ -37,6 +31,17 @@ const Background = styled(Box)({
 });
 
 const Main = () => {
+  let history = useHistory();
+  const user = useSelector(state => state.Auth.user);
+
+  const myfarmClickHandler = () => {
+    if (!user.status) {
+      history.push('/Auth');
+    } else {
+      history.push('/MyFarm');
+    }
+  };
+
   return (
     <Layout>
       <Wrapper>
@@ -49,17 +54,9 @@ const Main = () => {
             alignItems: 'center',
           }}
         >
-          <Typography
-            color="inherit"
-            align="center"
-            variant="h2"
-            marked="center"
-          >
-            Upgrade your Farm
-          </Typography>
           <Background
             sx={{
-              backgroundColor: '#FBF7F2', // Average color of the background image.
+              backgroundColor: '#FBF7F2',
               backgroundPosition: 'center',
             }}
           />
@@ -74,20 +71,42 @@ const Main = () => {
                   sx={{
                     display: 'flex',
                     justifyContent: 'center',
-                    bgcolor: '#ffc071',
-                    py: 8,
+                    bgcolor: '#ffd49e',
+                    py: 6,
                     px: 3,
                     boxShadow: 3,
                   }}
                 >
-                  <Box component="form" sx={{ maxWidth: 400 }}>
-                    <Typography variant="h2" gutterBottom className="title">
+                  <Box component="form" sx={{ maxWidth: 380, maxHeight: 200 }}>
+                    <Typography
+                      variant="h4"
+                      gutterBottom
+                      className="title1"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
+                      내 농장 속 IoT
+                    </Typography>
+                    <Typography
+                      variant="h3"
+                      gutterBottom
+                      className="title2"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
                       쑥쑥
                     </Typography>
-                    <Typography variant="h5">
-                      IoT를 이용한 농장 관리
-                      <br />
-                      농장이 멀리있어도 안심돼요
+                    <Typography
+                      variant="h5"
+                      className="title_desc"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
+                      농사를 짓는 모든 사람들을 위한 공간
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      className="title_desc"
+                      sx={{ fontFamily: `'Do Hyeon', sans-serif` }}
+                    >
+                      멀리 있어도 걱정하지 마세요
                     </Typography>
                   </Box>
                 </Box>
@@ -137,14 +156,14 @@ const Main = () => {
           component="section"
           sx={{
             display: 'flex',
-            bgcolor: '#E6F3E6',
+            bgcolor: '#FFF2E2',
             overflow: 'hidden',
           }}
         >
           <Container
             sx={{
               mt: 10,
-              mb: 15,
+              mb: 10,
               position: 'relative',
               display: 'flex',
               flexDirection: 'column',
@@ -162,70 +181,65 @@ const Main = () => {
                 opacity: 0.7,
               }}
             />
-            <Typography
-              variant="h4"
-              marked="center"
-              component="h2"
-              sx={{ mb: 14 }}
-            >
-              How it works
-            </Typography>
-            <div>
+            <p sx={{ mb: 14 }} className="what_to_do">
+              무엇을 할 수 있나요?
+            </p>
+            <div className="desc">
               <Grid container spacing={5}>
                 <Grid item xs={12} md={4}>
                   <Box sx={item}>
-                    <Box sx={number}>1.</Box>
-                    <Box
-                      component="img"
-                      src="https://cdn-icons-png.flaticon.com/128/4481/4481323.png"
-                      alt="suitcase"
-                      sx={image}
-                    />
-                    <Typography variant="h5" align="center">
-                      언제 어디서든 농장을 지켜봐요
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Box sx={item}>
-                    <Box sx={number}>2.</Box>
+                    <p className="sub_title">1. 농작물 기록</p>
                     <Box
                       component="img"
                       src="https://cdn-icons-png.flaticon.com/128/4478/4478100.png"
-                      alt="graph"
+                      alt="suitcase"
                       sx={image}
                     />
-                    <Typography variant="h5" align="center">
-                      나만의 농장을 어쩌구~~해요~
-                    </Typography>
+                    <p>Kiosk를 통해 농작물의 상태 변화를 기록해요</p>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Box sx={item}>
-                    <Box sx={number}>3.</Box>
+                    <p className="sub_title">2. 농작물 감시</p>
+                    <Box
+                      component="img"
+                      src="https://cdn-icons-png.flaticon.com/128/4481/4481323.png"
+                      alt="graph"
+                      sx={image}
+                    />
+                    <p>
+                      IoT 기기를 이용해
+                      <br />
+                      멀리서도 농작물의
+                      <br />
+                      환경을 확인해요
+                    </p>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box sx={item}>
+                    <p className="sub_title">3. 멘토링 커뮤니티</p>
                     <Box
                       component="img"
                       src="https://cdn-icons-png.flaticon.com/128/4185/4185445.png"
                       alt="clock"
                       sx={image}
                     />
-                    <Typography variant="h5" align="center">
-                      도움이 필요할 땐 언제든 고수에게~
-                    </Typography>
+                    <p>
+                      도움이 필요할 땐<br />
+                      언제든 공유해요
+                    </p>
                   </Box>
                 </Grid>
               </Grid>
             </div>
-            <Button
-              color="secondary"
-              size="large"
-              variant="contained"
-              component="a"
-              href="/premium-themes/onepirate/sign-up/"
-              sx={{ mt: 8 }}
-            >
-              시작하기
-            </Button>
+            <img
+              src="/images/start_button.png"
+              alt="쑥쑥 시작하기"
+              onClick={() => myfarmClickHandler()}
+              className="mouse-cursor"
+              style={{ width: '240px', marginTop: '35px' }}
+            />
           </Container>
         </Box>
       </Wrapper>

@@ -9,16 +9,17 @@ const cors = require("cors");
 // const form_data = multer(); // form-data 파싱을 위한..
 const { swaggerUi, specs } = require("./swagger");
 const nodemailer = require('nodemailer');
-
 // --------------------------------------------
 // env
 const envJson = require(`${__dirname}/env/env.json`);
 const uploadFilePath = envJson.uploadFilePath;
 const port = envJson.port ? envJson.port : 3001;
 
+const router = express.Router();
+
 //----------------------------------
 // middleware
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // cors
 app.use(
@@ -38,14 +39,15 @@ app.use(require(`${__dirname}/middleware/db`));
 
 //----------------------------------
 // routes
-app.use(uploadFilePath, express.static(path.join(__dirname + uploadFilePath)));
-app.use("/community", require(`${__dirname}/routes/community`));
-app.use("/user", require(`${__dirname}/routes/auth`));
-app.use("/notice", require(`${__dirname}/routes/notice`));
-app.use("/admin", require(`${__dirname}/routes/admin`));
-app.use("/myfarm", require(`${__dirname}/routes/myfarm`));
-app.use("/myfarm_survey", require(`${__dirname}/routes/myfarm_survey`));
+router.use(uploadFilePath, express.static(path.join(__dirname + uploadFilePath)));
+router.use("/community", require(`${__dirname}/routes/community`));
+router.use("/user", require(`${__dirname}/routes/auth`));
+router.use("/notice", require(`${__dirname}/routes/notice`));
+router.use("/admin", require(`${__dirname}/routes/admin`));
+router.use("/myfarm", require(`${__dirname}/routes/myfarm`));
+router.use("/myfarm_survey", require(`${__dirname}/routes/myfarm_survey`));
 
+app.use("/api", router);
 app.use(function (err, req, res, next) {
   console.log("This is the invalid field ->", err.field);
   next(err);

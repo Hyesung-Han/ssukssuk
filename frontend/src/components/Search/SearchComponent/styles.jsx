@@ -41,7 +41,7 @@ const Wrapper = styled.div`
     color: #ccc;
   }
   & .write-button{
-    font-weight: 600;
+    font-weight: 400;
     font-size: 16px;
     padding:5px 13px;
     color:#ffffff;
@@ -53,7 +53,7 @@ const Wrapper = styled.div`
     }
   }
   .select-box{
-    width:100px;
+    width:125px;
     height:40px;
   }
   & .MuiOutlinedInput-root {

@@ -1,27 +1,11 @@
-import React, {
-  useState,
-  useEffect,
-  Fragment,
-  useCallback,
-  useContext,
-} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setInit } from '../../../redux/reducers/AuthReducer';
-import store from 'store';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
-import { useDropzone } from 'react-dropzone';
 import { CommonContext } from '../../../context/CommonContext';
 import { ViewContext } from '../../../context/ViewContext';
 
-import {
-  Avatar,
-  TextField,
-  Button,
-  Grid,
-  Typography,
-  Fab,
-} from '@material-ui/core';
+import { TextField, Grid, Typography, Fab } from '@material-ui/core';
 import Wrapper from './styles';
 import { setNickname } from '../../../redux/reducers/AuthReducer';
 
@@ -51,7 +35,7 @@ const MyInfoInputComponent = props => {
           onChange={OnChangeHandler}
           multiline={rows !== null ? true : false}
           rows={rows !== null ? rows : 1}
-          rowsMax={3}
+          maxRows={3}
         />
       }
     />
@@ -95,9 +79,8 @@ const MyInfoButtonGroupComponent = props => {
       });
   };
 
-  const regNnm = /^[ㄱ-ㅎ|가-힣]+.{1,}$/;
+  const regNnm = /^[가-힣]{2,}$/;
   useEffect(() => {
-    console.log('수정테스트 : ' + inputValue.user_nickName, user.name);
     if (
       inputValue.user_nickName !== user.name &&
       regNnm.test(inputValue.user_nickName)
@@ -122,7 +105,7 @@ const MyInfoButtonGroupComponent = props => {
     <Grid
       container
       direction="row"
-      justify="flex-end"
+      justifyContent="flex-end"
       alignItems="center"
       className="on-my-info-save-handelr-grid"
     >
@@ -132,7 +115,7 @@ const MyInfoButtonGroupComponent = props => {
         onClick={handleClose}
         className="cancel-fab on-my-info-save-handelr-grid-fab1"
       >
-        CANCEL
+        취소
       </Fab>
 
       <Fab
@@ -149,7 +132,7 @@ const MyInfoButtonGroupComponent = props => {
           backgroundColor: isReadyToUpload ? '#9aba11' : '#E0E0E0',
         }}
       >
-        UPLOAD
+        수정
       </Fab>
     </Grid>
   );
@@ -161,7 +144,7 @@ const MyInfoContentDefaultComponent = props => {
     <Grid
       container
       direction="row"
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       spacing={2}
     >
@@ -182,7 +165,7 @@ const MyInfoContentComponent = props => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={2}
       >
@@ -223,8 +206,7 @@ const MyInfo = () => {
     user_email: '',
     user_code: '',
   });
-  let err = false;
-  let errMsg = '';
+
   useEffect(() => {
     Axios.get(serverUrlBase + '/user/myInfo/' + user.user_id)
       .then(data => {

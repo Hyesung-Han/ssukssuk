@@ -1,17 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import Layout from '../../../layout/';
-
 import Wrapper from './styles';
 import Axios from 'axios';
-
 import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
-
 import Swal from 'sweetalert2';
-
-import { Grid, Button, InputBase } from '@mui/material';
+import { Typography, Grid, Button, InputBase } from '@mui/material';
 
 const NoticeWrite = () => {
   let history = useHistory();
@@ -41,6 +36,20 @@ const NoticeWrite = () => {
     if (!user.status) {
       alert('회원정보 오류! 로그인을 확인해주세요');
       history.push('/Notice');
+      return;
+    }
+    if (!title || title === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '제목을 입력하세요',
+      });
+      return;
+    }
+    if (!content || content === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '내용을 입력하세요',
+      });
       return;
     }
 
@@ -87,7 +96,6 @@ const NoticeWrite = () => {
             <Grid
               container
               direction="row"
-              justify="space-between"
               alignItems="center"
               className="category-box"
             >
@@ -95,13 +103,20 @@ const NoticeWrite = () => {
                 분류
               </Grid>
               <Grid item className="body-content">
-                {code === 'N01' ? '공지사항' : '문의하기'}
+                <Typography
+                  sx={{
+                    fontSize: 18,
+                    color: '#495057',
+                    fontFamily: `'Do Hyeon', sans-serif`,
+                  }}
+                >
+                  {code === 'N01' ? '공지사항' : '문의하기'}
+                </Typography>
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justify="space-between"
               alignItems="center"
               className="title-box"
             >
@@ -114,13 +129,13 @@ const NoticeWrite = () => {
                   onChange={handleTitleChange}
                   placeholder="제목을 입력하세요"
                   className="body-content-input"
+                  sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
                 />
               </Grid>
             </Grid>
             <Grid
               container
               direction="row"
-              justify="space-between"
               alignItems="center"
               className="text-box"
             >
@@ -135,6 +150,7 @@ const NoticeWrite = () => {
                     placeholder="내용을 입력하세요"
                     multiline={true}
                     className="body-content-input"
+                    sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
                   />
                 </Grid>
               </div>
@@ -146,6 +162,7 @@ const NoticeWrite = () => {
             <Button
               className="write-button"
               onClick={onClickNoticeWriteHandler}
+              sx={{ fontSize: 18, fontFamily: `'Do Hyeon', sans-serif` }}
             >
               등록
             </Button>

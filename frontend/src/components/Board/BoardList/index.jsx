@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -34,11 +34,11 @@ const BoardList = props => {
     history.push('/' + moveDetail + '/' + no);
   }
 
-  function parsingDate(date){
-    const day=date.substr(0,10)
-    const time=date.substr(11,5)
+  function parsingDate(date) {
+    const day = date.substr(0, 10);
+    const time = date.substr(11, 5);
 
-    return day+" "+time;
+    return day + ' ' + time;
   }
 
   return (
@@ -87,7 +87,9 @@ const BoardList = props => {
                       align="center"
                       className="cell-front"
                     >
-                      {row.no}
+                      {listType === 'Community' &&
+                        (row.communityCode === 'C01' ? '자유' : '멘토링')}
+                      {listType === 'Notice' && row.no}
                     </TableCell>
                     <TableCell className="cell-body">
                       <Grid

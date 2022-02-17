@@ -449,6 +449,70 @@ app.delete("/live", async (req, res) => {
   
 }); // 내 농장 live 이미지 삭제 end
 
+// 내 농장 기기 신청(add 02.14  OYT)
+app.post("/device", async(req,res) =>{
+  if(!req.body || !req.body.user_id){
+    res.status(403).send({result : "fail1", error:err});
+    return;
+  }
+
+  var insertParams = {
+    user_id: req.body.user_id,
+    user_name: req.body.user_name,
+    user_address: req.body.user_address,
+    user_phone: req.body.user_phone
+  }
+
+  var selectParams = {
+    user_id: req.body.user_id,
+  }
+
+  let selectQuery = mybatisMapper.getStatement(
+    "MYFARM",
+    "MYFARM.SELECT.device",
+    selectParams,
+    { language: "sql", indent: "  " }
+  );
+  let list = [];
+  try {
+    list = await req.sequelize.query(selectQuery, {
+      type: req.sequelize.QueryTypes.SELECT,
+    });
+    console.log("TCL: data", list);
+  } catch (error) {
+    res.status(403).send({ result: "fail2", error: error });
+    return;
+  }
+
+  if (list.length == 0) {
+    let insertQuery = mybatisMapper.getStatement(
+      "MYFARM",
+      "MYFARM.INSERT.device",
+      insertParams,
+      { language: "sql", indent: "  " }
+    );
+    let data = [];
+    try {
+      data = await req.sequelize.query(insertQuery, {
+        type: req.sequelize.QueryTypes.INSERT,
+      });
+      console.log("TCL: data", data);
+    } catch (error) {
+      res.status(403).send({ result: "fail3", error: error });
+      return;
+    }
+    if (data.length == 0) {
+      res.status(403).send({ result: "fail4" });
+      return;
+    }
+    res.json({result : "success", url: req.url, body: req.body });
+  }else{
+    res.json({result : "fail", url: req.url, body: req.body });
+  }
+});
+
+// 내 농장 기기신청 end
+
 // sleep
 function sleep(ms) {
   return new Promise((resolve) => {
