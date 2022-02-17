@@ -34,7 +34,6 @@ import { CommonContext } from '../../../context/CommonContext';
 import { useSelector } from 'react-redux';
 
 import MenuList from '@mui/material/MenuList';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
@@ -60,8 +59,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -173,10 +170,8 @@ const FadeMenu = props => {
   const userId = props.checkId;
   const getUserList = props.getUserList;
 
-  // 무한? console.log(userId);
   const { serverUrlBase } = useContext(CommonContext);
 
-  // 라즈베리파이에서 만든거 강퇴 안됨(??)
   const onDeleteUser = async props => {
     setAnchorEl(null);
     Axios.delete(serverUrlBase + `/admin/delete/` + userId)
@@ -397,7 +392,7 @@ const AdminBoardList = () => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [userList, setUserList] = useState([]);
   const [checkId, setCheckId] = useState('');
 
@@ -476,7 +471,6 @@ const AdminBoardList = () => {
       });
   };
 
-  // 1번인가? 여러번인가?
   useEffect(() => {
     getUserList();
   }, []);

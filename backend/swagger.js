@@ -1,5 +1,5 @@
-const swaggerUi = require('swagger-ui-express');
-const swaggereJsdoc = require('swagger-jsdoc');
+const swaggerUi = require("swagger-ui-express");
+const swaggereJsdoc = require("swagger-jsdoc");
 
 const options = {
     swaggerDefinition: {
@@ -19,15 +19,15 @@ const options = {
             { jwt: [] }
         ],
         // host: 'localhost:3001',
-        host: '52.79.38.33:3001',
-        basePath: '/'
-    },
-    apis: ['./routes/*.js', './swagger/*']
+        host: 'i6a103.p.ssafy.io:3001',
+        basePath: '/api'
+  },
+  apis: ["./routes/*.js", "./swagger/*"],
 };
 
 const specs = swaggereJsdoc(options);
 
 module.exports = {
-    swaggerUi,
-    specs
+  swaggerUi,
+  specs,
 };

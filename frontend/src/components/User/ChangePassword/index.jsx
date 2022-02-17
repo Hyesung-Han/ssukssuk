@@ -18,8 +18,8 @@ import Wrapper from './styles';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-const regPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
-const regPwdCf = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,14}$/;
+const regPwd = /^[a-z0-9#?!@$ %^&*-]{7,14}$/;
+const regPwdCf = /^[a-z0-9#?!@$ %^&*-]{7,14}$/;
 
 const successSign = withReactContent(Swal);
 
@@ -53,9 +53,14 @@ const InputComponent = props => {
         if (!regPwdCf.test(inputValue['새 비밀번호 확인'])) {
           setsInputPwdErr(true);
           setInputPwdErrMsg('제대로 입력해주세요!');
-        } else {
+        } else if (
+          inputValue['새 비밀번호 확인'] === inputValue['새 비밀번호']
+        ) {
           setsInputPwdErr(false);
           setInputPwdErrMsg();
+        } else {
+          setsInputPwdErr(true);
+          setInputPwdErrMsg('비밀번호가 일치하지 않습니다.');
         }
       }
     }
@@ -76,16 +81,6 @@ const InputComponent = props => {
     } else {
       props.setDisabled(true);
     }
-    // console.log(!!!!inputValue['현재 비밀번호']);
-
-    // if (
-    //   inputValue['현재 비밀번호'] === '' ||
-    //   inputValue['새 비밀번호'] === '' ||
-    //   inputValue['새 비밀번호 확인'] === '' ||
-    //   inputPwdErr === true
-    // ) {
-    //   props.setDisabled(true);
-    // }
   }, [
     inputValue['현재 비밀번호'],
     inputValue['새 비밀번호'],
@@ -140,7 +135,7 @@ const ContentDefaultComponent = props => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={2}
       >
@@ -178,7 +173,6 @@ const MyInfoButtonGroupComponent = props => {
         icon: 'error',
         title: '비밀번호 불일치',
         text: '직접 확인하며 작성해보세요!',
-        footer: '<a href="">Why do I have this issue?</a>',
         target: document.querySelector('.MuiDialog-root'),
       });
       return;
@@ -212,7 +206,7 @@ const MyInfoButtonGroupComponent = props => {
             successSign.fire({
               icon: 'success',
               title: <strong>변경 완료!</strong>,
-              html: <i>자동 로그인 됬어요~!</i>,
+              html: <i>자동 로그인 됐어요~!</i>,
             });
             history.goBack();
           } else {
@@ -220,7 +214,6 @@ const MyInfoButtonGroupComponent = props => {
               icon: 'error',
               title: '입력 정보 오류',
               text: '현재 비밀번호 틀렸어요!',
-              footer: '<a href="">Why do I have this issue?</a>',
               target: document.querySelector('.MuiDialog-root'),
             });
           }
@@ -229,7 +222,6 @@ const MyInfoButtonGroupComponent = props => {
             icon: 'error',
             title: '변경 실패!',
             text: '??',
-            footer: '<a href="">Why do I have this issue?</a>',
             target: document.querySelector('.MuiDialog-root'),
           });
         }
@@ -237,18 +229,6 @@ const MyInfoButtonGroupComponent = props => {
       .catch(error => {
         console.log(error);
       });
-
-    // var body = {
-    //   new_pwd: hashPassword,
-    //   before_pwd: hashBeforePwd,
-    //   user_id: user.user_id,
-    // };
-
-    // if (respone['status'] === 200) {
-    //   alert('Has changed.');
-    // } else {
-    //   alert('Change failed.');
-    // }
   };
 
   return (
@@ -256,7 +236,7 @@ const MyInfoButtonGroupComponent = props => {
       <Grid
         container
         direction="row"
-        justify="flex-end"
+        justifyContent="flex-end"
         alignItems="center"
         className="my-info-button-group-component-grid"
       >
@@ -287,13 +267,14 @@ const MyInfoButtonGroupComponent = props => {
 // 전체 구조
 const ChangePasswordComponent = params => {
   const [disabled, setDisabled] = useState(true);
+
   return (
     <Wrapper>
       <form noValidate autoComplete="off">
         <Grid
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
         >

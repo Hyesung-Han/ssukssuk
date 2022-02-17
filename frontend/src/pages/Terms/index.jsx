@@ -2,75 +2,64 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import Layout from './../../layout/';
 import Wrapper from './styles';
+
 const Terms = () => {
   return (
     <Layout>
       <Wrapper>
         <Grid container direction="column">
           <Grid item className="title">
-            Privacy Policy
+            개인정보처리방침
           </Grid>
           <Grid item className="text">
             <Grid>
-              <h2>1. Acceptance of Terms of Use Agreement.</h2>
+              <h2>1. 이용약관 동의에 관하여</h2>
               <p>
-                By creating an SSAFY account, whether through a mobile device,
-                mobile application or computer (collectively, the “Service”) you
-                agree to be bound by (i) these Terms of Use, (ii) our Privacy
-                Policy and Safety Tips, each of which is incorporated by
-                reference into this Agreement, and (iii) any terms disclosed and
-                agreed to by you if you purchase additional features, products
-                or services we offer on the Service (collectively, this
-                “Agreement”). If you do not accept and agree to be bound by all
-                of the terms of this Agreement, please do not use the Service.
+                모바일 장치, 모바일 애플리케이션 또는 컴퓨터(통칭하여
+                "서비스")를 통해 쑥쑥 계정을 생성함으로써 귀하는 (i) 본 이용
+                약관, (ii) 당사의 개인 정보 보호 정책 및 안전 팁, 각각의 본
+                계약에 참조로 통합된 조항 및 (iii) 당사가 서비스에서 제공하는
+                추가 기능, 제품 또는 서비스를 구매하는 경우 귀하가 공개하고
+                동의한 모든 조건(총칭하여 이 "계약"). 본 계약의 모든 조건에
+                동의하지 않고 이에 구속되는데 동의하지 않는 경우 서비스를
+                사용하지 마십시오.
               </p>
               <p>
-                We may make changes to this Agreement and to the Service from
-                time to time. We may do this for a variety of reasons including
-                to reflect changes in or requirements of the law, new features,
-                or changes in business practices. The most recent version of
-                this Agreement will be posted on the Service under Settings, and
-                you should regularly check for the most recent version. The most
-                recent version is the version that applies. If the changes
-                include material changes that affect your rights or obligations,
-                we will notify you in advance of the changes by reasonable
-                means, which could include notification through the Service or
-                via email. If you continue to use the Service after the changes
-                become effective, then you agree to the revised Agreement.
+                당사는 본 계약 및 서비스를 수시로 변경할 수 있습니다. 우리는
+                법률의 변경 사항이나 요구 사항, 새로운 기능 또는 비즈니스 관행의
+                변경 사항을 반영하는 등 다양한 이유로 이를 수행할 수 있습니다.
+                본 계약의 최신 버전은 서비스의 설정 아래에 게시되며, 귀하는
+                정기적으로 최신 버전을 확인해야 합니다. 가장 최근 버전이
+                적용되는 버전입니다. 변경 사항에 귀하의 권리 또는 의무에 영향을
+                미치는 중대한 변경 사항이 포함되는 경우, 당사는 서비스 또는
+                이메일을 통한 통지를 포함할 수 있는 합리적인 수단으로 변경
+                사항을 사전에 통지할 것입니다. 변경 사항이 적용된 후에도
+                서비스를 계속 사용하는 경우 수정된 계약에 동의하는 것입니다.
               </p>
             </Grid>
             <Grid>
-              <h2>2. Your Account.</h2>
+              <h2>2. 귀하의 계정에 관하여</h2>
               <p>
-                In order to use SSAFY, you may sign in using your Facebook,
-                Instagram and Google (“Social Media”) login. If you do so, you
-                authorize us to access and use certain Social Media account
-                information, including but not limited to your public Social
-                Media profile and information about Social Media friends you
-                share in common with other SSAFY users who have given Social
-                Media or SSAFY permission to use their personal information. For
-                more information regarding the information we collect from you
-                and how we use it, please consult our Privacy Policy.
+                당사가 귀하로부터 수집한 정보 및 사용 방법에 대한 자세한 내용은
+                당사의 개인정보 보호정책을 참조하십시오.
               </p>
               <p>
-                You are responsible for maintaining the confidentiality of your
-                login credentials you use to sign up for SSAFY, and you are
-                solely responsible for all activities that occur under those
-                credentials. If you think someone has gained access to your
-                account, please immediately contact us.
+                귀하는 쑥쑥에 등록하는 데 사용하는 로그인 자격 증명의 기밀성을
+                유지할 책임이 있으며 해당 자격 증명으로 발생하는 모든 활동에
+                대한 전적인 책임이 있습니다. 누군가 귀하의 계정에 액세스했다고
+                생각되면 즉시 당사에 연락하십시오.
               </p>
             </Grid>
             <Grid>
-              <h2>3. Third Party Services.</h2>
+              <h2>3. 제3자 서비스에 관하여</h2>
               <p>
-                The Service may contain advertisements and promotions offered by
-                third parties and links to other web sites or resources. SSAFY
-                is not responsible for the availability (or lack of
-                availability) of such external websites or resources. If you
-                choose to interact with the third parties made available through
-                our Service, such party’s terms will govern their relationship
-                with you. SSAFY is not responsible or liable for such third
-                parties’ terms or actions.
+                서비스에는 제3자가 제공하는 광고 및 판촉 및 다른 웹사이트 또는
+                리소스에 대한 링크가 포함될 수 있습니다. 쑥쑥은 그러한 외부
+                웹사이트 또는 리소스의 가용성(또는 가용성 부족)에 대해 책임을
+                지지 않습니다. 귀하가 당사 서비스를 통해 제공되는 제3자와 상호
+                작용하기로 선택하는 경우 해당 당사자의 조건이 귀하와의 관계에
+                적용됩니다. 쑥쑥은 그러한 제3자의 조건이나 행동에 대해 책임을
+                지지 않습니다.
               </p>
             </Grid>
           </Grid>

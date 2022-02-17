@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
 const Comment = props => {
   const { serverUrlBase } = useContext(CommonContext);
   const user = useSelector(state => state.Auth.user);
-  const boardUrl = '/' + props.listType;
+  const listType = props.listType;
+  const boardUrl = '/' + listType;
   const [content, setContent] = useState('');
   const [commentList, setCommentList] = useState([]);
   const [updateDone, setUpdateDone] = useState(false);
@@ -23,24 +24,34 @@ const Comment = props => {
 
   const onClickCommentWriteHandler = e => {
     if (!user.status) {
-      alert('댓글을 작성하기 위해서는 로그인이 필요합니다');
-    } else {
-      Axios.post(serverUrlBase + boardUrl + '/comment/write', {
-        comment_user_nickName: user.user_nickName,
-        article_no: props.no,
-        comment_text: content,
-        comment_user_id: user.user_id,
-      })
-        .then(data => {
-          if (data.status === 200) {
-            setContent('');
-            getCommentList();
-          }
-        })
-        .catch(e => {
-          console.log('notice comment write error', e);
-        });
+      Swal.fire({
+        icon: 'error',
+        title: '댓글을 작성하기 위해서는 로그인이 필요합니다',
+      });
+      return;
     }
+    if (content === '') {
+      Swal.fire({
+        icon: 'error',
+        title: '내용을 입력하세요',
+      });
+      return;
+    }
+    Axios.post(serverUrlBase + boardUrl + '/comment/write', {
+      comment_user_nickName: user.user_nickName,
+      article_no: props.no,
+      comment_text: content,
+      comment_user_id: user.user_id,
+    })
+      .then(data => {
+        if (data.status === 200) {
+          setContent('');
+          getCommentList();
+        }
+      })
+      .catch(e => {
+        console.log('notice comment write error', e);
+      });
   };
 
   const getCommentList = async () => {
@@ -110,23 +121,34 @@ const Comment = props => {
 
   return (
     <Wrapper alignItems="center">
-      <FormControl fullWidth>
-        <TextField
-          id="filled-textarea"
-          placeholder="댓글을 입력하세요"
-          multiline
-          variant="outlined"
-          value={content}
-          onChange={handleTextChange}
-        />
-      </FormControl>
-      <Grid container direction="column" alignItems="flex-end">
-        <Grid item>
-          <Button className="write-button" onClick={onClickCommentWriteHandler}>
-            댓글등록
-          </Button>
-        </Grid>
-      </Grid>
+      {listType === 'notice' &&
+      user.user_code !== 'U03' &&
+      user.user_code !== 'U04' ? (
+        <></>
+      ) : (
+        <>
+          <FormControl fullWidth>
+            <TextField
+              id="filled-textarea"
+              placeholder="댓글을 입력하세요"
+              multiline
+              variant="outlined"
+              value={content}
+              onChange={handleTextChange}
+            />
+          </FormControl>
+          <Grid container direction="column" alignItems="flex-end">
+            <Grid item>
+              <Button
+                className="write-button"
+                onClick={onClickCommentWriteHandler}
+              >
+                댓글등록
+              </Button>
+            </Grid>
+          </Grid>
+        </>
+      )}
       <CommentList
         commentList={commentList}
         onDeleteComment={onDeleteComment}
