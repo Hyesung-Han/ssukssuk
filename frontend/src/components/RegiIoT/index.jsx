@@ -93,8 +93,16 @@ const RegiIoT = () => {
           user_phone: phoneNumber,
         })
           .then(data => {
-            console.log(data);
-
+            if (data.data.result === 'fail') {
+              Swal.fire({
+                icon: 'error',
+                title: '이미 신청 완료된 계정입니다.',
+                text: '궁금하신 점은 문의하기에서 문의해주세요',
+                confirmButtonText: '확인',
+                target: document.querySelector('.MuiDialog-root'),
+              });
+              return;
+            }
             // DB에 에러 없이 값이 올라가면
             Swal.fire({
               icon: 'success',
@@ -161,7 +169,7 @@ const RegiIoT = () => {
                 style={inputBoxStyle}
                 container
                 direction="row"
-                justify="space-between"
+                justifyContent="space-between"
                 alignItems="center"
               >
                 <Grid item md={3} style={fontBoxStyle}>
@@ -185,7 +193,7 @@ const RegiIoT = () => {
                 style={inputBoxStyle}
                 container
                 direction="row"
-                justify="space-between"
+                justifyContent="space-between"
                 alignItems="center"
               >
                 <Grid item md={3} style={fontBoxStyle}>
@@ -209,7 +217,7 @@ const RegiIoT = () => {
                 style={inputBoxStyle}
                 container
                 direction="row"
-                justify="space-between"
+                justifyContent="space-between"
                 alignItems="center"
               >
                 <Grid item md={3} style={fontBoxStyle}>
@@ -231,7 +239,7 @@ const RegiIoT = () => {
                 container
                 style={inputBoxStyle}
                 direction="row"
-                justify="flex-end"
+                justifyContent="flex-end"
               >
                 <Button style={buttonStyle} onClick={onClickRegiButton}>
                   제출

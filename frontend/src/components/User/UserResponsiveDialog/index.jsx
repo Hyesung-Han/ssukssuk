@@ -4,7 +4,7 @@ import { CommonContext } from '../../../context/CommonContext';
 import { ViewContext } from '../../../context/ViewContext';
 import VerticalTabs from './../VerticalTabs/';
 
-import { Dialog, useMediaQuery } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
 
 const User = () => {
   const { userDialogOpen, setUserDetailDialogOpen } = useContext(CommonContext);
