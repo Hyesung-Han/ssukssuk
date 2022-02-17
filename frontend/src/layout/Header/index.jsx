@@ -115,8 +115,7 @@ const Header = props => {
                 <img
                   className="logo_img"
                   src={
-                    history.location.pathname.indexOf('Detail') ==
-                      -1 &&
+                    history.location.pathname.indexOf('Detail') == -1 &&
                     history.location.pathname.indexOf('Update') == -1
                       ? 'images/ssug_green.png'
                       : '../images/ssug_green.png'
@@ -165,7 +164,7 @@ const Header = props => {
 
             <Grid item>
               <Grid container alignItems="center">
-                {(user.user_code === 'U03' || user.user_code === 'U04') && (
+                {user.user_code === 'U04' && (
                   <Grid item>
                     <Button
                       color="primary"

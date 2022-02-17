@@ -23,9 +23,10 @@ const DrawerHeaderGroup = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.Auth.user);
 
-  const { setDrawerOpen } = useContext(CommonContext);
+  const { setDrawerOpen,setIsSignUp } = useContext(CommonContext);
 
   const handleSignInDialogOpen = () => {
+    setIsSignUp('SignIn');
     history.push('/Auth');
   };
 
@@ -119,7 +120,7 @@ const DrawerListGroup = () => {
         >
           <ListItemText primary={'우리 팀 소개'} disableTypography />
         </ListItem>
-        {(user.user_code === 'U03' || user.user_code === 'U04') && (
+        {user.user_code === 'U04' && (
           <ListItem
             button
             key={'Admin'}
