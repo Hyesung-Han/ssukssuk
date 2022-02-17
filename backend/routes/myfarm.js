@@ -452,7 +452,7 @@ app.delete("/live", async (req, res) => {
 // 내 농장 기기 신청(add 02.14  OYT)
 app.post("/device", async(req,res) =>{
   if(!req.body || !req.body.user_id){
-    res.status(403).send({result : "fail", error:err});
+    res.status(403).send({result : "fail1", error:err});
     return;
   }
 
@@ -476,11 +476,11 @@ app.post("/device", async(req,res) =>{
   let list = [];
   try {
     list = await req.sequelize.query(selectQuery, {
-      type: req.sequelize.QueryTypes.INSERT,
+      type: req.sequelize.QueryTypes.SELECT,
     });
-    console.log("TCL: data", data);
+    console.log("TCL: data", list);
   } catch (error) {
-    res.status(403).send({ result: "fail", error: error });
+    res.status(403).send({ result: "fail2", error: error });
     return;
   }
 
@@ -498,11 +498,11 @@ app.post("/device", async(req,res) =>{
       });
       console.log("TCL: data", data);
     } catch (error) {
-      res.status(403).send({ result: "fail", error: error });
+      res.status(403).send({ result: "fail3", error: error });
       return;
     }
     if (data.length == 0) {
-      res.status(403).send({ result: "fail" });
+      res.status(403).send({ result: "fail4" });
       return;
     }
     res.json({result : "success", url: req.url, body: req.body });
