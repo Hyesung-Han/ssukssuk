@@ -509,8 +509,6 @@ const SignUpSection02 = () => {
   ];
 
   useEffect(() => {
-    console.log('이메일 인증버튼', emailDisabled);
-    console.log('이메일 입력창', emailConfirm);
     if (signUpUserData.id.length === 0) {
       setSignUpIdErr(false);
       setSignUpIdErrMsg();
