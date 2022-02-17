@@ -23,9 +23,10 @@ const DrawerHeaderGroup = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.Auth.user);
 
-  const { setDrawerOpen } = useContext(CommonContext);
+  const { setDrawerOpen,setIsSignUp } = useContext(CommonContext);
 
   const handleSignInDialogOpen = () => {
+    setIsSignUp('SignIn');
     history.push('/Auth');
   };
 
