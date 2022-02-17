@@ -9,7 +9,7 @@ import ChangePassword from './../ChangePassword/';
 import DeleteAccount from './../DeleteAccount/';
 import { CommonContext } from '../../../context/CommonContext';
 
-import { useMediaQuery, Box, Typography, Tabs, Tab } from '@material-ui/core';
+import { Box, Typography, Tabs, Tab } from '@material-ui/core';
 import Wrapper from './styles';
 import '../../../App.css';
 import Swal from 'sweetalert2';
@@ -42,7 +42,7 @@ function a11yProps(index) {
 export default function VerticalTabs() {
   let history = useHistory();
   const dispatch = useDispatch();
-  const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
+  // const fullScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
   const { userDialogIndex, setUserDialogIndex, setDrawerOpen } = useContext(
     CommonContext,
   );
