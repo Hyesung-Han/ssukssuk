@@ -10,8 +10,6 @@
 
 #  🥕 쑥쑥
 
-[[_TOC_]]
-
 
 
 ## 1. 쑥쑥 소개
@@ -21,8 +19,7 @@
 - 개발 인원 : 최소원, 오윤택, 한혜성, 이정아, 황소현, 이동준
 - 역할 [팀명 : 👖 청바지! (**청**춘은 **바**로 **지**금)]
 
-![image-20220217110821914](/uploads/7e90f703863f90c8c09d410b7b65086e/image-20220217110821914.png)
-
+![1](https://user-images.githubusercontent.com/87076126/191977983-009aae85-93db-4cac-87fd-cc3441265b8f.png)
 
 
 
@@ -43,13 +40,13 @@
 
 ### 쑥쑥 기획 배경
 
-![image-20220217142354401](/uploads/c61f4b9bc77668e5981038f5aa75b7ef/image-20220217142354401.png)
+![2](https://user-images.githubusercontent.com/87076126/191978098-96e68816-dcbf-4912-9043-1b0c620e5e04.png)
 
 
 
 ### 쑥쑥 기능
 
-![image-20220217141932047](/uploads/3b76d761b4b3864babaf9cefe83eb8ec/image-20220217141932047.png)
+![3](https://user-images.githubusercontent.com/87076126/191978136-67cba3db-723f-4e88-a3ac-0240ad84a32b.png)
 
 
 
@@ -57,7 +54,7 @@
 
 ## 3. 기술 스택
 
-![image-20220217111527030](/uploads/3627a683775b974b7d33c09c0c8f85de/image-20220217111527030.png)
+![4](https://user-images.githubusercontent.com/87076126/191978163-b1f2370d-3f8b-42f0-a892-491216aee931.png)
 
 
 
@@ -67,17 +64,16 @@
 
 ### [`Notion`](https://www.notion.so/5934c5579cec4460818bad76641363d0?v=700fdcd203754c4088ba9a5bd50e91aa)
 
-![image-20220217135053385](/uploads/cd58f97ae4411b1eb1896aacafd2a842/image-20220217135053385.png)
+![5](https://user-images.githubusercontent.com/87076126/191978236-cb53522e-08fa-4514-b2ce-aadc775cc5ca.png)
 
-![image-20220217135147963](/uploads/46462d80a92d04ad5efbb5463baef8dc/image-20220217135147963.png)
-
+![6](https://user-images.githubusercontent.com/87076126/191978205-0147129f-3a59-4b7e-a3a1-51ab07a62580.png)
 
 
 ### [`Jira`](https://www.notion.so/JIRA-1d2c1288517c45719a3fc98346f8d153)
 
-![image-20220217140116170](/uploads/6c05b99db730c2853aec2166d25a7b14/image-20220217140116170.png)
+![7](https://user-images.githubusercontent.com/87076126/191978275-2d74fbfa-d5ab-4bfd-b0d3-84c637fc64f8.png)
 
-![image-20220217140801762](/uploads/575c47660ab163879d80fe3f5f9dfd76/image-20220217140801762.png)
+![8](https://user-images.githubusercontent.com/87076126/191978306-59b31643-5562-475e-a24d-29776408b387.png)
 
 
 
@@ -97,25 +93,26 @@
 
 ### 주기능 1-1. 내농장 히스토리
 
-![image-20220217142504927](/uploads/b4786bc64d1ff59c3ec72cec8956d836/image-20220217142504927.png)
+![9](https://user-images.githubusercontent.com/87076126/191978337-1d6050e7-0ceb-4ec6-b9c8-2fff0983cd60.png)
+
 
 
 
 ### 주기능 1-2. 내농장 상태
 
-![image-20220217142600236](/uploads/3ba7c33341f066170d8a8b1f96ec36b3/image-20220217142600236.png)
+![10](https://user-images.githubusercontent.com/87076126/191978363-f935745b-f94d-4097-aefb-fed43b34bccf.png)
 
 
 
 ### 주기능 1-3. 내농장 이미지
 
-![image-20220217142623686](/uploads/cea5f51704e3f34ca6c0ad97e30fe822/image-20220217142623686.png)
+![11](https://user-images.githubusercontent.com/87076126/191978395-dd10cf18-65d2-4bfa-a862-fca2aced44bc.png)
 
 
 
 ### 주기능 2. 커뮤니티
 
-![image-20220217142715089](/uploads/cce638001599b29098506f78b9f433ce/image-20220217142715089.png)
+![12](https://user-images.githubusercontent.com/87076126/191978420-e9de1860-8cf6-41f3-a317-e4bd02c52f67.png)
 
 
 
@@ -123,7 +120,7 @@
 
 ## 6. ERD [DB Modeling]
 
-![image-20220217162548594](/uploads/d3ea2396a391b9cd4fd2e0b795c8e781/image-20220217162548594.png)
+![13](https://user-images.githubusercontent.com/87076126/191978441-f4c8db1e-dd3e-4a42-a618-037d9d0c0bce.png)
 
 
 
